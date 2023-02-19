@@ -64,7 +64,6 @@ function Content(){
     };
    }
 
-  
 
 return(
       <div>
