@@ -2,8 +2,7 @@ import classNames from "classnames/bind";
 import styles from './HomeAdmin.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
-import MaterialTable from 'material-table'
-import {Checkbox,Select,MenuItem} from '@material-ui/core'
+import MaterialTable from "material-table";
 
 import axios, { Axios } from 'axios';
 
@@ -16,18 +15,13 @@ function HomeAdmin() {
     const [filter, setFilter]=useState(true)
 
     const columns = [
-        { title: "ID", field: "id" },
-        { title: "Username", field: "username" },
+        
+        { title: "name", field: "username" },
         { title: "Email", field: "email" },
         { title: "Password", field: "password" },
-        { title: "Phone Number", field: 'phone' },
-        { title: "Role", field: 'role' },
+        { title: "Phone Number", field: 'phonenumber' },
+        { title: "role", field: 'role' },
       ]
-
-      const handleChange=()=>{
-        setFilter(!filter)
-       }
-
 
     useEffect(() => {
         const localstore = localStorage.getItem('user-save')
@@ -53,41 +47,54 @@ function HomeAdmin() {
     }
 
     return (
-        <div>
-        <div className="App">
-      <h1 align="center">React-App</h1>
-      <h4 align='center'>Filtering in Material Table</h4>
-      
-      <ul >
-        {accounts.map(account=>(
+      <div className="App">
+        <h1 align="center">React-App</h1>
+        <h4 align='center'>Material Table with CRUD operation</h4>
         <MaterialTable
         title="Employee Data"
-        data={account}
+        data={accounts}
         columns={columns}
-        options={{
-          filtering:filter
+        editable={{
+          onRowAdd: (newRow) => new Promise((resolve, reject) => {
+            const updatedRows = [...accounts, { id: Math.floor(Math.random() * 100), ...newRow }]
+            setTimeout(() => {
+              setAccount(updatedRows)
+              resolve()
+            }, 2000)
+          }),
+          onRowDelete: selectedRow => new Promise((resolve, reject) => {
+            const index = selectedRow.tableData.id;
+            const updatedRows = [...accounts]
+            updatedRows.splice(index, 1)
+            setTimeout(() => {
+              setAccount(updatedRows)
+              resolve()
+            }, 2000)
+          }),
+          onRowUpdate:(updatedRow,oldRow)=>new Promise((resolve,reject)=>{
+            const index=oldRow.tableData.id;
+            const updatedRows=[...accounts]
+            updatedRows[index]=updatedRow
+            setTimeout(() => {
+              setAccount(updatedRows)
+              resolve()
+            }, 2000)
+          })
+
         }}
-        actions={[
-          {
-            icon:()=><Checkbox
-            checked={filter}
-            onChange={handleChange}
-            inputProps={{ 'aria-label': 'primary checkbox' }}
-          />,
-          tooltip:"Hide/Show Filter option",
-          isFreeAction:true
-          },
-        ]}
+        options={{
+          actionsColumnIndex: -1, addRowPosition: "first"
+        }}
       />
-        ))}
-      
-      </ul>
-      
-    </div>
-            
-        </div>
+  
+    
+      </div>
     );
 }
+            
+       
+    
+
 
 
 export default HomeAdmin;
