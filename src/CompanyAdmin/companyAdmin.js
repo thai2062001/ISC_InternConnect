@@ -4,8 +4,6 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import axios, { Axios } from 'axios';
-import { IconButton } from '@material-ui/core';
-import Slidebar from '../Component/Layout/DefaultLayout/Slidebar';
 
 
 const cx = classNames.bind(styles)
@@ -66,6 +64,7 @@ function CompanyAdmin() {
             <div className={cx('table-wrapper')}>
                 <MaterialTable className={cx('Table')}
                     data={accounts}
+                    title = 'Company Data'
                     columns={columns}
                     actions={[
                         {

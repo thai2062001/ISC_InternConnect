@@ -81,7 +81,7 @@ function HomeAdmin() {
         
         <div className={cx('table-wrapper')}>
         <MaterialTable className = {cx('table')} 
-        title="Employee Data"
+        title="Account Data"
         data={accounts}
         columns={columns}
         actions ={[

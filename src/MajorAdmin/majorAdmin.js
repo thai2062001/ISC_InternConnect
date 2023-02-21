@@ -50,7 +50,7 @@ function MajorAdmin() {
     return ( 
         <div className="App">
         <div className={cx('wrapper')}>
-        <h1 align="center">Trang quản lý Admin</h1>
+        <h1 align="center">Trang quản lý Major</h1>
         <div className={cx('user_log')}>
           <h2 className={cx('name_set')}>{name}</h2>
           <button onClick={handleLogOutUser} className={cx('btn')}>Đăng xuất</button>
@@ -60,6 +60,7 @@ function MajorAdmin() {
         <div className={cx('table-wrapper')}>
         <MaterialTable className = {cx('Table')} 
         data={accounts}
+        title = 'Major Data'
         columns={columns}
         actions ={[
           {
