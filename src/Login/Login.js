@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss'
+import { FaUserAlt,CgPassword  } from "react-icons/fa";
 
 import axios, { Axios } from 'axios';
 import { useState,useEffect } from "react";
@@ -72,20 +73,20 @@ return(
 				<h2 className={cx('title')}>Welcome</h2>
            		<div className={cx('input-div one')}>
            		   <div className={cx('i')}>
-           		   		<i className={cx('fas fa-user')}></i>
+                  <FaUserAlt/>
            		   </div>
            		   <div className={cx('div')}>
-           		   		<h5>Username</h5>
-           		   		<input type="text" className={cx('input')} onChange={(e)=>setEmail(e.target.value)}/>
+           		   		
+           		   		<input placeholder='Email' type="text" className={cx('input-user')} onChange={(e)=>setEmail(e.target.value)}/>
            		   </div>
            		</div>
            		<div className={cx('input-div pass')}>
            		   <div className={cx('i')}> 
-           		    	<i className={cx('fas fa-lock')}></i>
+           		    
            		   </div>
            		   <div className={cx('div')}>
-           		    	<h5>Password</h5>
-           		    	<input type="password" className={cx('input')} onChange={(e)=>setpassword(e.target.value)}/>
+           		    
+           		    	<input placeholder='password' type="password" className={cx('input-user')} onChange={(e)=>setpassword(e.target.value)}/>
             	   </div>
             	</div>
             	<a href="#">Forgot Password?</a>
