@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import styles from './HomeAdmin.module.scss'
+import styles from './majorAdmin.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
@@ -7,47 +7,29 @@ import axios, { Axios } from 'axios';
 import { IconButton } from '@material-ui/core';
 import Slidebar from '../Component/Layout/DefaultLayout/Slidebar';
 
-
-
 const cx = classNames.bind(styles)
 
-// http://localhost:5000/admin/account
-function HomeAdmin() {
+
+
+
+
+function MajorAdmin() {
+
+
     const [name, setName] = useState('')
     const [accounts, setAccount] = useState([])
-
     const columns = [
-        { title: "name", field: "username" },
-        { title: "Email", field: "email" },
-        { title: "Password", field: "password" },
-        { title: "Phone Number", field: 'phonenumber' },
-        { title: 'Role', field: 'role', render: rowData => (
-          <select value={rowData.role} onChange={event => handleRoleChange(event, rowData)}>
-            <option value="student">Student</option>
-            <option value="admin">Admin</option>
-            <option value="company">Company</option>
-          </select>
-        )}
+        { title: "Major", field: "namemajor" },
       ]
       
-
-
-      function handleRoleChange(event, rowData) {
-        const newData = [...accounts];
-        const rowIndex = rowData.tableData.id;
-        newData[rowIndex].role = event.target.value;
-        setAccount(newData);
-      }
-      
-
-    useEffect(() => {
+      useEffect(() => {
         const localstore = localStorage.getItem('user-save')
         const decodeUser = jwt_decode(localstore);
         console.log(decodeUser.username);
         console.log(decodeUser.email);
         setName(decodeUser.username)
     }, [])
-    const URL = 'http://localhost:5000/admin/account'
+    const URL = 'http://localhost:5000/admin/major'
     useEffect(() => {
         const fetchData = async () => {
             const result = await fetch(URL)
@@ -57,26 +39,20 @@ function HomeAdmin() {
         }
         fetchData();
     }, []);
-
-
-     // Ham logout ve trang homelogin
+    
     function handleLogOutUser() {
-      localStorage.removeItem('user-save');
-      window.location.href = '/login'
-  }
-
-
-  // dung de luu lai xem tai khoan nao da login
+        localStorage.removeItem('user-save');
+        window.location.href = '/login'
+    }
+    
     const token = localStorage.getItem('user-save');
     const decodeEmail = jwt_decode(token);
     const emailUser = decodeEmail.email;
 
 
 
-
-
-    return (
-      <div className="App">
+    return ( 
+        <div className="App">
         <div className={cx('wrapper')}>
         <h1 align="center">Trang quản lý Admin</h1>
         <div className={cx('user_log')}>
@@ -98,13 +74,10 @@ function HomeAdmin() {
           }
         ]}
         editable={{
-          
-          isDeleteHidden:(row)=>row.role ==='Student' || row.role === 'School' || row.role ==='Company' ,
-          isDeleteHidden:(row)=>row.role == 'Admin' && row.email === emailUser,
-          
+        
           onRowAdd: (newRow) => new Promise((resolve, reject) => {
             const token_create = localStorage.getItem('user-save');
-            fetch('http://localhost:5000/admin/account/create', {
+            fetch('http://localhost:5000/admin/major/create', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -136,7 +109,7 @@ function HomeAdmin() {
             const id = accounts[index]._id;
             console.log(id);
 
-            fetch(`http://localhost:5000/admin/account/${id}`, {
+            fetch(`http://localhost:5000/admin/major/${id}`, {
               method: 'DELETE',
               headers: {
                 'Authorization': `Bearer ${token}`
@@ -162,7 +135,7 @@ function HomeAdmin() {
           onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
             const id = oldData._id;
             const token_update = localStorage.getItem('user-save');
-            fetch(`http://localhost:5000/admin/account/details/${id}`, {
+            fetch(`http://localhost:5000/admin/major/details/${id}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -215,12 +188,7 @@ function HomeAdmin() {
   href="https://fonts.googleapis.com/icon?family=Material+Icons"
 />
       </div>
-    );
+     );
 }
-            
-       
-    
 
-
-
-export default HomeAdmin;
+export default MajorAdmin;
