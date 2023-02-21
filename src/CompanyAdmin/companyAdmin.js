@@ -58,7 +58,6 @@ function CompanyAdmin() {
                 <h1 align="center">Trang quản lý Company</h1>
                 <div className={cx('user_log')}>
                     <h2 className={cx('name_set')}>{name}</h2>
-                    <button onClick={handleLogOutUser} className={cx('btn')}>Đăng xuất</button>
                 </div>
             </div>
             <div className={cx('table-wrapper')}>

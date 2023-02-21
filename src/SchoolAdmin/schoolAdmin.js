@@ -41,14 +41,6 @@ function SchoolAdmin() {
     const token = localStorage.getItem('user-save');
     const decodeEmail = jwt_decode(token);
     const emailUser = decodeEmail.email;
-
-
-
-
-
-
-
-
     function handleLogOutUser() {
         localStorage.removeItem('user-save');
         window.location.href = '/login'
@@ -59,7 +51,6 @@ function SchoolAdmin() {
                 <h1 align="center">Trang quản lý School</h1>
                 <div className={cx('user_log')}>
                     <h2 className={cx('name_set')}>{name}</h2>
-                    <button onClick={handleLogOutUser} className={cx('btn')}>Đăng xuất</button>
                 </div>
             </div>
             <div className={cx('table-wrapper')}>

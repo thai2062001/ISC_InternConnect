@@ -4,7 +4,8 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import axios, { Axios } from 'axios';
-
+import Is_valid_password from "./CheckPassword";
+import { CgPassword } from 'react-icons/fa';
 
 const cx = classNames.bind(styles)
 
@@ -14,13 +15,46 @@ function HomeAdmin() {
     const [accounts, setAccount] = useState([])
 
     const columns = [
-        { title: "name", field: "username" },
-        { title: "Email", field: "email" },
-        { title: "Password", field: "password" },
-        { title: "Phone Number", field: 'phonenumber' },
+        { title: "name", field: "username" ,validate: rowData =>{
+          if(rowData.username === undefined || rowData.username === ""){
+              return "Required"
+          }else if(rowData.username.length < 3){
+            return "Name should contains atleast 3 chars"
+          }
+          return true
+        
+        }},
+        {
+        title: "Email", field: "email", validate: rowData => {
+          if (rowData.email === undefined || rowData.email === "") {
+            return "Required"
+          } else if (!rowData.email.includes('@' && '.')) {
+            return "Enter valid email address"
+          }
+          return true
+        }
+      },
+        { title: "Password", field: "password" ,validate:rowData =>{
+          if (rowData.password === undefined || rowData.password === "") {
+            return "Required"
+          }
+          else if (!Is_valid_password(rowData.password)){
+            return "Mật khẩu phải có số, chữ hoa , chữ thường"
+          }
+        }},
+        {
+          title: "Phone Number", field: 'phonenumber',validate:rowData =>{
+            if(rowData.phonenumber === undefined || rowData.phonenumber === ""){
+              return "Required"
+            }else if(rowData.phonenumber.length <10 || rowData.phonenumber.length >10){
+              return "Phone number should contains 10 digits"
+            }
+          }
+        },
+
         { title: 'Role', field: 'role', render: rowData => (
-          <select value={rowData.role} onChange={event => handleRoleChange(event, rowData)}>
-            <option value="student">Student</option>
+          <select  value={rowData.role} onChange={event => handleRoleChange(event, rowData)}>
+            <option value="school">School</option>
             <option value="admin">Admin</option>
             <option value="company">Company</option>
           </select>
@@ -75,7 +109,6 @@ function HomeAdmin() {
         <h1 align="center">Trang quản lý Admin</h1>
         <div className={cx('user_log')}>
           <h2 className={cx('name_set')}>{name}</h2>
-          <button onClick={handleLogOutUser} className={cx('btn')}>Đăng xuất</button>
         </div>
         </div>
         
