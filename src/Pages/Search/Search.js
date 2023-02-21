@@ -2,7 +2,7 @@ function Search() {
     return (  
 
         <div>
-            <h1>Day la Search_page</h1>
+            <img src ='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwFIDYh79pYv2K6X03Mmp_Jo_0dFdoq62qhw&usqp=CAU'/>
         </div>
     );
 }
