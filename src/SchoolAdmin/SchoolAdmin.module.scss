@@ -17,10 +17,16 @@
     background-color: rgb(142, 154, 147);
 }
 
-.Table_wrapper{
-    width: 1150px;
+.table-wrapper{
+    width: 1800px;
+    margin-left: 100px;
 }
-
+.table {
+    width: 80%;
+    max-width: 800px;
+    min-width: 300px;
+    margin: 0 auto;
+  }
 .user_log {
     display:flex;
     font-size: 22px;

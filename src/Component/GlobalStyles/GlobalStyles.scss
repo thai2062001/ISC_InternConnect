@@ -2,10 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 :root{
-    --primary: #fe2c55;
+
+    //color
+    --primary-color: #695CFE;
+
+
+
 }
 
 * {
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -15,7 +21,6 @@ html{
 }
 
 body{
-    font-family: 'Poppins', sans-serif;
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;

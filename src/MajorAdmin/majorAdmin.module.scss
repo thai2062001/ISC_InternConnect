@@ -1,0 +1,41 @@
+
+
+.btn{
+    margin-bottom: 5px;
+    background-color: rgb(198, 225, 232);
+    font-size: 16px;
+    text-decoration: none;
+    padding: 9px 25px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+   
+}
+
+.btn:hover{
+    background-color: rgb(142, 154, 147);
+}
+.table-wrapper{
+    width: 1800px;
+    margin-left: 100px;
+}
+.table {
+    width: 80%;
+    max-width: 800px;
+    min-width: 300px;
+    margin: 0 auto;
+  }
+.user_log {
+    display:flex;
+    font-size: 22px;
+    margin-left: auto;
+    justify-content: end;
+
+}
+.user_log h2 {
+    font-size: 22px;
+    margin-left: auto;
+    margin-right: 5px;
+
+} 

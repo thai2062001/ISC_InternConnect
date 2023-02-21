@@ -4,13 +4,9 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import axios, { Axios } from 'axios';
-import { IconButton } from '@material-ui/core';
-import Slidebar from '../Component/Layout/DefaultLayout/Slidebar';
+
 
 const cx = classNames.bind(styles)
-
-
-
 
 
 function MajorAdmin() {
@@ -59,13 +55,10 @@ function MajorAdmin() {
           <h2 className={cx('name_set')}>{name}</h2>
           <button onClick={handleLogOutUser} className={cx('btn')}>Đăng xuất</button>
         </div>
-
-        
         </div>
-        
-      
-        <MaterialTable className = {cx('Table_wrapper')} 
-        title="Employee Data"
+
+        <div className={cx('table-wrapper')}>
+        <MaterialTable className = {cx('Table')} 
         data={accounts}
         columns={columns}
         actions ={[
@@ -176,13 +169,13 @@ function MajorAdmin() {
             
           })
       
-          
-
         }}
         options={{
           actionsColumnIndex: -1, addRowPosition: "first"
         }}
       />
+        </div>
+       
       <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/icon?family=Material+Icons"
