@@ -67,6 +67,7 @@ function SchoolAdmin() {
             </div>
 
 
+            <div className={cx('table-wrapper')}>
             <MaterialTable className={cx('Table_wrapper')}
                 title="Employee Data"
                 data={accounts}
@@ -189,6 +190,8 @@ function SchoolAdmin() {
                     actionsColumnIndex: -1, addRowPosition: "first"
                 }}
             />
+            </div>
+            
             <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/icon?family=Material+Icons"

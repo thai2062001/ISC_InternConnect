@@ -10,6 +10,7 @@ import SignOut from '../SignOut/SignOut';
 import SchoolAdmin from '../SchoolAdmin/schoolAdmin';
 import MajorAdmin from '../MajorAdmin/majorAdmin';
 import CompanyAdmin from '../CompanyAdmin/companyAdmin';
+import SlidebarOnly from './../Component/Layout/SlidebarOnly'
 
 //public routers
 const publicRouters = [
@@ -17,12 +18,12 @@ const publicRouters = [
     {path: '/search',component: Search},
     {path: '/profile',component: Profile},
     {path: '/uploadcv',component: UploadCV,layout: HeaderOnly},
-    {path: '/homeadmin',component: HomeAdmin},
+    {path: '/homeadmin',component: HomeAdmin,layout: SlidebarOnly},
     {path: '/login',component: Login,layout: null},
     {path: '/signout',component: SignOut},
-    {path: '/homeadmin/schoolAdmin',component: SchoolAdmin},
-    {path: '/homeadmin/majorAdmin',component:MajorAdmin },
-    {path: '/homeadmin/companyAdmin',component:CompanyAdmin },,
+    {path: '/homeadmin/schoolAdmin',component: SchoolAdmin,layout: SlidebarOnly},
+    {path: '/homeadmin/majorAdmin',component:MajorAdmin ,layout: SlidebarOnly},
+    {path: '/homeadmin/companyAdmin',component:CompanyAdmin ,layout: SlidebarOnly},
 
 
 ]
