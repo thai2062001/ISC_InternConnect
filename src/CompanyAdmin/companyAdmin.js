@@ -14,13 +14,43 @@ function CompanyAdmin() {
     const [accounts, setAccount] = useState([])
 
     const columns = [
-        { title: "Company", field: "namecompany" },
-        { title: "Email", field: "emailcompany" },
-        { title: "Website", field: "websitecompany" },
-        { title: "Phone Number", field: 'phonecompany' },
+        { title: "Company", field: "namecompany",validate: rowData =>{
+            if(rowData.namecompany === undefined || rowData.namecompany === ""){
+                return "Required"
+            }else if(rowData.namecompany.length < 3){
+              return "namecompany should contains atleast 3 chars"
+            }
+            return true
+          
+          } },
+        { title: "Email", field: "emailcompany",validate: rowData =>{
+            if(rowData.namecompany === undefined || rowData.namecompany === ""){
+                return "Required"
+            }else if (!rowData.emailcompany.includes('@' && '.')) {
+                return "Enter valid email address"
+              }
+            return true
+          
+          } },
+        { title: "Website", field: "websitecompany" ,validate: rowData =>{
+            if(rowData.websitecompany === undefined || rowData.websitecompany === ""){
+                return "Required"
+            }else if(!rowData.emailcompany.includes('.')){
+              return "Websitecompany should contains atleast 3 chars"
+            }
+            return true
+          
+          } },
+        { title: "Phone Number", field: 'phonecompany',validate: rowData =>{
+            if(rowData.phonecompany === undefined || rowData.phonecompany === ""){
+                return "Required"
+            }else if(rowData.namecompany.length > 10){
+              return "wrong"
+            }
+            return true
+          
+          } },
     ]
-
-
     useEffect(() => {
         const localstore = localStorage.getItem('user-save')
         const decodeUser = jwt_decode(localstore);
@@ -42,14 +72,10 @@ function CompanyAdmin() {
         localStorage.removeItem('user-save');
         window.location.href = '/login'
     }
-
     // dung de luu lai xem tai khoan nao da login
     const token = localStorage.getItem('user-save');
     const decodeEmail = jwt_decode(token);
     const emailUser = decodeEmail.email;
-
-
-
     return (
         <div className="App">
             <div className={cx('wrapper')}>
@@ -164,16 +190,12 @@ function CompanyAdmin() {
                             }, 2000)
 
                         })
-
-
-
                     }}
                     options={{
                         actionsColumnIndex: -1, addRowPosition: "first"
                     }}
                 />
             </div>
-
             <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/icon?family=Material+Icons"

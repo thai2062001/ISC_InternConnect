@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import classNames from "classnames/bind";
-import styles from './Slidebar.module.scss'
+import styles from './SlidebarSchoolAdmin.module.scss'
 const cx = classNames.bind(styles)
 
 function Slidebar() {
@@ -35,21 +35,20 @@ function Slidebar() {
 
     </li>
       <li>
-        <a href="/homeadmin">
-          <i className={cx('bx bx-user')}></i>
+        <a href="/schooladmin">
+          <i className={cx('bx bxs-school')}></i>
           <span className={cx('links_name')}>Account</span>
         </a>
          <span className={cx('tooltip')}>Account</span>
       </li>
       <li>
-       <a href="/homeadmin/schoolAdmin">
-        
+       <a href="#">
          <i className={cx('bx bxs-school')} ></i>
          <span className={cx('links_name')}>School</span>
        </a>
        <span className={cx('tooltip')}>School</span>
      </li>
-     <li>
+     {/* <li>
        <a href="/homeadmin/majorAdmin">
          <i className={cx('bx bx-math')} ></i>
          <span className={cx('links_name')}>Major</span>
@@ -81,7 +80,8 @@ function Slidebar() {
      <span className={cx('tooltip')}>Logout</span>
      </li>
 
-     
+      */
+      }
     </ul>
   </div>
 

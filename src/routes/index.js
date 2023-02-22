@@ -11,7 +11,8 @@ import SchoolAdmin from '../SchoolAdmin/schoolAdmin';
 import MajorAdmin from '../MajorAdmin/majorAdmin';
 import CompanyAdmin from '../CompanyAdmin/companyAdmin';
 import SlidebarOnly from './../Component/Layout/SlidebarOnly'
-
+import SchoolManager from '../SchoolManager/schoolManager';
+import SlidebarSchool from './../Component/Layout/SlidebarSchool'
 //public routers
 const publicRouters = [
     {path: '/',component: Home},
@@ -24,6 +25,7 @@ const publicRouters = [
     {path: '/homeadmin/schoolAdmin',component: SchoolAdmin,layout: SlidebarOnly},
     {path: '/homeadmin/majorAdmin',component:MajorAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/companyAdmin',component:CompanyAdmin ,layout: SlidebarOnly},
+    {path: '/schooladmin',component:SchoolManager ,layout: SlidebarSchool },
 
 
 ]

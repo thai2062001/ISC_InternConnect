@@ -15,7 +15,14 @@ function MajorAdmin() {
     const [name, setName] = useState('')
     const [accounts, setAccount] = useState([])
     const columns = [
-        { title: "Major", field: "namemajor" },
+        { title: "Major", field: "namemajor" , validate: rowData => {
+          if (rowData.namemajor === undefined || rowData.namemajor === "") {
+            return "Required"
+          } else if (rowData.namemajor.length <3 ) {
+            return "Name should contains atleast 3 chars "
+          }
+          return true
+        }},
       ]
       
       useEffect(() => {
@@ -44,7 +51,6 @@ function MajorAdmin() {
     const token = localStorage.getItem('user-save');
     const decodeEmail = jwt_decode(token);
     const emailUser = decodeEmail.email;
-
 
 
     return ( 
@@ -80,12 +86,10 @@ function MajorAdmin() {
             .then(response => {
               if (response.ok) {
                 return response.json();
-              } else {
-                throw new Error(response.statusText);
-              }
+              } 
             })
             .then(data => {
-              const updatedRows = [...accounts, { id: data.id, ...newRow }]
+              const updatedRows = [...accounts, {  ...newRow }]
               setTimeout(() => {
                 setAccount(updatedRows)
                 resolve()

@@ -34,13 +34,27 @@ function HomeAdmin() {
           return true
         }
       },
-        { title: "Password", field: "password", 
+        { title: "Password", field: "password", validate: rowData => {
+          if (rowData.password === undefined || rowData.password === "") {
+            return "Required"
+          } else if (!Is_valid_password(rowData.password)) {
+            return "Wrong"
+          }
+          return true
+        }
         },
         {
-          title: "Phone Number", field: 'phonenumber'
+          title: "Phone Number", field: 'phonenumber', validate: rowData => {
+            if (rowData.phonenumber === undefined || rowData.phonenumber === "") {
+              return "Required"
+            } else if (rowData.phonenumber.length < 10 || rowData.phonenumber.length > 10) {
+              return "Wrong number phone"
+            }
+            return true
+          }
         },
 
-        { title: 'Role', field: 'role',}
+        { title: 'Role', field: 'role', values : 'Admin' }
       ]
       
 
@@ -137,7 +151,6 @@ function HomeAdmin() {
             const index = selectedRow.tableData.id;
             const id = accounts[index]._id;
             console.log(id);
-
             fetch(`http://localhost:5000/admin/account/${id}`, {
               method: 'DELETE',
               headers: {

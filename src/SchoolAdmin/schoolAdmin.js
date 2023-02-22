@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import axios, { Axios } from 'axios';
+import Select from '@material-ui/core/Select';
 
 
 const cx = classNames.bind(styles)
@@ -11,29 +12,44 @@ const cx = classNames.bind(styles)
 function SchoolAdmin() {
     const [name, setName] = useState('')
     const [accounts, setAccount] = useState([])
+    const [provinces, setProvinces] = useState([]);
+    const [provinceList, setProvinceList] = useState({});
+    const [showDropdown, setShowDropdown] = useState(false);
 
     const columns = [
-        { title: "Name School", field: "nameschool" ,validate: rowData =>{
-            if(rowData.nameschool === undefined || rowData.nameschool === ""){
-                return "Required"
-            }else if(rowData.nameschool.length < 3){
-              return "NameSchool should contains atleast 3 chars"
+        {
+            title: "Name School", field: "nameschool", validate: rowData => {
+                if (rowData.nameschool === undefined || rowData.nameschool === "") {
+                    return "Required"
+                } else if (rowData.nameschool.length < 3) {
+                    return "NameSchool should contains atleast 3 chars"
+                }
+                return true
             }
-            return true
-          }},
-        { title: "Location", field: "location" ,validate: rowData =>{
-            if(rowData.location === undefined || rowData.location === ""){
-                return "Required"
-            }else if(rowData.location.length < 3){
-              return "location should contains atleast 3 chars"
-            }
-            return true
-          } },
+        },
+        {
+            title: "Location", field: "location", lookup: showDropdown ? provinceList : null,
+        },
         { title: "Email School", field: "emailschool" },
         { title: "Phone Number", field: 'phoneschool' },
         { title: 'websiteschool', field: 'websiteschool' },
     ]
 
+        
+    useEffect(() => {
+        fetch('https://vapi.vnappmob.com/api/province')
+            .then(response => response.json())
+            .then(data => {
+                setProvinces(data.results);
+                setProvinceList(
+                    data.results.reduce((list, province) => {
+                        list[province.province_id] = province.province_name;
+                        return list;
+                    }, {})
+                );
+            })
+            .catch(error => console.error(error));
+    }, []);
     useEffect(() => {
         const localstore = localStorage.getItem('user-save')
         const decodeUser = jwt_decode(localstore);
@@ -59,6 +75,7 @@ function SchoolAdmin() {
         localStorage.removeItem('user-save');
         window.location.href = '/login'
     }
+
     return (
         <div className="App">
             <div className={cx('wrapper')}>
@@ -72,18 +89,12 @@ function SchoolAdmin() {
                     title="School Data"
                     data={accounts}
                     columns={columns}
-                    actions={[
-                        {
-                            icon: () => <button />
-                        }
-                    ]}
                     editable={{
-
                         isDeleteHidden: (row) => row.role === 'Student' || row.role === 'School' || row.role === 'Company',
                         isDeleteHidden: (row) => row.role == 'Admin' && row.email === emailUser,
-
                         onRowAdd: (newRow) => new Promise((resolve, reject) => {
                             const token_create = localStorage.getItem('user-save');
+                            setShowDropdown(true)
                             fetch('http://localhost:5000/admin/school/create', {
                                 method: 'POST',
                                 headers: {
@@ -95,9 +106,7 @@ function SchoolAdmin() {
                                 .then(response => {
                                     if (response.ok) {
                                         return response.json();
-                                    } else {
-                                        throw new Error(response.statusText);
-                                    }
+                                    } 
                                 })
                                 .then(data => {
                                     const updatedRows = [...accounts, { id: data.id, ...newRow }]
@@ -189,6 +198,7 @@ function SchoolAdmin() {
                     options={{
                         actionsColumnIndex: -1, addRowPosition: "first"
                     }}
+
                 />
             </div>
 

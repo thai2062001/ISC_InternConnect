@@ -41,7 +41,7 @@ function Login() {
 
       }else if(decoded.role === 'School')
       {
-          window.location.href = '/school'
+          window.location.href = '/schooladmin'
       }
       else if(decoded.role === 'Student')
       {
@@ -51,6 +51,7 @@ function Login() {
       {
 
       }
+      
 
     }
     catch(error) {
