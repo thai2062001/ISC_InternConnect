@@ -13,8 +13,22 @@ function SchoolAdmin() {
     const [accounts, setAccount] = useState([])
 
     const columns = [
-        { title: "Name School", field: "nameschool" },
-        { title: "Location", field: "location" },
+        { title: "Name School", field: "nameschool" ,validate: rowData =>{
+            if(rowData.nameschool === undefined || rowData.nameschool === ""){
+                return "Required"
+            }else if(rowData.nameschool.length < 3){
+              return "NameSchool should contains atleast 3 chars"
+            }
+            return true
+          }},
+        { title: "Location", field: "location" ,validate: rowData =>{
+            if(rowData.location === undefined || rowData.location === ""){
+                return "Required"
+            }else if(rowData.location.length < 3){
+              return "location should contains atleast 3 chars"
+            }
+            return true
+          } },
         { title: "Email School", field: "emailschool" },
         { title: "Phone Number", field: 'phoneschool' },
         { title: 'websiteschool', field: 'websiteschool' },

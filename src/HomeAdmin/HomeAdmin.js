@@ -34,31 +34,13 @@ function HomeAdmin() {
           return true
         }
       },
-        { title: "Password", field: "password" ,validate:rowData =>{
-          if (rowData.password === undefined || rowData.password === "") {
-            return "Required"
-          }
-          else if (!Is_valid_password(rowData.password)){
-            return "Mật khẩu phải có số, chữ hoa , chữ thường"
-          }
-        }},
+        { title: "Password", field: "password", 
+        },
         {
-          title: "Phone Number", field: 'phonenumber',validate:rowData =>{
-            if(rowData.phonenumber === undefined || rowData.phonenumber === ""){
-              return "Required"
-            }else if(rowData.phonenumber.length <10 || rowData.phonenumber.length >10){
-              return "Phone number should contains 10 digits"
-            }
-          }
+          title: "Phone Number", field: 'phonenumber'
         },
 
-        { title: 'Role', field: 'role', render: rowData => (
-          <select  value={rowData.role} onChange={event => handleRoleChange(event, rowData)}>
-            <option value="school">School</option>
-            <option value="admin">Admin</option>
-            <option value="company">Company</option>
-          </select>
-        )}
+        { title: 'Role', field: 'role',}
       ]
       
 
@@ -117,11 +99,6 @@ function HomeAdmin() {
         title="Account Data"
         data={accounts}
         columns={columns}
-        actions ={[
-          {
-            icon:()=> <button/>
-          }
-        ]}
         editable={{
           
           isDeleteHidden:(row)=>row.role ==='Student' || row.role === 'School' || row.role ==='Company' ,

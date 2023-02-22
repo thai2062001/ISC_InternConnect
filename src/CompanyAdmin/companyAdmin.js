@@ -24,8 +24,6 @@ function CompanyAdmin() {
     useEffect(() => {
         const localstore = localStorage.getItem('user-save')
         const decodeUser = jwt_decode(localstore);
-        console.log(decodeUser.username);
-        console.log(decodeUser.email);
         setName(decodeUser.username)
     }, [])
     const URL = 'http://localhost:5000/admin/company'
@@ -65,15 +63,7 @@ function CompanyAdmin() {
                     data={accounts}
                     title = 'Company Data'
                     columns={columns}
-                    actions={[
-                        {
-                            icon: () => <button />
-                        }
-                    ]}
                     editable={{
-
-                        isDeleteHidden: (row) => row.role === 'Student' || row.role === 'School' || row.role === 'Company',
-                        isDeleteHidden: (row) => row.role == 'Admin' && row.email === emailUser,
                         onRowAdd: (newRow) => new Promise((resolve, reject) => {
                             const token_create = localStorage.getItem('user-save');
                             fetch('http://localhost:5000/admin/company/create', {

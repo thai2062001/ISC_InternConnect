@@ -67,8 +67,7 @@ function MajorAdmin() {
           }
         ]}
         editable={{
-        
-          onRowAdd: (newRow) => new Promise((resolve, reject) => {
+         onRowAdd: (newRow) => new Promise((resolve, reject) => {
             const token_create = localStorage.getItem('user-save');
             fetch('http://localhost:5000/admin/major/create', {
               method: 'POST',
