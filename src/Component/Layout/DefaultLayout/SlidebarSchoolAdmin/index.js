@@ -1,30 +1,15 @@
 import React, { useState,useEffect } from 'react';
 import classNames from "classnames/bind";
-import styles from './Slidebar.module.scss'
+import styles from './SlidebarSchoolAdmin.module.scss'
 const cx = classNames.bind(styles)
 
 function Slidebar() {
-
   function handleLogOutUser() {
     localStorage.removeItem('user-save');
     window.location.href = '/login'
 }
   return (
     <div className={cx('slidebar')}>
-    {/* <ul className={cx('menu')}>
-      <li className={cx('menu-item')}>
-        <a href="/homeadmin" className={cx('menu-link')}>Account</a>
-      </li>
-      <li className={cx('menu-item')}>
-        <a href="/homeadmin/schooladmin" className={cx('menu-link')}>School</a>
-      </li>
-      <li className={cx('menu-item')}>
-        <a href="/homeadmin/majorAdmin" className={cx('menu-link')}>Major</a>
-      </li>
-      <li className={cx('menu-item')}>
-        <a href="/homeadmin/companyAdmin" className={cx('menu-link')}>Company</a>
-      </li>
-    </ul> */}
 
 <div className={cx('sidebar')}>
     <div className={cx('logo-details')}>
@@ -35,21 +20,20 @@ function Slidebar() {
 
     </li>
       <li>
-        <a href="/homeadmin">
-          <i className={cx('bx bx-user')}></i>
+        <a href="/schooladmin">
+          <i className={cx('bx bxs-school')}></i>
           <span className={cx('links_name')}>Account</span>
         </a>
          <span className={cx('tooltip')}>Account</span>
       </li>
       <li>
-       <a href="/homeadmin/schoolAdmin">
-        
+       <a href="#">
          <i className={cx('bx bxs-school')} ></i>
          <span className={cx('links_name')}>School</span>
        </a>
        <span className={cx('tooltip')}>School</span>
      </li>
-     <li>
+     {/* <li>
        <a href="/homeadmin/majorAdmin">
          <i className={cx('bx bx-math')} ></i>
          <span className={cx('links_name')}>Major</span>
@@ -71,7 +55,7 @@ function Slidebar() {
          <span className={cx('links_name')}>Setting</span>
        </a>
        <span className={cx('tooltip')}>Setting</span>
-     </li>
+     </li>*/
 
      <li className={cx('profile')}>
      <a href="login" onClick={handleLogOutUser}>
@@ -81,7 +65,8 @@ function Slidebar() {
      <span className={cx('tooltip')}>Logout</span>
      </li>
 
-     
+      
+      }
     </ul>
   </div>
 

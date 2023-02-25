@@ -11,9 +11,15 @@ import SchoolAdmin from '../SchoolAdmin/schoolAdmin';
 import MajorAdmin from '../MajorAdmin/majorAdmin';
 import CompanyAdmin from '../CompanyAdmin/companyAdmin';
 import SlidebarOnly from './../Component/Layout/SlidebarOnly'
+import SchoolManager from '../SchoolManager/schoolManager';
+import SlidebarSchool from './../Component/Layout/SlidebarSchool'
+import CompanyManager from '../CompanyManager/companyManager';
+import SlidebarCompany from '../Component/Layout/SlidebarCompany'
+import Demo from '../SignUp/Signup';
 
 //public routers
 const publicRouters = [
+    {path: '/Demo',component: Demo,layout:null},
     {path: '/',component: Home},
     {path: '/search',component: Search},
     {path: '/profile',component: Profile},
@@ -24,6 +30,8 @@ const publicRouters = [
     {path: '/homeadmin/schoolAdmin',component: SchoolAdmin,layout: SlidebarOnly},
     {path: '/homeadmin/majorAdmin',component:MajorAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/companyAdmin',component:CompanyAdmin ,layout: SlidebarOnly},
+    {path: '/schooladmin',component:SchoolManager ,layout: SlidebarSchool },
+    {path: '/companyadmin',component:CompanyManager ,layout: SlidebarCompany },
 
 
 ]
@@ -33,3 +41,5 @@ const privateRouters = [
 ]
 
 export {publicRouters,privateRouters}
+
+
