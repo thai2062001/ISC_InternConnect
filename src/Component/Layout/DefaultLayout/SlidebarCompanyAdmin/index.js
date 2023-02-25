@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import classNames from "classnames/bind";
-import styles from './SlidebarSchoolAdmin.module.scss'
+import styles from './SlidebarCompanyAdmin.module.scss'
 const cx = classNames.bind(styles)
 
 function Slidebar() {
@@ -10,7 +10,6 @@ function Slidebar() {
 }
   return (
     <div className={cx('slidebar')}>
-
 <div className={cx('sidebar')}>
     <div className={cx('logo-details')}>
         <i className={cx('bx bx-menu')} id="btn" ></i>
@@ -20,18 +19,18 @@ function Slidebar() {
 
     </li>
       <li>
-        <a href="/schooladmin">
+        <a href="/companyadmin">
           <i className={cx('bx bxs-school')}></i>
-          <span className={cx('links_name')}>Account</span>
+          <span className={cx('links_name')}>Company</span>
         </a>
-         <span className={cx('tooltip')}>Account</span>
+         <span className={cx('tooltip')}>Company</span>
       </li>
       <li>
        <a href="#">
          <i className={cx('bx bxs-school')} ></i>
-         <span className={cx('links_name')}>School</span>
+         <span className={cx('links_name')}>Jobpost</span>
        </a>
-       <span className={cx('tooltip')}>School</span>
+       <span className={cx('tooltip')}>Jobpost</span>
      </li>
      {/* <li>
        <a href="/homeadmin/majorAdmin">

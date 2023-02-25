@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss'
-import { FaUserAlt,CgPassword  } from "react-icons/fa";
+import { FaUserAlt,FaLock  } from "react-icons/fa";
 
 import axios, { Axios } from 'axios';
 import { useState,useEffect } from "react";
@@ -15,9 +15,9 @@ function Login() {
   const [password,setpassword] = useState("")
   const [account,setAccount] = useState([])
 
- 
+  
+
   useEffect(()=>{
-    
   },[]);
 
    async function HandleLogin(e){
@@ -49,7 +49,7 @@ function Login() {
       }
       else if(decoded.role === 'Company')
       {
-
+        window.location.href = '/companyadmin'
       }
       
 
@@ -77,27 +77,33 @@ return(
                   <FaUserAlt/>
            		   </div>
            		   <div className={cx('div')}>
-           		   		
            		   		<input placeholder='Email' type="text" className={cx('input-user')} onChange={(e)=>setEmail(e.target.value)}/>
            		   </div>
            		</div>
            		<div className={cx('input-div pass')}>
            		   <div className={cx('i')}> 
-           		    
+                  <FaLock/>
            		   </div>
            		   <div className={cx('div')}>
-           		    
            		    	<input placeholder='password' type="password" className={cx('input-user')} onChange={(e)=>setpassword(e.target.value)}/>
             	   </div>
             	</div>
-            	<a href="#">Forgot Password?</a>
+              <div className={cx('wraper_link')}>
+              <a href="#">Forgot Password?</a>
+              <a href="/signup">Sign Up?</a>
+              </div>
+            	
             	<button onClick={HandleLogin} className={cx('btn')}>Login</button>
             </div>
         </div>
     </div>
 
-        
+    <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            />
       </div>
+      
 
   )
 
