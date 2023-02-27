@@ -4,8 +4,8 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import axios, { Axios } from 'axios';
-import Select from '@material-ui/core/Select';
 import { Card, Button, Row, Col } from 'react-bootstrap';
+import PageDetail from "../PageDetail/pageDetail";
 
 
 const cx = classNames.bind(styles)
@@ -13,10 +13,6 @@ const cx = classNames.bind(styles)
 function CompanyManager() {
     const [name, setName] = useState('')
     const [accounts, setAccount] = useState([])
-    const [provinces, setProvinces] = useState([]);
-    const [provinceList, setProvinceList] = useState({});
-    const [showDropdown, setShowDropdown] = useState(false);
-
 
     const columns = [
         { title: "benifit", field: "benifit" },
@@ -54,10 +50,9 @@ function CompanyManager() {
         fetchData();
     }, []);
 
-    const handleDetail = (id)=>{
-        window.location.href = `/admincompany/details/${id}`
+    const handleDetail = (id) => {
+        window.location.href = `/companyadmin/${id}`
     }
-
     const token = localStorage.getItem('user-save');
     const decodeEmail = jwt_decode(token);
     const emailUser = decodeEmail.email;
@@ -66,11 +61,11 @@ function CompanyManager() {
         window.location.href = '/login'
     }
 
-    const col_style = {display:'flex',flexGrow:'1',marginTop:'40px'}
-    const row_style = {marginTop:'40px'}
+    const col_style = { display: 'flex', flexGrow: '1', marginTop: '40px' }
+    const row_style = { marginTop: '40px' }
 
     return (
-        <Row xs={1} md={3} className="g-4 " styles = {row_style}>
+            <Row xs={1} md={3} className="g-4 " styles = {row_style}>
             {accounts.map((account, index) => (
                 <Col key={account._id} style={col_style} >
                     <Card style={{ width: '30rem',borderRadius:'10px'}}>
@@ -90,9 +85,7 @@ function CompanyManager() {
             ))}
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
         </Row>
-        
     );
-
 }
 
 export default CompanyManager;

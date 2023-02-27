@@ -73,28 +73,34 @@ form{
 	margin-top: 10px;
 }
 .i{
-	width: 12px;
-	height: 12px;
+	height: 40px;
 	position: absolute;
-	margin-top: 7px;
+	margin-top: 5px;
 	color: #d9d9d9;
+	margin-right: 5px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-
- .input-user{
-	margin-left: 8px;
-	width: 100%;
-	height: 100%;
-	border: none;
-	outline: none;
-	background: none;
-	padding: 0.5rem 0.7rem;
-	font-size: 1.2rem;
-	color: #555;
-	font-family: 'poppins', sans-serif;
+.div{
+	width: 200px;
 }
+.input-div{
+	position: fixed;
+}
+ .input-user{
+    margin-left: 15px;
+    width: 260px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0.5rem 0.7rem;
+    font-size: 2.1rem;
+    color: #555;
+    font-family: "poppins", sans-serif;
+}
+
 .input-div > div > input-user{
 	position: absolute;
 	left: 0;
