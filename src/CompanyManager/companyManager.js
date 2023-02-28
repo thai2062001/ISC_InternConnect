@@ -61,30 +61,35 @@ function CompanyManager() {
         window.location.href = '/login'
     }
 
-    const col_style = { display: 'flex', flexGrow: '1', marginTop: '40px' }
-    const row_style = { marginTop: '40px' }
+    const col_style = { display: 'flex', flexGrow: '1', marginTop: '80px' }
+    const row_style = { marginTop: '0px' }
 
     return (
+        <div>
+            <button className={cx('button-action')}>Tạo bài đăng</button>
             <Row xs={1} md={3} className="g-4 " styles = {row_style}>
             {accounts.map((account, index) => (
                 <Col key={account._id} style={col_style} >
                     <Card style={{ width: '30rem',borderRadius:'10px'}}>
-                        <Card.Img  variant="top" src={account.url} />
+                        <Card.Img className={cx('card-img-top')}  variant="top" src={account.url} />
                         <Card.Body>
-                            <Card.Title>{account.title}</Card.Title>
+                            <Card.Title className={cx('card-title')}>{account.title}</Card.Title>
                             <Card.Text>
                                 {account.namecompany}
                             </Card.Text>
                             <Card.Text>
                                 {account.salary}
                             </Card.Text>
-                            <Button onClick={()=>(handleDetail(account._id))} className={cx('info-button')} variant="primary">Xem thêm</Button>
+                            <Button onClick={()=>(handleDetail(account._id))} className={cx('btn-primary')} variant="primary">Xem thêm</Button>
                         </Card.Body>
                     </Card>
                 </Col>
             ))}
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
         </Row>
+        </div>
+            
+                    
     );
 }
 
