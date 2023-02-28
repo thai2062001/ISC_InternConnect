@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import SlidebarCompany from '../Component/Layout/SlidebarCompany'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot,faCoins ,faVenusMars  } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faCoins, faVenusMars } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles)
 
 
@@ -68,47 +68,63 @@ function PageDetail() {
 
 
     <div className={cx('wrapper')} >
-      <div className={cx('container')}>
-        <div className={cx('logo-info')}>
-          <img src={accounts.url} />
-          <h2>{accounts.title}</h2>
-          <h3>{accounts.namecompany}</h3>
+      <h1 >Detais_page</h1>
+      <div className={cx('form-detail')}>
+        <div className={cx('container')}>
+          <div className={cx('logo-info')}>
+            <img src={accounts.url} />
+            <h3>{accounts.namecompany}</h3>
+          </div>
+
+          <div className={cx('input-img')}>
+            <label style={{ marginRight: '10px' }}>Date</label>
+            <p>{accounts.expdate}</p>
+          </div>
         </div>
 
-        <div className={cx('input-img')}>
-          <label style={{ marginRight: '10px' }}>Date</label>
-          <p>{accounts.expdate}</p>
-        </div>
-      </div>
-      <div className={cx('wrapper-ip')}>
-        <div style={{display:'flex'}}>
-        <FontAwesomeIcon icon={faLocationDot} color="#FFA3FD" size="lg"/>
-        <p>{accounts.location}</p>
+        <div className={cx('title_wrap')}>
+          <label className={cx('label-des')}>Tiêu đề</label>
+          <input className={cx('input-title')} value={accounts.title} />
         </div>
 
-        <div style={{display:'flex',marginTop:'10px'}}>
-        <FontAwesomeIcon icon={faCoins}  color="#9DC08B" size="lg" />
-        <p>{accounts.salary}</p>
+        <div className={cx('wrapper-des')}>
+          <div >
+            <label className={cx('label-des-one')}>Địa chỉ</label>
+            <input className={cx('input-des')} value={accounts.location} />
+          </div>
+          <div >
+            <label className={cx('label-des-one')}>Trợ cấp</label>
+            <input className={cx('input-des')} value={accounts.salary} />
+          </div>
         </div>
-        <div style={{display:'flex',marginTop:'10px'}}>
-        <FontAwesomeIcon icon={faVenusMars} color="#FDD36A" size="lg" />
-        <p>{accounts.gender}</p>
+        <div className={cx('wrapper-gen')}>
+          <div >
+            <label className={cx('label-des-one')}>Khác</label>
+            <input className={cx('input-des')} value={accounts.salary} />
+          </div>
+          <div >
+            <label className={cx('label-des-one')} for="gender">Giới tính</label>
+            <select id="gender" name="gender">
+              <option value="male">Nam</option>
+              <option value="female">Nữ</option>
+              <option value="other">Khác</option>
+            </select>
+          </div>
         </div>
 
-        
-      </div>
 
-      <div className={cx('wrapper-ip')}>
-        <label className={cx('input-field')} for="input-field">Phúc lợi thực tập</label>
-        <p>{accounts.required}</p>
-      </div>
-      <div className={cx('wrapper-ip')}>
-        <label className={cx('input-field')} for="input-field">Trách nhiệm </label>
-        <p>{accounts.required}</p>
-      </div>
-      <div className={cx('wrapper-ip')}>
-        <label className={cx('input-field')} for="input-field">Kỹ năng</label>
-        <p>{accounts.required}</p>
+        <div className={cx('wrapper-ip')}>
+          <label className={cx('label-des')} for="input-field">Phúc lợi thực tập</label>
+          <input className={cx('input-res')} value={accounts.required} />
+        </div>
+        <div className={cx('wrapper-ip')}>
+          <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
+          <input className={cx('input-res')} value={accounts.required} />
+        </div>
+        <div className={cx('wrapper-ip')}>
+          <label className={cx('label-des')} for="input-field">Kỹ năng</label>
+          <input type="text" className={cx('input-res')} value={accounts.required} />
+        </div>
       </div>
 
     </div>
