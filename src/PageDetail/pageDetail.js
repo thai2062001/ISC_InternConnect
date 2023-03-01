@@ -55,19 +55,65 @@ function PageDetail() {
 
   const handlePreviewLogo = (e) => {
     const file = e.target.files[0]
-
     file.preview = URL.createObjectURL(file)
     //URL.createObjectURL dùng để tạo Obj để trở thành 1 url để có thể xem tạm ảnh
-
     setLogo(file)
   }
 
+  useEffect(() => {
+    const editButton = document.querySelector('#edit-button');
+    let isEditing = false;
+    if (editButton) {
+      editButton.addEventListener("click", function() {
+        if (isEditing) {
+          document.getElementById('re-data').readOnly=true;
+          document.getElementById('data').readOnly=true;
+          document.getElementById('salary').readOnly=true;
+          document.getElementById('difi').readOnly=true;
+          document.getElementById('required').readOnly=true;
+          document.getElementById('required1').readOnly=true;
+          document.getElementById('required2').readOnly=true;
+          isEditing = false;
+        } else {
+          document.getElementById('re-data').readOnly=false;
+          document.getElementById('data').readOnly=false;
+          document.getElementById('salary').readOnly=false;
+          document.getElementById('difi').readOnly=false;
+          document.getElementById('required').readOnly=false;
+          document.getElementById('required1').readOnly=false;
+          document.getElementById('required2').readOnly=false;
+          isEditing = true;
+        }
+      });
+    }
+    else{
+      console.log("Lỗi");
+    }
 
-
+    let isDataChanged = false;
+    document.querySelectorAll("input").forEach(function(input) {
+      input.addEventListener("change", function() {
+        isDataChanged = true;
+      });
+    });
+  
+    return () => {
+      // remove event listener here
+      if (editButton) {
+        editButton.removeEventListener("click", function() {
+          document.getElementById('re-data').readOnly=false;
+          document.getElementById('data').readOnly=false;
+          document.getElementById('salary').readOnly=false;
+          document.getElementById('difi').readOnly=false;
+          document.getElementById('required').readOnly=false;
+          document.getElementById('required1').readOnly=false;
+          document.getElementById('required2').readOnly=false;
+        });
+      }
+    };
+  }, []);
   return (
-
-
-    <div className={cx('wrapper')} >
+      <div className={cx('wrapper')} >
       <h1 >Detais_page</h1>
       <div className={cx('form-detail')}>
         <div className={cx('container')}>
@@ -84,23 +130,23 @@ function PageDetail() {
 
         <div className={cx('title_wrap')}>
           <label className={cx('label-des')}>Tiêu đề</label>
-          <input className={cx('input-title')} value={accounts.title} />
+          <input id="re-data" className={cx('input-title')} readOnly value={accounts.title} onChange={(event) => setAccount({...accounts, title: event.target.value})}/>
         </div>
 
         <div className={cx('wrapper-des')}>
           <div >
             <label className={cx('label-des-one')}>Địa chỉ</label>
-            <input className={cx('input-des')} value={accounts.location} />
+            <input id="data" className={cx('input-des')} readOnly  value={accounts.location} onChange={(event) => setAccount({...accounts, location: event.target.value})} />
           </div>
           <div >
             <label className={cx('label-des-one')}>Trợ cấp</label>
-            <input className={cx('input-des')} value={accounts.salary} />
+            <input id="salary" readOnly className={cx('input-des')}value={accounts.salary} onChange={(event) => setAccount({...accounts, salary: event.target.value})} />
           </div>
         </div>
         <div className={cx('wrapper-gen')}>
           <div >
             <label className={cx('label-des-one')}>Khác</label>
-            <input className={cx('input-des')} value={accounts.salary} />
+            <input id="difi" readOnly className={cx('input-des')} value={accounts.salary} onChange={(event) => setAccount({...accounts, salary: event.target.value})} />
           </div>
           <div >
             <label className={cx('label-des-one')} for="gender">Giới tính</label>
@@ -111,23 +157,27 @@ function PageDetail() {
             </select>
           </div>
         </div>
-
-
         <div className={cx('wrapper-ip')}>
           <label className={cx('label-des')} for="input-field">Phúc lợi thực tập</label>
-          <input className={cx('input-res')} value={accounts.required} />
+          <input id="required" readOnly className={cx('input-res')} value={accounts.required} onChange={(event) => setAccount({...accounts, required: event.target.value})} />
         </div>
         <div className={cx('wrapper-ip')}>
           <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
-          <input className={cx('input-res')} value={accounts.required} />
+          <input id="required1" readOnly className={cx('input-res')} value={accounts.required} onChange={(event) => setAccount({...accounts, required1: event.target.value})} />
         </div>
         <div className={cx('wrapper-ip')}>
           <label className={cx('label-des')} for="input-field">Kỹ năng</label>
-          <input type="text" className={cx('input-res')} value={accounts.required} />
+          <input id="required2" readOnly type="text" className={cx('input-res')} value={accounts.required} onChange={(event) => setAccount({...accounts, required2: event.target.value})} />
         </div>
+        <div className={cx('button-action-div')}>
+        <button  id={cx('edit-button')} className={cx('button-action')}>Chỉnh sửa</button>
+        <button onSubmit="submit"  id={cx('edit-update')} className={cx('button-action')}>Cập nhật</button>
+        </div>
+       
       </div>
 
     </div>
+
   );
 }
 export default PageDetail

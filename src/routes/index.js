@@ -17,7 +17,7 @@ import CompanyManager from '../CompanyManager/companyManager';
 import SlidebarCompany from '../Component/Layout/SlidebarCompany'
 import Demo from '../SignUp/Signup';
 import PageDetail from '../PageDetail/pageDetail';
- 
+import JobPostCreate from '../JobPostCreate/jobPostCreate';
 //public routers
 
 const publicRouters = [
@@ -34,6 +34,7 @@ const publicRouters = [
     {path: '/homeadmin/companyAdmin',component:CompanyAdmin ,layout: SlidebarOnly},
     {path: '/schooladmin',component:SchoolManager ,layout: SlidebarSchool },
     {path: '/companyadmin',component:CompanyManager ,layout: SlidebarCompany },
+    {path: '/companyadmin/create',component:JobPostCreate ,layout: SlidebarCompany },
     {path:'/companyadmin/:id' ,component:PageDetail,layout: SlidebarCompany },
 
 ]
