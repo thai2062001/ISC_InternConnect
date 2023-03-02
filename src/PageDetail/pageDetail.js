@@ -20,6 +20,7 @@ function PageDetail() {
   useEffect(() => {
     const url = new URL(window.location.href);
     const idDetail = url.pathname.split('/').pop();
+    console.log(idDetail);
     const company_token = localStorage.getItem('user-save');
     const companyApi = 'http://localhost:5000/company'
     const fetchData = async () => {
@@ -89,14 +90,6 @@ function PageDetail() {
     else{
       console.log("Lỗi");
     }
-
-    let isDataChanged = false;
-    document.querySelectorAll("input").forEach(function(input) {
-      input.addEventListener("change", function() {
-        isDataChanged = true;
-      });
-    });
-  
     return () => {
       // remove event listener here
       if (editButton) {
@@ -171,7 +164,7 @@ function PageDetail() {
         </div>
         <div className={cx('button-action-div')}>
         <button  id={cx('edit-button')} className={cx('button-action')}>Chỉnh sửa</button>
-        <button onSubmit="submit"  id={cx('edit-update')} className={cx('button-action')}>Cập nhật</button>
+        <button   id={cx('edit-update')} className={cx('button-action')}>Cập nhật</button>
         </div>
        
       </div>

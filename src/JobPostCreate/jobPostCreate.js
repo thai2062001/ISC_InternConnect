@@ -11,8 +11,9 @@ const cx = classNames.bind(styles)
 function JobPostCreate() {
     const [accounts, setAccount] = useState({})
     const [logo, setLogo] = useState()
-    const [image, setImage] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
+    const [formData, setFormData] = useState({});
+
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -27,23 +28,52 @@ function JobPostCreate() {
     }, [logo])
 
     const handlePreviewLogo = (e) => {
-        const file = e.target.files[0]
-        file.preview = URL.createObjectURL(file)
+        const logo = e.target.files[0]
+        logo.preview = URL.createObjectURL(logo)
+        setLogo(logo)
         //URL.createObjectURL dùng để tạo Obj để trở thành 1 url để có thể xem tạm ảnh
-        setLogo(file)
     }
 
+    const createJobPost = async () => {
+        try {
+          const formData = new FormData();
+          formData.append('namecompany', document.getElementById('companyNameInput').value);
+          formData.append('title', document.getElementById('jobTitleInput').value);
+          formData.append('location', document.getElementById('locationInput').value);
+          formData.append('salary', document.getElementById('salaryInput').value);
+          formData.append('gender', document.getElementById('genderInput').value);
+          formData.append('benefit', document.getElementById('benefitInput').value);
+          formData.append('required', document.getElementById('skillInput').value);
+          formData.append('expdate', selectedDate);
+          formData.append('logo', logo);
+          const response = await fetch('http://localhost:5000/company/create', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          });
+          if (!response.ok) {
+            throw new Error(response.status);
+          }
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
     return (
-        <div className={cx('wrapper')} >
+            <div className={cx('wrapper')} >
             <h1 >Create a Jobpost</h1>
-
             <div className={cx('form-detail')}>
                 <div className={cx('container')}>
                     <div className={cx('logo-info')}>
-                        <img src={accounts.url} />
+                    {logo && <img src={logo.preview} alt="Logo preview" />}
+                        <input  type="file"
+                            onChange={handlePreviewLogo}
+                        />
                         <h3>{accounts.namecompany}</h3>
                     </div>
-
                     <div className={cx('input-img')}>
                         <label style={{ marginRight: '10px' }}>Date</label>
                         <DatePicker
@@ -54,25 +84,24 @@ function JobPostCreate() {
                         />
                     </div>
                 </div>
-
                 <div className={cx('title_wrap')}>
                     <label className={cx('label-des')}>Tên công ty</label>
-                    <input className={cx('input-title')} />
+                    <input id="companyNameInput" className={cx('input-title')} />
                 </div>
 
                 <div className={cx('title_wrap')}>
                     <label className={cx('label-des')}>Tiêu đề</label>
-                    <input className={cx('input-title')} />
+                    <input id="jobTitleInput" className={cx('input-title')} />
                 </div>
 
                 <div className={cx('wrapper-des')}>
                     <div >
                         <label className={cx('label-des-one')}>Địa chỉ</label>
-                        <input className={cx('input-des')} />
+                        <input id="locationInput" className={cx('input-des')} />
                     </div>
                     <div >
                         <label className={cx('label-des-one')}>Trợ cấp</label>
-                        <input className={cx('input-des')} />
+                        <input id="salaryInput" className={cx('input-des')} />
                     </div>
                 </div>
                 <div className={cx('wrapper-gen')}>
@@ -82,18 +111,16 @@ function JobPostCreate() {
                     </div>
                     <div >
                         <label className={cx('label-des-one')} for="gender">Giới tính</label>
-                        <select id="gender" name="gender">
-                            <option value="male">Nam</option>
-                            <option value="female">Nữ</option>
-                            <option value="other">Khác</option>
+                        <select id="genderInput" name="gender">
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Khác">Khác</option>
                         </select>
                     </div>
                 </div>
-
-
                 <div className={cx('wrapper-ip')}>
                     <label className={cx('label-des')} for="input-field">Phúc lợi thực tập</label>
-                    <input className={cx('input-res')} />
+                    <input id="benefitInput" className={cx('input-res')} />
                 </div>
                 <div className={cx('wrapper-ip')}>
                     <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
@@ -101,13 +128,17 @@ function JobPostCreate() {
                 </div>
                 <div className={cx('wrapper-ip')}>
                     <label className={cx('label-des')} for="input-field">Kỹ năng</label>
-                    <input type="text" className={cx('input-res')} />
+                    <input id="skillInput" type="text" className={cx('input-res')} />
+                </div>
+                <div className={cx('button-action-div')}>
+                    <button className={cx('button-action')} onClick={createJobPost}>Đăng bài</button>
                 </div>
             </div>
 
         </div>
+
+        
     );
 }
-
 
 export default JobPostCreate;

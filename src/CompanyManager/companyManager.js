@@ -101,7 +101,6 @@ function CompanyManager() {
                                 const index = selectedRow.tableData.id;
                                 const id = accounts[index]._id;
                                 console.log(id);
-
                                 fetch(`http://localhost:5000/company/${id}`, {
                                     method: 'DELETE',
                                     headers: {
