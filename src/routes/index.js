@@ -15,14 +15,14 @@ import SchoolManager from '../SchoolManager/schoolManager';
 import SlidebarSchool from './../Component/Layout/SlidebarSchool'
 import CompanyManager from '../CompanyManager/companyManager';
 import SlidebarCompany from '../Component/Layout/SlidebarCompany'
-import Demo from '../SignUp/Signup';
 import PageDetail from '../PageDetail/pageDetail';
 import JobPostCreate from '../JobPostCreate/jobPostCreate';
+import AccountSettings from '../SettingsAdmin/settingsAdmin';
 //public routers
 
 const publicRouters = [
-    {path: '/Demo',component: Demo,layout:null},
     {path: '/',component: Home},
+    {path: '/settings',component: AccountSettings,layout: null},
     {path: '/search',component: Search},
     {path: '/profile',component: Profile},
     {path: '/uploadcv',component: UploadCV,layout: HeaderOnly},
