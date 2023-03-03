@@ -35,9 +35,6 @@ function PageDetail() {
         const account = json.find(item => item._id === idDetail);
         if (account) {
           setAccount(account);
-          if (account.url) {
-            setImage(account.url);
-          }
         } else {
           console.error('Không tồn tại bài đăng có id này');
         }
@@ -99,7 +96,7 @@ function PageDetail() {
           document.getElementById('salary').readOnly=false;
           document.getElementById('difi').readOnly=false;
           document.getElementById('required').readOnly=false;
-          document.getElementById('required1').readOnly=false;
+          document.getElementById('benefit').readOnly=false;
           document.getElementById('required2').readOnly=false;
         });
       }
@@ -111,7 +108,7 @@ function PageDetail() {
       <div className={cx('form-detail')}>
         <div className={cx('container')}>
           <div className={cx('logo-info')}>
-            <img src={accounts.url} />
+            <img src="/uploads/bay.png" alt="Lỗi" />
             <h3>{accounts.namecompany}</h3>
           </div>
 
@@ -156,7 +153,7 @@ function PageDetail() {
         </div>
         <div className={cx('wrapper-ip')}>
           <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
-          <input id="required1" readOnly className={cx('input-res')} value={accounts.required} onChange={(event) => setAccount({...accounts, required1: event.target.value})} />
+          <input id="required1" readOnly className={cx('input-res')} value={accounts.benefit} onChange={(event) => setAccount({...accounts, benefit: event.target.value})} />
         </div>
         <div className={cx('wrapper-ip')}>
           <label className={cx('label-des')} for="input-field">Kỹ năng</label>
