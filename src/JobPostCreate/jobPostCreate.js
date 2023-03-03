@@ -10,10 +10,16 @@ import "react-datepicker/dist/react-datepicker.css";
 const cx = classNames.bind(styles)
 function JobPostCreate() {
     const [accounts, setAccount] = useState({})
+    const [name, setName] = useState('')
     const [logo, setLogo] = useState()
     const [selectedDate, setSelectedDate] = useState(null);
     const [formData, setFormData] = useState({});
 
+    useEffect(() => {
+        const localstore = localStorage.getItem('user-save')
+        const decodeUser = jwt_decode(localstore);
+        setName(decodeUser.username)
+    }, [])
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -58,6 +64,10 @@ function JobPostCreate() {
           }
           const data = await response.json();
           console.log(data);
+          window.location.href="/companyadmin"
+
+
+
         } catch (error) {
           console.log(error);
         }
@@ -86,7 +96,7 @@ function JobPostCreate() {
                 </div>
                 <div className={cx('title_wrap')}>
                     <label className={cx('label-des')}>Tên công ty</label>
-                    <input id="companyNameInput" className={cx('input-title')} />
+                    <input id="companyNameInput" disabled value={name} className={cx('input-title')} />
                 </div>
 
                 <div className={cx('title_wrap')}>

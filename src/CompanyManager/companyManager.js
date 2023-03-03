@@ -62,12 +62,9 @@ function CompanyManager() {
     const handleDetail = (id) => {
         window.location.href = `/companyadmin/${id}`
     }
-
     const handleCreate = () =>{
         window.location.href = '/companyadmin/create'
-
     }
-
 
     //Hàm Logout và chuyển về trang login
     const token = localStorage.getItem('user-save');
@@ -77,7 +74,6 @@ function CompanyManager() {
         localStorage.removeItem('user-save');
         window.location.href = '/login'
     }
-
     return (
             <div className="App">
                 <div className={cx('wrapper')}>
