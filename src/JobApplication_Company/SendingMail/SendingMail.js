@@ -29,16 +29,36 @@ function SendingMail(props) {
                 props.onClose();
               }
         }
+      console.log(toId);
+        const handleFormSubmit = (event,toId) => {
+            event.preventDefault();
+          
+            // Tạo payload gửi đi
+            const payload = {
+              to: toEmail,
+              to_company: toComEmail,
+              subject: subject,
+              message: message
+            };
+          
+            // Thực hiện gửi email
+            fetch(`http://localhost:5000/company/list-cv/details/${toId}/send-email`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
 
-    const handleFormSubmit = (event) => {
-        event.preventDefault();
-        // Gửi email ở đây
-        if (props.onClose) {
-            props.onClose();
-          }
-
-
-    };
+              },
+              body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+          
+            // Gọi onClose
+            if (props.onClose) {
+              props.onClose();
+            }
+          };
 
     return (
         <div className={cx('sending-mail')}>
