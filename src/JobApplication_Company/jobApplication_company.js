@@ -38,7 +38,8 @@ function JobApplication() {
         const decodeUser = jwt_decode(localstore);
         setName(decodeUser.username)
         setEmailSending(decodeUser.email)
-     
+        setIdSending(decodeUser.id)
+        
     }, [])
 
 
@@ -74,7 +75,7 @@ function JobApplication() {
         const decodeEmail = jwt_decode(token);
         const emailUser = decodeEmail.email;
         localStorage.removeItem('user-save');
-        window.location.href = '/login'
+        window.location.href = 'login'
     }
 
     return (
