@@ -117,11 +117,14 @@ function SchoolManager() {
 
         }}
         options={{
-          actionsColumnIndex: -1, addRowPosition: "first"
+          actionsColumnIndex: -1, addRowPosition: "first",
+          headerStyle: {
+            fontSize: '18px',
+            width: '200px',
+          },
         }}
       />
         </div>
-       
       <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/icon?family=Material+Icons"

@@ -6,7 +6,7 @@ import MaterialTable from "material-table";
 import axios, { Axios } from 'axios';
 import PageDetail from "../PageDetail/pageDetail";
 import { IconButton } from '@material-ui/core';
-import { Add as AddIcon, Edit as EditIcon } from '@material-ui/icons';
+import { Add as AddIcon, Edit as EditIcon,Mail as MailIcon  } from '@material-ui/icons';
 
 
 const cx = classNames.bind(styles)
@@ -122,9 +122,12 @@ function CompanyManager() {
                             }),
 
                         }}
-
                         options={{
-                            actionsColumnIndex: -1, addRowPosition: "first"
+                            actionsColumnIndex: -1, addRowPosition: "first",
+                            headerStyle: {
+                                fontSize: '18px',
+                                width: '200px',
+                              },
                         }}
                     />
                 </div>
@@ -134,9 +137,6 @@ function CompanyManager() {
                     href="https://fonts.googleapis.com/icon?family=Material+Icons"
                 />
             </div>
-       
-
-
     );
 }
 

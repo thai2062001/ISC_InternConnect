@@ -174,7 +174,11 @@ function MajorAdmin() {
       
         }}
         options={{
-          actionsColumnIndex: -1, addRowPosition: "first"
+          actionsColumnIndex: -1, addRowPosition: "first",
+          headerStyle: {
+            fontSize: '18px',
+            width: '200px',
+          },
         }}
       />
         </div>
