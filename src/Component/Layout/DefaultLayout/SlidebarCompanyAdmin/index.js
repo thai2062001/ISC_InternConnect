@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import classNames from "classnames/bind";
 import styles from './SlidebarCompanyAdmin.module.scss'
+import JobApplication from './../../../../JobApplication_Company/jobApplication_company';
 const cx = classNames.bind(styles)
 
 function Slidebar() {
@@ -16,45 +17,21 @@ function Slidebar() {
     </div>
     <ul className={cx('nav-list')}>
     <li>
-
     </li>
       <li>
         <a href="/companyadmin">
           <i className={cx('bx bxs-school')}></i>
-          <span className={cx('links_name')}>Company</span>
+          <span className={cx('links_name')}>Job Post</span>
         </a>
-         <span className={cx('tooltip')}>Company</span>
+         <span className={cx('tooltip')}>Job Post</span>
       </li>
       <li>
-       <a href="#">
+       <a href="/companyadmin/jobapp">
          <i className={cx('bx bxs-school')} ></i>
-         <span className={cx('links_name')}>Jobpost</span>
+         <span className={cx('links_name')}>Job Application</span>
        </a>
-       <span className={cx('tooltip')}>Jobpost</span>
+       <span className={cx('tooltip')}>Job Application</span>
      </li>
-     {/* <li>
-       <a href="/homeadmin/majorAdmin">
-         <i className={cx('bx bx-math')} ></i>
-         <span className={cx('links_name')}>Major</span>
-       </a>
-       <span className={cx('tooltip')}>Major</span>
-     </li>
-
-     <li>
-       <a href="/homeadmin/companyAdmin">
-         <i className='bx bx-building-house' ></i>
-         <span className={cx('links_name')}>Company</span>
-       </a>
-       <span className={cx('tooltip')}>Company</span>
-     </li>
-    
-     <li>
-       <a href="#">
-         <i className='bx bx-cog' ></i>
-         <span className={cx('links_name')}>Setting</span>
-       </a>
-       <span className={cx('tooltip')}>Setting</span>
-     </li>*/
 
      <li className={cx('profile')}>
      <a href="login" onClick={handleLogOutUser}>
@@ -64,8 +41,6 @@ function Slidebar() {
      <span className={cx('tooltip')}>Logout</span>
      </li>
 
-      
-      }
     </ul>
   </div>
 

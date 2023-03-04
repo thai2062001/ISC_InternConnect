@@ -18,10 +18,13 @@ import SlidebarCompany from '../Component/Layout/SlidebarCompany'
 import PageDetail from '../PageDetail/pageDetail';
 import JobPostCreate from '../JobPostCreate/jobPostCreate';
 import AccountSettings from '../SettingsAdmin/settingsAdmin';
+import JobApplication from '../JobApplication_Company/jobApplication_company';
+
+
 //public routers
 
 const publicRouters = [
-    {path: '/',component: Home},
+    {path: '/',component: Home,layout:HeaderOnly},
     {path: '/settings',component: AccountSettings,layout: null},
     {path: '/search',component: Search},
     {path: '/profile',component: Profile},
@@ -34,6 +37,7 @@ const publicRouters = [
     {path: '/homeadmin/companyAdmin',component:CompanyAdmin ,layout: SlidebarOnly},
     {path: '/schooladmin',component:SchoolManager ,layout: SlidebarSchool },
     {path: '/companyadmin',component:CompanyManager ,layout: SlidebarCompany },
+    {path: '/companyadmin/jobapp',component:JobApplication ,layout: SlidebarCompany },
     {path: '/companyadmin/create',component:JobPostCreate ,layout: SlidebarCompany },
     {path:'/companyadmin/:id' ,component:PageDetail,layout: SlidebarCompany },
 
