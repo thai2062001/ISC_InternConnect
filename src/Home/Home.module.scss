@@ -1,40 +1,17 @@
 .wrapper{
-    display: flex;
-}
-
-.item-post{
+    height: 2000px;
     display: flex;
     justify-content: center;
-    margin: 30px;
-}
-
-.item{
-    margin: 20px;
 }
 
 .content{
-    background-color: #ccc;
-    text-align: center;
+    height: 100%;
+    width: 1600px;
+    background-color: #966e6e;
 }
 
-.content li{
+.banner{
     display: flex;
-    justify-content: center;
-   
-}
-
-.content li:hover{
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.content img{
-    width: 60%;
-    display: inline-block;
-    
-}
-
-.content img:hover{
-    width: 65%;
-    
+    width: 500px;
+    height: 500px;
 }

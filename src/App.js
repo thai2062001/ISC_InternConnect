@@ -1,6 +1,5 @@
 import { useState,useEffect} from 'react'
 import { BrowserRouter as Router,Route,Routes } from 'react-router-dom';
-import Content from './content';
 import { publicRouters } from './routes';
 import DefaultLayout from './Component/Layout/DefaultLayout';
 import { Fragment } from 'react';

@@ -1,36 +1,58 @@
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss'
-
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Card, CardContent, Typography, Button } from '@material-ui/core';
 
 const cx = classNames.bind(styles)
 
 
-const courses =[{
-    name:'Thai',
-    age:'18',
-    img:'https://inkythuatso.com/uploads/thumbnails/800/2021/11/logo-tiktok-inkythuatso-2-mesa-de-trabajo-1-27-09-13-05.jpg'
-
-},
-    {
-        name:'Huong',
-        age:'20',
-        img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwFIDYh79pYv2K6X03Mmp_Jo_0dFdoq62qhw&usqp=CAU'
-}]
-
 function Home() {
+    const useStyles = makeStyles((theme) => ({
+        root: {
+          flexGrow: 1,
+          padding: theme.spacing(4),
+        },
+        card: {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 200,
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
+        },
+        title: {
+          marginBottom: theme.spacing(2),
+        },
+        button: {
+          marginTop: theme.spacing(2),
+        },
+      }));
+      
+      const BodyComponent = () => {
+        const classes = useStyles();
+
+        
     return ( 
         <div className={cx('wrapper')}>
-            <ul className={cx('item-post')}>
-                {courses.map(course=>(
-                    <div className={cx('content')}>
-                        <img src={course.img}/>
-                        <li className={cx('item')} key={course} >{course.name}</li>
-                    </div>
-                    
-                ))}
-            </ul>
-        </div>
-     );
+            <div className={cx('content')} >
+                <div className={cx('banner')}>
+                    <h1>
+                        <span>Find</span> your job
+                    </h1>
+                    <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                     typesetting industry. Lorem Ipsum has been the industry's
+                      standard dummy text ever since the 1500s,
+                       when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                        but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                        sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    </p>
+                </div>
+            </div>
+      </div>
+    );
+    
 }
-
+}
 export default Home;
