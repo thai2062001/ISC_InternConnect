@@ -35,8 +35,8 @@ function SendingMail(props) {
           
             // Tạo payload gửi đi
             const payload = {
-              to: toEmail,
-              to_company: toComEmail,
+              fromMail: toComEmail,
+              toMail: toEmail,
               subject: subject,
               message: message
             };
@@ -68,10 +68,10 @@ function SendingMail(props) {
                 </span>
                 <form onSubmit={handleFormSubmit}>
                 <label htmlFor="email">Email Gửi:</label>
-                    <input type="email" id="to" value={toComEmail} onChange={e => setToComEmail(e.target.value)} />
+                    <input type="email" name="fromMail" id="fromMail" value={toComEmail} onChange={e => setToComEmail(e.target.value)} />
 
                     <label htmlFor="email">Email nhận:</label>
-                    <input type="email" id="to" value={toEmail} onChange={e => setToEmail(e.target.value)} />
+                    <input type="email" name="toMail" id="toMail" value={toEmail} onChange={e => setToEmail(e.target.value)} />
 
                     <label htmlFor="subject">Chủ đề:</label>
                     <input

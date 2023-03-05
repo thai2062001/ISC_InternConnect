@@ -3,7 +3,6 @@ import styles from './schoolManager.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
-import axios, { Axios } from 'axios';
 
 
 const cx = classNames.bind(styles)
@@ -15,10 +14,10 @@ function SchoolManager() {
     const [accounts, setAccount] = useState([])
 
     const columns = [
-        { title: "student ID", field: "code" , },
+        { title: "ID", field: "code" , },
         { title: "Name", field: "studentname" , },
-        { title: "Student Email", field: "studentemail" , },
-        { title: "Student Phone", field: "studentphone" , },
+        { title: "Email", field: "studentemail" , },
+        { title: "Phone", field: "studentphone" , },
         { title: "Academic Year", field: "academicyear" , },
         { title: "Address", field: "address" , },
         { title: "Gender", field: "gender" , },
@@ -65,7 +64,6 @@ function SchoolManager() {
   const emailUser = decodeEmail.email;
 
 
-
     return ( 
         <div className="App">
         <div className={cx('wrapper')}>
@@ -82,9 +80,6 @@ function SchoolManager() {
         columns={columns}
         editable={{
           
-          isDeleteHidden:(row)=>row.role ==='Student' || row.role === 'School' || row.role ==='Company' ,
-          isDeleteHidden:(row)=>row.role == 'Admin' && row.email === emailUser,
-
           onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
             const id = oldData._id;
             const token_update = localStorage.getItem('user-save');

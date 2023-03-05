@@ -3,8 +3,7 @@ import styles from './jobApplication_company.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
-import { IconButton } from '@material-ui/core';
-import { Add as AddIcon, Edit as EditIcon, Mail as MailIcon } from '@material-ui/icons';
+import { Mail as MailIcon } from '@material-ui/icons';
 import SendingMail from "./SendingMail/SendingMail";
 import Popup from "reactjs-popup";
 
@@ -68,8 +67,6 @@ function JobApplication() {
         window.location.href = '/companyadmin/create'
     }
 
-
-
     const token = localStorage.getItem('user-save');
     function handleLogOutUser() {
         const decodeEmail = jwt_decode(token);
@@ -81,7 +78,7 @@ function JobApplication() {
     return (
         <div className="App">
             <div className={cx('wrapper')}>
-                <h1 align="center">Trang quản lý Company Jobpost</h1>
+                <h1 align="center">Trang quản lý Company JobApplication</h1>
                 <div className={cx('user_log')}>
 
                     <h2 className={cx('name_set')}>{name}</h2>
@@ -103,36 +100,6 @@ function JobApplication() {
                             onClick: handleMail
                         },
                     ]}
-                    editable={{
-                        onRowDelete: selectedRow => new Promise((resolve, reject) => {
-                            const index = selectedRow.tableData.id;
-                            const id = accounts[index]._id;
-                            console.log(id);
-                            fetch(`http://localhost:5000/company/${id}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'Authorization': `Bearer ${token}`
-                                }
-                            })
-                                .then(response => {
-                                    if (response.ok) {
-                                        const updatedRows = [...accounts]
-                                        updatedRows.splice(index, 1)
-                                        setTimeout(() => {
-                                            setAccount(updatedRows)
-                                            resolve()
-                                        }, 2000)
-                                    } else {
-                                        reject(response.statusText)
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error(error);
-                                    reject(error)
-                                })
-                        }),
-
-                    }}
 
                     options={{
                         actionsColumnIndex: -1, addRowPosition: "first",
