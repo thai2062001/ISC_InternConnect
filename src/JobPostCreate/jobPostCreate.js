@@ -65,9 +65,6 @@ function JobPostCreate() {
           const data = await response.json();
           console.log(data);
           window.location.href="/companyadmin"
-
-
-
         } catch (error) {
           console.log(error);
         }
@@ -130,15 +127,15 @@ function JobPostCreate() {
                 </div>
                 <div className={cx('wrapper-ip')}>
                     <label className={cx('label-des')} for="input-field">Phúc lợi thực tập</label>
-                    <input id="benefitInput" className={cx('input-res')} />
+                    <textarea id="benefitInput" className={cx('input-res')} />
                 </div>
                 <div className={cx('wrapper-ip')}>
                     <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
-                    <input className={cx('input-res')} />
+                    <textarea className={cx('input-res')} />
                 </div>
                 <div className={cx('wrapper-ip')}>
                     <label className={cx('label-des')} for="input-field">Kỹ năng</label>
-                    <input id="skillInput" type="text" className={cx('input-res')} />
+                    <textarea id="skillInput" type="text" className={cx('input-res')} />
                 </div>
                 <div className={cx('button-action-div')}>
                     <button className={cx('button-action')} onClick={createJobPost}>Đăng bài</button>

@@ -168,6 +168,7 @@ function SchoolAdmin() {
                                             setAccount(updatedRows);
                                             resolve();
                                         }, 2000);
+                                        window.location.reload();
                                     } else {
                                         throw new Error(response.statusText);
                                     }
@@ -177,20 +178,7 @@ function SchoolAdmin() {
                                     reject(error);
                                 });
                         }),
-                        onBulkUpdate: selectedRow => new Promise((resolve, reject) => {
-                            const rows = Object.values(selectedRow)
-                            const updatedRows = [...accounts]
-                            let index
-                            rows.map(account => {
-                                index = account.oldData.tableData.id
-                                updatedRows[index] = account.newData
-                            })
-                            setTimeout(() => {
-                                setAccount(updatedRows)
-                                resolve()
-                            }, 2000)
-
-                        })
+   
 
 
 
