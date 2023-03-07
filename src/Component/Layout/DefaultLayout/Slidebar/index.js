@@ -7,7 +7,7 @@ function Slidebar() {
 
   function handleLogOutUser() {
     localStorage.removeItem('user-save');
-    window.location.href = '/login'
+    window.location.href = 'login'
 }
   return (
     <div className={cx('slidebar')}>
@@ -66,11 +66,11 @@ function Slidebar() {
      </li>
     
      <li>
-       <a href="#">
-         <i className='bx bx-cog' ></i>
-         <span className={cx('links_name')}>Setting</span>
+       <a href="/homeadmin/jobpost">
+         <i className='bx bx-list-ul' ></i>
+         <span className={cx('links_name')}>Job Post</span>
        </a>
-       <span className={cx('tooltip')}>Setting</span>
+       <span className={cx('tooltip')}>Job Post</span>
      </li>
 
      <li className={cx('profile')}>

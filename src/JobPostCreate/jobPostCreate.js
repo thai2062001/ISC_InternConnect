@@ -13,7 +13,6 @@ function JobPostCreate() {
     const [name, setName] = useState('')
     const [logo, setLogo] = useState()
     const [selectedDate, setSelectedDate] = useState(null);
-    const [formData, setFormData] = useState({});
 
     useEffect(() => {
         const localstore = localStorage.getItem('user-save')

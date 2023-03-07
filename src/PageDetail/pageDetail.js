@@ -3,10 +3,8 @@ import classNames from "classnames/bind";
 import styles from './pageDetail.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
-import SlidebarCompany from '../Component/Layout/SlidebarCompany'
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot, faCoins, faVenusMars } from '@fortawesome/free-solid-svg-icons';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const cx = classNames.bind(styles)
 
 
@@ -15,6 +13,7 @@ function PageDetail() {
   const [logo, setLogo] = useState()
   const [image, setImage] = useState(null);
   const { id } = useParams();
+  const [selectedDate, setSelectedDate] = useState(null);
 
 
   const url = new URL(window.location.href);
@@ -33,6 +32,7 @@ function PageDetail() {
       result.json().then(json => {
         const account = json.find(item => item._id === idDetail);
         if (account) {
+          setSelectedDate(new Date(account.expdate));
           setAccount(account);
         } else {
           console.error('Không tồn tại bài đăng có id này');
@@ -41,8 +41,6 @@ function PageDetail() {
     }
     fetchData();
   }, []);
-
-  
 
 
   useEffect(() => {
@@ -65,42 +63,42 @@ function PageDetail() {
     const editButton = document.querySelector('#edit-button');
     let isEditing = false;
     if (editButton) {
-      editButton.addEventListener("click", function() {
+      editButton.addEventListener("click", function () {
         if (isEditing) {
-          document.getElementById('title').readOnly=true;
-          document.getElementById('salary').readOnly=true;
-          document.getElementById('location').readOnly=true;
-          document.getElementById('gender').readOnly=true;
-          document.getElementById('required').readOnly=true;
-          document.getElementById('benefit').readOnly=true;
-          document.getElementById('date').readOnly=true;
+          document.getElementById('title').readOnly = true;
+          document.getElementById('salary').readOnly = true;
+          document.getElementById('location').readOnly = true;
+          document.getElementById('gender').readOnly = true;
+          document.getElementById('required').readOnly = true;
+          document.getElementById('benefit').readOnly = true;
+          document.getElementById('date').readOnly = true;
           isEditing = false;
         } else {
-          document.getElementById('title').readOnly=false;
-          document.getElementById('salary').readOnly=false;
-          document.getElementById('location').readOnly=false;
-          document.getElementById('gender').readOnly=false;
-          document.getElementById('required').readOnly=false;
-          document.getElementById('benefit').readOnly=false;
-          document.getElementById('date').readOnly=false;
+          document.getElementById('title').readOnly = false;
+          document.getElementById('salary').readOnly = false;
+          document.getElementById('location').readOnly = false;
+          document.getElementById('gender').readOnly = false;
+          document.getElementById('required').readOnly = false;
+          document.getElementById('benefit').readOnly = false;
+          document.getElementById('date').readOnly = false;
           isEditing = true;
         }
       });
     }
-    else{
+    else {
       console.log("Lỗi");
     }
     return () => {
       // remove event listener here
       if (editButton) {
-        editButton.removeEventListener("click", function() {
-          document.getElementById('title').readOnly=false;
-          document.getElementById('salary').readOnly=false;
-          document.getElementById('location').readOnly=false;
-          document.getElementById('gender').readOnly=false;
-          document.getElementById('required').readOnly=false;
-          document.getElementById('benefit').readOnly=false;
-          document.getElementById('date').readOnly=false;
+        editButton.removeEventListener("click", function () {
+          document.getElementById('title').readOnly = false;
+          document.getElementById('salary').readOnly = false;
+          document.getElementById('location').readOnly = false;
+          document.getElementById('gender').readOnly = false;
+          document.getElementById('required').readOnly = false;
+          document.getElementById('benefit').readOnly = false;
+          document.getElementById('date').readOnly = false;
         });
       }
     };
@@ -114,14 +112,13 @@ function PageDetail() {
     const benefit = document.getElementById("benefit").value;
     // const respon = document.getElementById("respon").value;
     const required = document.getElementById("required").value;
-    const date = document.getElementById("date").value;
+    
     // const companyNameInput = document.getElementById("datepicker").value;
-  
+
     // Lấy ID của company
-    const id =  idDetail// Lấy ID của company từ đâu đó
-  console.log(id);
+    // Lấy ID của company từ đâu đó
     // Gọi API để cập nhật thông tin
-    fetch(`http://localhost:5000/company/details/${id}`, {
+    fetch(`http://localhost:5000/company/details/${idDetail}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -131,24 +128,24 @@ function PageDetail() {
         salary: salary,
         gender: gender,
         location: location,
-        required:required,
-        benefit:benefit,
-        expdate:date
+        required: required,
+        benefit: benefit,
+        expdate: selectedDate
       })
     })
-    .then(response => {
-      if (response.ok) {
-        // Thực hiện các hành động khác khi cập nhật thành công
-      } else {
-        // Thông báo lỗi nếu không thành công
-      }
-    })
-    .catch(error => {
-      // Xử lý lỗi nếu có
-    });
+      .then(response => {
+        if (response.ok) {
+          // Thực hiện các hành động khác khi cập nhật thành công
+        } else {
+          // Thông báo lỗi nếu không thành công
+        }
+      })
+      .catch(error => {
+        // Xử lý lỗi nếu có
+      });
   }
   return (
-      <div className={cx('wrapper')} >
+    <div className={cx('wrapper')} >
       <h1 >Detais_page</h1>
       <div className={cx('form-detail')}>
         <div className={cx('container')}>
@@ -157,33 +154,42 @@ function PageDetail() {
           </div>
           <div className={cx('input-img')}>
             <label style={{ marginRight: '10px' }}>Date</label>
-            <p id={cx('date')}>{accounts.expdate}</p>
+            <DatePicker
+              id="date"
+              selected={selectedDate}
+              onChange={date => {
+                setSelectedDate(date)
+                updateDetails(date)}
+              }
+              dateFormat="dd/MM/yyyy"
+              placeholderText="Chọn ngày hết hạn"
+            />
           </div>
         </div>
         <div className={cx('title_wrap')}>
-                    <label className={cx('label-des')}>Tên công ty</label>
-                    <input id="companyNameInput" disabled value={accounts.namecompany} className={cx('input-title')} />
-                </div>
+          <label className={cx('label-des')}>Tên công ty</label>
+          <input id="companyNameInput" disabled value={accounts.namecompany} className={cx('input-title')} />
+        </div>
 
         <div className={cx('title_wrap')}>
           <label className={cx('label-des')}>Tiêu đề</label>
-          <input id="title" className={cx('input-title')} readOnly value={accounts.title} onChange={(event) => setAccount({...accounts, title: event.target.value})}/>
+          <input id="title" className={cx('input-title')} readOnly value={accounts.title} onChange={(event) => setAccount({ ...accounts, title: event.target.value })} />
         </div>
 
         <div className={cx('wrapper-des')}>
           <div >
             <label className={cx('label-des-one')}>Địa chỉ</label>
-            <input id="location" className={cx('input-des')} readOnly  value={accounts.location} onChange={(event) => setAccount({...accounts, location: event.target.value})} />
+            <input id="location" className={cx('input-des')} readOnly value={accounts.location} onChange={(event) => setAccount({ ...accounts, location: event.target.value })} />
           </div>
           <div >
             <label className={cx('label-des-one')}>Trợ cấp</label>
-            <input id="salary" readOnly className={cx('input-des')}value={accounts.salary} onChange={(event) => setAccount({...accounts, salary: event.target.value})} />
+            <input id="salary" readOnly className={cx('input-des')} value={accounts.salary} onChange={(event) => setAccount({ ...accounts, salary: event.target.value })} />
           </div>
         </div>
         <div className={cx('wrapper-gen')}>
           <div >
             <label className={cx('label-des-one')}>Skill</label>
-            <input id="skill" readOnly className={cx('input-des')}  onChange={(event) => setAccount({...accounts, salary: event.target.value})} />
+            <input id="skill" readOnly className={cx('input-des')} onChange={(event) => setAccount({ ...accounts, salary: event.target.value })} />
           </div>
           <div >
             <label className={cx('label-des-one')} for="gender">Giới tính</label>
@@ -196,19 +202,19 @@ function PageDetail() {
         </div>
         <div className={cx('wrapper-ip')}>
           <label className={cx('label-des')} for="input-field">Phúc lợi thực tập</label>
-          <textarea id="benefit" readOnly className={cx('input-res')} value={accounts.required} onChange={(event) => setAccount({...accounts, required: event.target.value})} />
+          <textarea id="benefit" readOnly className={cx('input-res')} value={accounts.required} onChange={(event) => setAccount({ ...accounts, required: event.target.value })} />
         </div>
         <div className={cx('wrapper-ip')}>
           <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
-          <textarea id="respon" readOnly className={cx('input-res')} value={accounts.benefit} onChange={(event) => setAccount({...accounts, benefit: event.target.value})} />
+          <textarea id="respon" readOnly className={cx('input-res')} value={accounts.benefit} onChange={(event) => setAccount({ ...accounts, benefit: event.target.value })} />
         </div>
         <div className={cx('wrapper-ip')}>
           <label className={cx('label-des')} for="input-field">Kỹ năng</label>
-          <textarea id="required" readOnly type="text" className={cx('input-res')} value={accounts.required} onChange={(event) => setAccount({...accounts, required2: event.target.value})} />
+          <textarea id="required" readOnly type="text" className={cx('input-res')} value={accounts.required} onChange={(event) => setAccount({ ...accounts, required2: event.target.value })} />
         </div>
         <div className={cx('button-action-div')}>
-        <button  id={cx('edit-button')} className={cx('button-action')}>Chỉnh sửa</button>
-        <button  onClick={updateDetails}   id={cx('button-update')}  className={cx('button-action')}>Cập nhật</button>
+          <button id={cx('edit-button')} className={cx('button-action')}>Chỉnh sửa</button>
+          <button onClick={updateDetails} id={cx('button-update')} className={cx('button-action')}>Cập nhật</button>
         </div>
       </div>
     </div>

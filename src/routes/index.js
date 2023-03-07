@@ -19,8 +19,8 @@ import PageDetail from '../PageDetail/pageDetail';
 import JobPostCreate from '../JobPostCreate/jobPostCreate';
 import AccountSettings from '../SettingsAdmin/settingsAdmin';
 import JobApplication from '../JobApplication_Company/jobApplication_company';
-
-
+import AllJobPost from '../AllJobPost/allJobPost';
+import Signup from '../SignUp/Signup';
 //public routers
 
 const publicRouters = [
@@ -32,9 +32,11 @@ const publicRouters = [
     {path: '/homeadmin',component: HomeAdmin,layout: SlidebarOnly},
     {path: '/login',component: Login,layout: null},
     {path: '/signout',component: SignOut},
+    {path: '/signup',component: Signup,layout: null},
     {path: '/homeadmin/schoolAdmin',component: SchoolAdmin,layout: SlidebarOnly},
     {path: '/homeadmin/majorAdmin',component:MajorAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/companyAdmin',component:CompanyAdmin ,layout: SlidebarOnly},
+    {path: '/homeadmin/jobpost',component:AllJobPost ,layout: SlidebarOnly},
     {path: '/schooladmin',component:SchoolManager ,layout: SlidebarSchool },
     {path: '/companyadmin',component:CompanyManager ,layout: SlidebarCompany },
     {path: '/companyadmin/jobapp',component:JobApplication ,layout: SlidebarCompany },

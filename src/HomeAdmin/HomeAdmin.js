@@ -3,10 +3,7 @@ import styles from './HomeAdmin.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
-import axios, { Axios } from 'axios';
 import Is_valid_password from "./CheckPassword";
-import { CgPassword } from 'react-icons/fa';
-
 const cx = classNames.bind(styles)
 
 // http://localhost:5000/admin/account
