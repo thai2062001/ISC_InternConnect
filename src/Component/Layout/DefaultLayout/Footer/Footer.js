@@ -6,12 +6,14 @@ import { FaFacebookF, FaTwitch, FaInstagram } from 'react-icons/fa';
 const cx = classNames.bind(styles)
 
 function Footer() {
+
+
     
     return (
         <footer className={cx('footer')}>
           <div className={cx('footer__content')}>
             <div className={cx( 'footer__logo')}>
-              <a href="/">Logo</a>
+            <img src= 'logo.png' alt="Logo" />
             </div>
             <div className={cx( 'footer__links')}>
               <ul className={cx( 'footer__list')}>

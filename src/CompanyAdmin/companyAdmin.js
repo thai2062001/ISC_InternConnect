@@ -3,8 +3,6 @@ import styles from './companyAdmin.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
-import axios, { Axios } from 'axios';
-
 
 const cx = classNames.bind(styles)
 
