@@ -7,7 +7,7 @@ const cx = classNames.bind(styles)
 function Slidebar() {
   function handleLogOutUser() {
     localStorage.removeItem('user-save');
-    window.location.href = '/login'
+    window.location.href = 'login'
 }
   return (
     <div className={cx('slidebar')}>
