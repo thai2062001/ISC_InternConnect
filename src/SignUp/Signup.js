@@ -1,15 +1,54 @@
 import classNames from "classnames/bind";
 import styles from "./Signup.module.scss";
 import { FaUserAlt, FaLock, FaEnvelope, FaPhoneAlt, FaSchool } from "react-icons/fa";
-
-import axios, { Axios } from "axios";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const cx = classNames.bind(styles);
 
 function Signup() {
   const [account, setAccount] = useState([]);
   const [schoolList, setSchoolList] = useState([{'nameschool': '', 'id':''}])
+  const [username, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confpassword, setConfirmPass] = useState('');
+  const [phonenumber, setPhone] = useState('');
+  const [gender, setGender] = useState('');
+  const [school, setSchool] = useState('');
+
+  const URL = 'http://localhost:5000/admin/account'
+  useEffect(() => {
+      const fetchData = async () => {
+          const result = await fetch(URL)
+          result.json().then(json => {
+              setAccount(json)
+          })
+      }
+      fetchData();
+  }, []);
+
+  function handleOptionChange(event) {
+    setSchool(event.target.value);
+  }
+
+  const HandleSignup = async () => {
+    fetch('http://localhost:5000/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password ,confpassword,phonenumber,gender,school})
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+      })
+      .catch(error => console.error(error));
+  };
+
+
   useEffect(() =>{
     const fecthData = async () =>{
       const response = await fetch("http://localhost:5000/admin/school");
@@ -19,29 +58,10 @@ function Signup() {
     fecthData();
   }, [])
 
-  const HandleSignup = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('username', document.getElementById('username').value);
-      formData.append('email', document.getElementById('Email').value);
-      formData.append('password', document.getElementById('password').value);
-      formData.append('confpassword', document.getElementById('repass').value);
-      formData.append('gender', document.getElementById('gender').value);
-      formData.append('phonenumber', document.getElementById('phone').value);
-      formData.append('school', document.getElementById('school').value);
+  
+        
+ 
 
-      const response = await fetch('http://localhost:5000/auth/register', {
-        method: 'POST',
-        body: formData,
-      });
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const data = await response.json();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div>
@@ -62,8 +82,10 @@ function Signup() {
                 <FaUserAlt />
               </div>
               <div className={cx("div")}>
-                <input
-                  placeholder="Username"
+                <input 
+                  placeholder="Username" 
+                  value= {username}
+                  onChange={(e)=>(setName(e.target.value))}
                   type="text"
                   id="username"
                   className={cx("input-user")}
@@ -77,6 +99,8 @@ function Signup() {
               <div className={cx("div")}>
                 <input
                   placeholder="Email"
+                  value= {email}
+                  onChange={(e)=>(setEmail(e.target.value))}
                   type="text"
                   id="Email"
                   className={cx("input-user")}
@@ -90,6 +114,8 @@ function Signup() {
               <div className={cx("div")}>
                 <input
                   placeholder="Phone number"
+                  value={phonenumber}
+                  onChange={(e)=>(setPhone(e.target.value))}
                   type="text"
                   id="phone"
                   className={cx("input-user")}
@@ -103,6 +129,8 @@ function Signup() {
               <div className={cx("div")}>
                 <input
                   placeholder="Password"
+                  value={password}
+                  onChange={(e)=>(setPassword(e.target.value))}
                   type="password"
                   id="password"
                   className={cx("input-user")}
@@ -116,6 +144,8 @@ function Signup() {
               <div className={cx("div")}>
                 <input
                   placeholder="Re-enter password"
+                  value={confpassword}
+                  onChange={(e)=>(setConfirmPass(e.target.value))}
                   type="password"
                   id="repass"
                   className={cx("input-user")}
@@ -127,11 +157,11 @@ function Signup() {
                 <FaSchool />
               </div>
               <div className={cx("div")}>
-                <select name="school" className={cx("input-school")}>
-                  <option id="school" value="schoolName">Choose School Name</option>
+                <select  value={school} onChange={handleOptionChange} name="school" className={cx("input-school")}>
+                  <option  value="schoolName">Choose School Name</option>
                   {
                     schoolList.map(school =>(
-                      <option  key = {school.id}>{school.nameschool}</option>
+                      <option   id="school" key = {school.id}>{school.nameschool}</option>
                     ))
                   }
                 </select>
@@ -141,21 +171,23 @@ function Signup() {
               <div className={cx("div-gender")}>
                 <input
                   name="gender"
+                  onChange={(e)=>(setGender(e.target.value))}
                   type="radio"
                   id="gender"
                   className={cx("input-gender")}
                   value="Male"
             
-                />{" "}
+                />
                 <span className={cx("gender")}>Male</span>
                 <input
                   name="gender"
+                  onChange={(e)=>(setGender(e.target.value))}
                   type="radio"
                   id="gender"
                   className={cx("input-gender")}
                   value="Female"
              
-                />{" "}
+                />
                 <span className={cx("gender")}>Female</span>
               </div>
             </div>

@@ -1,0 +1,101 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    padding: 0 2rem;
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .inner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 1600px;
+    height: 100%;
+  }
+  .header__logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .header__nav {
+    display: none;
+  }
+  
+  @media only screen and (min-width: 768px) {
+    .header__nav {
+      display: flex;
+    }
+  }
+  
+  .header__list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .header__item {
+    margin-right: 2rem;
+  }
+  
+  // chỗ css font chữ header
+  .header__item a {
+    font-size: 1.5rem;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .header__item a:hover {
+    color: #0077b6;
+  }
+  
+  .header__actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header__login {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .header__login:hover {
+    color: #0077b6;
+  }
+  
+
+  @media only screen and (max-width: 767px) {
+    .header {
+      flex-direction: column;
+      height: auto;
+      padding: 1rem 2rem;
+    }
+  
+    .header__nav {
+      display: none;
+      margin-top: 1.5rem;
+    }
+  
+    .header__list {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 1.5rem;
+    }
+  
+    .header__item {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+  }

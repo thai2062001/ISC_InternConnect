@@ -1,14 +1,16 @@
 import classNames from 'classnames/bind';
-import styles from './Home.module.scss'
+import styles from './homeLogin.module.scss'
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 import { useEffect,useState } from 'react';
 import jwt_decode from "jwt-decode";
 
-
 const cx = classNames.bind(styles)
 
 
-function Home() {
+// phải tạo thêm file copy của default layout nữa mới hiện được content
+
+
+function HomeLogin() {
   const [accounts, setAccount] = useState([])
   const [name, setName] = useState('')
 
@@ -122,4 +124,4 @@ function Home() {
 
 }
 
-export default Home;
+export default HomeLogin;
