@@ -34,7 +34,7 @@ function Slidebar() {
      </li>
 
      <li className={cx('profile')}>
-     <a href="login" onClick={handleLogOutUser}>
+     <a href="/admin/adminlogin" onClick={handleLogOutUser}>
      <div className={cx('profile-details')}></div>
          <i className={cx('bx bx-log-out')} id="log_out" ></i>
      </a>

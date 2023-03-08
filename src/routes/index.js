@@ -21,16 +21,21 @@ import AccountSettings from '../SettingsAdmin/settingsAdmin';
 import JobApplication from '../JobApplication_Company/jobApplication_company';
 import AllJobPost from '../AllJobPost/allJobPost';
 import Signup from '../SignUp/Signup';
+import AdminLogin from '../AdminLogin/adminLogin';
+import HomeLogin from './../HomeLogin/homeLogin';
+import HeaderLogin from '../Component/Layout/components/Header/HeaderLogin/headerLogin';
 //public routers
 
 const publicRouters = [
     {path: '/',component: Home,layout:HeaderOnly},
+    {path: '/home',component: HomeLogin,layout:HeaderLogin},
     {path: '/settings',component: AccountSettings,layout: null},
     {path: '/search',component: Search},
     {path: '/profile',component: Profile},
     {path: '/uploadcv',component: UploadCV,layout: HeaderOnly},
     {path: '/homeadmin',component: HomeAdmin,layout: SlidebarOnly},
     {path: '/login',component: Login,layout: null},
+    {path: '/admin/adminlogin',component: AdminLogin,layout: null},
     {path: '/signout',component: SignOut},
     {path: '/signup',component: Signup,layout: null},
     {path: '/homeadmin/schoolAdmin',component: SchoolAdmin,layout: SlidebarOnly},

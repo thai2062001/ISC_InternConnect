@@ -11,20 +11,6 @@ function Slidebar() {
 }
   return (
     <div className={cx('slidebar')}>
-    {/* <ul className={cx('menu')}>
-      <li className={cx('menu-item')}>
-        <a href="/homeadmin" className={cx('menu-link')}>Account</a>
-      </li>
-      <li className={cx('menu-item')}>
-        <a href="/homeadmin/schooladmin" className={cx('menu-link')}>School</a>
-      </li>
-      <li className={cx('menu-item')}>
-        <a href="/homeadmin/majorAdmin" className={cx('menu-link')}>Major</a>
-      </li>
-      <li className={cx('menu-item')}>
-        <a href="/homeadmin/companyAdmin" className={cx('menu-link')}>Company</a>
-      </li>
-    </ul> */}
 
 <div className={cx('sidebar')}>
     <div className={cx('logo-details')}>
@@ -74,7 +60,7 @@ function Slidebar() {
      </li>
 
      <li className={cx('profile')}>
-     <a href="login" onClick={handleLogOutUser}>
+     <a href="/admin/adminlogin" onClick={handleLogOutUser}>
      <div className={cx('profile-details')}></div>
          <i className={cx('bx bx-log-out')} id="log_out" ></i>
      </a>

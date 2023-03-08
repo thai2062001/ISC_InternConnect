@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
-import styles from './Login.module.scss'
+import styles from './adminLogin.module.scss'
 import { FaUserAlt,FaLock  } from "react-icons/fa";
-
 import axios, { Axios } from 'axios';
 import { useState,useEffect } from "react";
 import jwt_decode from "jwt-decode";
@@ -9,13 +8,11 @@ import jwt_decode from "jwt-decode";
 const cx = classNames.bind(styles)
 
 
-function Login() {
+function AdminLogin() {
 
   const [email,setEmail] = useState("")
   const [password,setpassword] = useState("")
   const [account,setAccount] = useState([])
-
-  
 
   useEffect(()=>{
   },[]);
@@ -35,9 +32,21 @@ function Login() {
       console.log(decoded);
       console.log(localstored);
       
-      if(decoded.role === 'Student')
+      if(decoded.role === 'Admin'){
+
+        window.location.href = '/homeadmin'
+
+      }else if(decoded.role === 'School')
       {
-        window.location.href = '/home'
+          window.location.href = '/schooladmin'
+      }
+      else if(decoded.role === 'Student')
+      {
+          window.location.href ='/login'
+      }
+      else if(decoded.role === 'Company')
+      {
+        window.location.href = '/companyadmin'
       }
       
 
@@ -78,7 +87,6 @@ return(
             	</div>
               <div className={cx('wraper_link')}>
               <a href="#">Forgot Password?</a>
-              <a href="/signup">Sign Up?</a>
               </div>
             	
             	<button onClick={HandleLogin} className={cx('btn')}>Login</button>
@@ -97,4 +105,4 @@ return(
 
 }
 
-export default Login;
+export default AdminLogin;
