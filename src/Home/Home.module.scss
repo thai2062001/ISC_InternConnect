@@ -3,7 +3,6 @@
     width: 1500px;
     height: 2000px;
     margin-right: auto;
-
     margin-left: auto;
 }
 .container{
@@ -36,12 +35,15 @@
     height: 280px;
     background-position:50% 50%;
     transition: 1s;
-    background-size: 200%;
+    background-size: 150%;
     display: inline-block;
     position: absolute;
     z-index: 1;
 }
 
+.Viettel{
+    background-image: url('https://thanhtra.com.vn/data/images/0/2021/01/07/congdinh/logo-moi-cua-viettel.jpg?dpi=150&quality=100&w=630&mode=crop&anchor=topcenter&scale=both');
+}
 .item:nth-child(1){
     transform: translate(-150%);
     background-position: 0% 50%;
@@ -92,7 +94,7 @@
 }
 
 .item:hover{
-    background-size: 250%;
+    background-size: 120%;
 }
 .buttons{
     position: absolute;
