@@ -1,8 +1,9 @@
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss'
-import { FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
-import { useEffect,useState } from 'react';
+import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
+import bannerimages from '../images/banner.PNG'
 
 
 const cx = classNames.bind(styles)
@@ -10,114 +11,174 @@ const cx = classNames.bind(styles)
 
 function Home() {
   const [accounts, setAccount] = useState([])
-  const [name, setName] = useState('')
+  const [listJobPost, setListJobPost] = useState([])
 
   const URL = 'http://localhost:5000/admin/account'
   useEffect(() => {
-      const fetchData = async () => {
-          const result = await fetch(URL)
-          result.json().then(json => {
-              setAccount(json)
-          })
-      }
-      fetchData();
+    const fetchData = async () => {
+      const result = await fetch(URL)
+      result.json().then(json => {
+        setAccount(json)
+      })
+    }
+    fetchData();
   }, []);
 
+
+  const api = 'http://localhost:5000/'
   useEffect(() => {
-    const localstore = localStorage.getItem('user-save')
-    const decodeUser = jwt_decode(localstore);
-    console.log(decodeUser.username);
-    console.log(decodeUser.email);
-    setName(decodeUser.username)
-}, [])
+    const fetchData = async () => {
+      const result = await fetch(api)
+      result.json().then(json => {
+        setListJobPost(json)
+      })
+    }
+    fetchData();
+  }, []);
+  console.log(listJobPost);
 
 
-  const HandleNext = ()=>{
-      let lists = document.querySelectorAll('#item');
-      document.getElementById('slide').appendChild(lists[0]);
-   }
-
-   const HandlePrev = ()=>{
+  const HandleNext = () => {
     let lists = document.querySelectorAll('#item');
-    document.getElementById('slide').prepend(lists[lists.length -1]);
- }
+    document.getElementById('slide').appendChild(lists[0]);
+  }
+
+  const HandlePrev = () => {
+    let lists = document.querySelectorAll('#item');
+    document.getElementById('slide').prepend(lists[lists.length - 1]);
+  }
 
   return (
-    <div className={cx('container_full')}> 
-<div className={cx('container')}>
-  <div className={cx('title_slide')}>
-    <h1>Các công ty nổi bật</h1>
-  </div>
-      <div className={cx('wrapper')}>
-        <div id='slide' className={cx('banner')}>
-          <div id='item' className={cx('item')} style={{ background: 'rgb(100,132,187)', backgroundImage: 'linear-gradient(90deg, rgba(100,132,187,1) 18%, rgba(100,132,187,1) 35%, rgba(100,132,187,1) 50%, rgba(64,161,211,1) 68%, rgba(48,174,222,1) 76%, rgba(0,212,255,1) 100%)' }}>
-            <div className={cx('content')}>
-              <div className={cx('from')}>FPT</div>
-              <div className={cx('name')}>Công ty FPT</div>
-              <div className={cx('type')}>IT</div>
-            </div>
-          </div>
+    <div className={cx('container_full')}>
+      <div className={cx('container')}>
 
-          <div id='item' className={cx('item')} style={{ background: 'rgb(100,132,187)', backgroundImage: 'linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%)' }}>
-            <div className={cx('content')}>
-              <div className={cx('from')}>Viettel</div>
-              <div className={cx('name')}>Công ty Viettel</div>
-              <div className={cx('type')}>IT</div>
+        <div className={cx('search')}>
+          <div className={cx('search-banner')}>
+            <div className={cx('banner-wrapper')}>
+              <img src='https://dxwd4tssreb4w.cloudfront.net/images/common/background-cover/careerlink_engineering_office.jpg' className={cx('banner-img')} />
             </div>
-          </div>
+            <div className={cx('banner-wrapper-search')}>
+              <h1>Tìm việc nhanh chóng, dễ dàng</h1>
+              <div className={cx('banner-div')}>
+                <div className={cx('input-1')}>
+                  <FaSearch className={cx('seach-icon')} />
+                  <input placeholder='Nhập từ khóa,Công việc' />
+                </div>
+                <div className={cx('input-2')}>
+                  <FaLocationArrow className={cx('seach-icon')} />
+                  <input placeholder='Nhập thành phố' />
+                </div>
 
-          <div id='item' className={cx('item')} style={{ background: 'rgb(100,132,187)', backgroundImage: ' radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)' }}>
-            <div className={cx('content')}>
-              <div className={cx('from')}>Viettel</div>
-              <div className={cx('name')}>Công ty Viettel</div>
-              <div className={cx('type')}>IT</div>
-            </div>
-          </div>
-          <div id='item' className={cx('item')} style={{ background: 'rgb(100,132,187)', backgroundImage: ' radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)' }}>
-            <div className={cx('content')}>
-              <div className={cx('from')}>Viettel</div>
-              <div className={cx('name')}>Công ty Viettel</div>
-              <div className={cx('type')}>IT</div>
-            </div>
-          </div>
-          <div id='item' className={cx('item')} style={{ background: 'rgb(100,132,187)', backgroundImage: ' radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,231) 100%)' }}>
-            <div className={cx('content')}>
-              <div className={cx('from')}>Viettel</div>
-              <div className={cx('name')}>Công ty Viettel</div>
-              <div className={cx('type')}>IT</div>
-            </div>
+                <div className={cx('search-button')}>
+                  <FaSearch className={cx('seach-icon-button')} />
+                  <button>Tìm kiếm</button>
+                </div>
 
-          </div>
-          <div id='item' className={cx('item')} style={{ background: 'rgb(100,132,187)', backgroundImage: ' radial-gradient(circle, rgba(174,202,1) 0%, rgba(148,187,233,1) 100%)' }}>
-            <div className={cx('content')}>
-              <div className={cx('from')}>Viettel</div>
-              <div className={cx('name')}>Công ty Viettel</div>
-              <div className={cx('type')}>IT</div>
+              </div>
             </div>
           </div>
-
         </div>
 
-        <div className={cx('buttons')}>
-          <button className={cx('prev')} onClick={HandlePrev} id='prev'>
-          <FaAngleDoubleLeft/>
-          </button>
-          <button onClick={HandleNext} id='next'>
-            <FaAngleDoubleRight/>
-          </button>
+        <div className={cx('jobpost')}>
+        <div className={cx('jobpost-title')}>
+            <span>Thực tập hấp dẫn</span>
+        </div>
+        </div>
+
+        <div className={cx('wrapper')}>
+          <h1>Các công ty nổi bật</h1>
+          <div id='slide' className={cx('banner')}>
+            <div id='item' className={cx('item', 'Viettel')}  >
+              <div className={cx('content')}>
+                <div className={cx('from')}>Viettel Group</div>
+                <div className={cx('name')}>Viettel - Show us your way</div>
+                <div className={cx('address')}> <FaLocationArrow /> Quận Cầu Giấy, Hà Nội</div>
+                <div className={cx('decription')}>
+                  <div className={cx('type')}>Fintech</div>
+                  <div className={cx('moreDetails')}><span>Details <FaArrowRight /></span></div>
+                </div>
+              </div>
+            </div>
+
+            <div id='item' className={cx('item', 'Fpt')}  >
+              <div className={cx('content')}>
+                <div className={cx('from')}>FPT Software</div>
+                <div className={cx('name')}>FPT Software - You can make it!</div>
+                <div className={cx('address')}> <FaLocationArrow /> Quận Cầu Giấy,Hà Nội</div>
+                <div className={cx('decription')}>
+                  <div className={cx('type')}>Phần mềm</div>
+                  <div className={cx('moreDetails')}><span>Details <FaArrowRight /></span></div>
+                </div>
+              </div>
+            </div>
+
+            <div id='item' className={cx('item', 'BIDV')} >
+              <div className={cx('content')}>
+                <div className={cx('from')}>Ngân hàng TMCP Đầu tư và Phát triển Việt Nam (BIDV)</div>
+                <div className={cx('name')}></div>
+                <div className={cx('address')}> <FaLocationArrow /> Quận Hai Bà Trưng,Hà Nội</div>
+                <div className={cx('decription')}>
+                  <div className={cx('type')}>Ngân Hàng</div>
+                  <div className={cx('moreDetails')}><span>Details <FaArrowRight /></span></div>
+                </div>
+
+
+              </div>
+            </div>
+            <div id='item' className={cx('item', 'VIB')}>
+              <div className={cx('content')}>
+                <div className={cx('from')}>Ngân hàng Quốc Tế VIB</div>
+                <div className={cx('name')}>VIB - Luôn gia tăng giá trị cho bạn</div>
+                <div className={cx('address')}> <FaLocationArrow /> Quận 1, Hồ Chí Minh</div>
+                <div className={cx('decription')}>
+                  <div className={cx('type')}>Ngân Hàng</div>
+                  <div className={cx('moreDetails')}><span>Details <FaArrowRight /></span></div>
+
+                </div>
+              </div>
+            </div>
+            <div id='item' className={cx('item', 'TMA')} >
+              <div className={cx('content')}>
+                <div className={cx('from')}>TMA Tech Group</div>
+                <div className={cx('name')}>TMA Technology Group – Tập đoàn Công nghệ hàng đầu Việt Nam</div>
+                <div className={cx('address')}> <FaLocationArrow /> Quận 12, Hồ Chí Minh</div>
+                <div className={cx('decription')}>
+                  <div className={cx('type')}>Outsourcing</div>
+                  <div className={cx('moreDetails')}><span>Details <FaArrowRight /></span></div>
+                </div>
+              </div>
+
+            </div>
+            <div id='item' className={cx('item', 'MoMo')}>
+              <div className={cx('content')}>
+                <div className={cx('from')}>MoMo</div>
+                <div className={cx('name')}>Ví Điện Tử MoMo - Siêu Ứng Dụng Thanh Toán số 1 Việt Nam</div>
+                <div className={cx('address')}> <FaLocationArrow /> Quận 7,Hồ Chí Minh</div>
+                <div className={cx('decription')}>
+                  <div className={cx('type')}>Fintech</div>
+                  <div className={cx('moreDetails')}><span>Details <FaArrowRight /></span></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div className={cx('buttons')}>
+            <button className={cx('prev')} onClick={HandlePrev} id='prev'>
+              <FaAngleDoubleLeft />
+            </button>
+            <button onClick={HandleNext} id='next'>
+              <FaAngleDoubleRight />
+            </button>
+          </div>
+
         </div>
 
       </div>
 
-    </div>
-    <div className={cx('introduce')}>
-    <div className={cx('introduce-banner')}>
-      <h1>Give me your money</h1>
-    </div>
-    </div>
 
     </div>
-    
+
   );
 
 }

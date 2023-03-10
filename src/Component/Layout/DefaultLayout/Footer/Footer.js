@@ -1,19 +1,22 @@
 import classNames from 'classnames/bind';
 import styles from './Footer.module.scss'
 import { FaFacebookF, FaTwitch, FaInstagram } from 'react-icons/fa';
-
+import logo from '../Footer/logo.png'
 
 const cx = classNames.bind(styles)
 
 function Footer() {
 
+  const handleLogo = () => {
+    window.location.href = '/'
+  }
 
     
     return (
         <footer className={cx('footer')}>
           <div className={cx('footer__content')}>
             <div className={cx( 'footer__logo')}>
-            <img src= 'logo.png' alt="Logo" />
+            <img onClick={handleLogo} className={cx('logo')} src= {logo} alt="Logo" />
             </div>
             <div className={cx( 'footer__links')}>
               <ul className={cx( 'footer__list')}>

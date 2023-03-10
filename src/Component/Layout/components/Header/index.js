@@ -4,6 +4,8 @@ import styles from './Header.module.scss'
 import { FaUser } from 'react-icons/fa';
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
+
+import logo from './HeaderLogin/logo.png';
 const cx = classNames.bind(styles)
 
 
@@ -12,12 +14,17 @@ function Header() {
   const handleLogin = () => {
     window.location.href = "/login"
   }
+  const handleLogo = () => {
+    window.location.href = '/'
+  }
+
   return (
     <header className={cx('header')}>
       <div className={cx('inner')}>
         <div className={cx('header__logo')}>
-        <a href="/">Logo</a>
-      </div>
+          <img onClick={handleLogo} className={cx('logo')} src={logo} />
+        </div>
+
         <nav className={cx('header__nav')}>
           <ul className={cx('header__list')}>
             <li className={cx('header__item')}><a href="/">Home</a></li>
