@@ -6,14 +6,12 @@ import jwt_decode from "jwt-decode";
 import bannerimages from '../images/banner.PNG'
 
 
-
-
 const cx = classNames.bind(styles)
 
 
 function Home() {
   const [accounts, setAccount] = useState([])
-  const [name, setName] = useState('')
+  const [listJobPost, setListJobPost] = useState([])
 
   const URL = 'http://localhost:5000/admin/account'
   useEffect(() => {
@@ -26,13 +24,18 @@ function Home() {
     fetchData();
   }, []);
 
+
+  const api = 'http://localhost:5000/'
   useEffect(() => {
-    const localstore = localStorage.getItem('user-save')
-    const decodeUser = jwt_decode(localstore);
-    console.log(decodeUser.username);
-    console.log(decodeUser.email);
-    setName(decodeUser.username)
-  }, [])
+    const fetchData = async () => {
+      const result = await fetch(api)
+      result.json().then(json => {
+        setListJobPost(json)
+      })
+    }
+    fetchData();
+  }, []);
+  console.log(listJobPost);
 
 
   const HandleNext = () => {
@@ -80,11 +83,7 @@ function Home() {
         <div className={cx('jobpost-title')}>
             <span>Thực tập hấp dẫn</span>
         </div>
-
-
-
         </div>
-
 
         <div className={cx('wrapper')}>
           <h1>Các công ty nổi bật</h1>
