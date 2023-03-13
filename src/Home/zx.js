@@ -27,7 +27,7 @@ function Home() {
     const fetchData = async () => {
       const result = await fetch(api)
       result.json().then(json => {
-        setListJobPosts(json);
+        setListJobPosts(Object.values(json));
       })
     }
     fetchData();
@@ -42,10 +42,6 @@ function Home() {
     let lists = document.querySelectorAll('#item');
     document.getElementById('slide').prepend(lists[lists.length - 1]);
   }
-
-  const handleDetail = (id) => {
-    window.location.href = `/${id}`
-}
 
   return (
     <div className={cx('container_full')}>
@@ -81,8 +77,10 @@ function Home() {
             <span>Thực tập hấp dẫn</span>
             <ul className={cx('jobpost-preview')}>
               {listJobPosts.map((jobPost,index) => (
-               <div onClick={()=>handleDetail(jobPost._id)} className={cx('jobpost-description')} key={index}>
+               <div key={index}>
                <p >{jobPost.title}</p>
+               <p >{jobPost.benefit}</p>
+               <p >{jobPost.location}</p>
              </div>
               ))}
             </ul>

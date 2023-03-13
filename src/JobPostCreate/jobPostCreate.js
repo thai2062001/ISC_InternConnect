@@ -48,7 +48,9 @@ function JobPostCreate() {
           formData.append('salary', document.getElementById('salaryInput').value);
           formData.append('gender', document.getElementById('genderInput').value);
           formData.append('benefit', document.getElementById('benefitInput').value);
-          formData.append('required', document.getElementById('skillInput').value);
+          formData.append('required', document.getElementById('requiredInput').value);
+          formData.append('responsibility', document.getElementById('ResponInput').value);
+          formData.append('skill', document.getElementById('skillinput').value);
           formData.append('expdate', selectedDate);
           formData.append('logo', logo);
           const response = await fetch('http://localhost:5000/company/create', {
@@ -130,11 +132,15 @@ function JobPostCreate() {
                 </div>
                 <div className={cx('wrapper-ip')}>
                     <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
-                    <textarea className={cx('input-res')} />
+                    <textarea id="ResponInput" className={cx('input-res')} />
+                </div>
+                <div className={cx('wrapper-ip')}>
+                    <label className={cx('label-des')} for="input-field">Yêu cầu</label>
+                    <textarea id="requiredInput" type="text" className={cx('input-res')} />
                 </div>
                 <div className={cx('wrapper-ip')}>
                     <label className={cx('label-des')} for="input-field">Kỹ năng</label>
-                    <textarea id="skillInput" type="text" className={cx('input-res')} />
+                    <textarea id="skillinput" type="text" className={cx('input-res')} />
                 </div>
                 <div className={cx('button-action-div')}>
                     <button className={cx('button-action')} onClick={createJobPost}>Đăng bài</button>

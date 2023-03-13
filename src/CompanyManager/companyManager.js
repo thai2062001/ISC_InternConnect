@@ -3,8 +3,6 @@ import styles from './companyManager.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
-import axios, { Axios } from 'axios';
-import PageDetail from "../PageDetail/pageDetail";
 import { IconButton } from '@material-ui/core';
 import { Add as AddIcon, Edit as EditIcon,Mail as MailIcon  } from '@material-ui/icons';
 
@@ -79,7 +77,6 @@ function CompanyManager() {
                 <div className={cx('wrapper')}>
                     <h1 align="center">Trang quản lý Company Jobpost</h1>
                     <div className={cx('user_log')}>
-
                         <h2 className={cx('name_set')}>{name}</h2>
                         <button onClick={handleCreate} className={cx('button-action')}>JobPost</button>
                         
@@ -91,7 +88,6 @@ function CompanyManager() {
                         data={accounts}
                         title='Company Data'
                         columns={columns}
-
                         editable={{
                             onRowDelete: selectedRow => new Promise((resolve, reject) => {
                                 const index = selectedRow.tableData.id;
