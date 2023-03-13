@@ -95,7 +95,6 @@
 .jobpost{
     width: 1600px;
     height: 900px;
-    background-color: #ccc;
     margin-left: auto;
     margin-right: auto;
 }
@@ -109,14 +108,25 @@
     margin-left: 40px;
 
 }
+.jobpost-description{
+    border: 1px solid rgb(134, 134, 215);
+    margin-top: 15px;
+    border-radius: 15px;
+    height: 100px;
+    width: 1500px;
+}
 
+.jobpost-description:hover{
+    box-shadow: 0 15px 50px #bdbdbd;
+}
 
-
-
-
-
-
-
+.jobpost-preview p{
+    color: red;
+  font-size: 12px;
+  
+  padding: 10px;
+  margin: 10px;
+}
 
 
 .wrapper{
@@ -145,7 +155,7 @@
     border-top-left-radius: 10px;
     background-position:50% 50%;
     transition: 1s;
-    background-size: 120%;
+    background-size: 90%;
     display: inline-block;
     position: absolute;
     z-index: 1;

@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import logoCompany from '../uploads/viettel.jpg'
 const cx = classNames.bind(styles)
 
 
@@ -71,6 +72,8 @@ function PageDetail() {
           document.getElementById('gender').readOnly = true;
           document.getElementById('required').readOnly = true;
           document.getElementById('benefit').readOnly = true;
+          document.getElementById('responsibility').readOnly = true;
+          document.getElementById('skill').readOnly = true;
           document.getElementById('date').readOnly = true;
           isEditing = false;
         } else {
@@ -80,6 +83,8 @@ function PageDetail() {
           document.getElementById('gender').readOnly = false;
           document.getElementById('required').readOnly = false;
           document.getElementById('benefit').readOnly = false;
+          document.getElementById('responsibility').readOnly = false;
+          document.getElementById('skill').readOnly = false;
           document.getElementById('date').readOnly = false;
           isEditing = true;
         }
@@ -98,6 +103,8 @@ function PageDetail() {
           document.getElementById('gender').readOnly = false;
           document.getElementById('required').readOnly = false;
           document.getElementById('benefit').readOnly = false;
+          document.getElementById('responsibility').readOnly = false;
+          document.getElementById('skill').readOnly = false;
           document.getElementById('date').readOnly = false;
         });
       }
@@ -110,8 +117,9 @@ function PageDetail() {
     const location = document.getElementById("location").value;
     const gender = document.getElementById("gender").value;
     const benefit = document.getElementById("benefit").value;
-    // const respon = document.getElementById("respon").value;
+    const responsibility = document.getElementById("responsibility").value;
     const required = document.getElementById("required").value;
+    const skill = document.getElementById("skill").value;
     
     // const companyNameInput = document.getElementById("datepicker").value;
 
@@ -130,6 +138,8 @@ function PageDetail() {
         location: location,
         required: required,
         benefit: benefit,
+        responsibility:responsibility,
+        skill:skill,
         expdate: selectedDate
       })
     })
@@ -150,7 +160,7 @@ function PageDetail() {
       <div className={cx('form-detail')}>
         <div className={cx('container')}>
           <div className={cx('logo-info')}>
-            <img src="/uploads/bay.png" alt="Lỗi" />
+            <img src={logoCompany} alt="Lỗi" />
           </div>
           <div className={cx('input-img')}>
             <label style={{ marginRight: '10px' }}>Date</label>
@@ -189,11 +199,11 @@ function PageDetail() {
         <div className={cx('wrapper-gen')}>
           <div >
             <label className={cx('label-des-one')}>Skill</label>
-            <input id="skill" readOnly className={cx('input-des')} onChange={(event) => setAccount({ ...accounts, salary: event.target.value })} />
+            <input id="skill" value={accounts.skill} readOnly className={cx('input-des')} onChange={(event) => setAccount({ ...accounts, skill: event.target.value })} />
           </div>
           <div >
             <label className={cx('label-des-one')} for="gender">Giới tính</label>
-            <select id="gender" name="gender">
+            <select readOnly value={accounts.gender} id="gender" name="gender">
               <option value="Nam">Nam</option>
               <option value="Nữ">Nữ</option>
               <option value="Khác">Khác</option>
@@ -202,15 +212,15 @@ function PageDetail() {
         </div>
         <div className={cx('wrapper-ip')}>
           <label className={cx('label-des')} for="input-field">Phúc lợi thực tập</label>
-          <textarea id="benefit" readOnly className={cx('input-res')} value={accounts.required} onChange={(event) => setAccount({ ...accounts, required: event.target.value })} />
+          <textarea id="benefit" readOnly className={cx('input-res')} value={accounts.benefit} onChange={(event) => setAccount({ ...accounts, benefit: event.target.value })} />
         </div>
         <div className={cx('wrapper-ip')}>
           <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
-          <textarea id="respon" readOnly className={cx('input-res')} value={accounts.benefit} onChange={(event) => setAccount({ ...accounts, benefit: event.target.value })} />
+          <textarea id="responsibility" readOnly className={cx('input-res')} value={accounts.responsibility} onChange={(event) => setAccount({ ...accounts, responsibility: event.target.value })} />
         </div>
         <div className={cx('wrapper-ip')}>
-          <label className={cx('label-des')} for="input-field">Kỹ năng</label>
-          <textarea id="required" readOnly type="text" className={cx('input-res')} value={accounts.required} onChange={(event) => setAccount({ ...accounts, required2: event.target.value })} />
+          <label className={cx('label-des')} for="input-field">Yêu cầu</label>
+          <textarea id="required" readOnly type="text" className={cx('input-res')} value={accounts.required} onChange={(event) => setAccount({ ...accounts, required: event.target.value })} />
         </div>
         <div className={cx('button-action-div')}>
           <button id={cx('edit-button')} className={cx('button-action')}>Chỉnh sửa</button>
