@@ -5,7 +5,8 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import logoCompany from '../uploads/viettel.jpg'
+
+
 const cx = classNames.bind(styles)
 
 
@@ -154,13 +155,15 @@ function PageDetail() {
         // Xử lý lỗi nếu có
       });
   }
+
+  
   return (
     <div className={cx('wrapper')} >
       <h1 >Detais_page</h1>
       <div className={cx('form-detail')}>
         <div className={cx('container')}>
           <div className={cx('logo-info')}>
-            <img src={logoCompany} alt="Lỗi" />
+            <img src={accounts.logo} alt="Lỗi" />
           </div>
           <div className={cx('input-img')}>
             <label style={{ marginRight: '10px' }}>Date</label>

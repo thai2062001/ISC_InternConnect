@@ -32,7 +32,7 @@ import HomeJobPostDetail from '../HomeJobPostDetails/homeJobPostDetail';
 const publicRouters = [
     {path: '/',component: Home,layout:HeaderOnly},
     {path: '/:id',component: HomeJobPostDetail,layout:HeaderOnly},
-    {path: '/home',component: HomeLogin,layout:HeaderLogin},
+    // {path: '/home',component: HomeLogin,layout:HeaderLogin},
     {path: '/settings',component: AccountSettings,layout: null},
     {path: '/search',component: Search},
     {path: '/profile',component: Profile},

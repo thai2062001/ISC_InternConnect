@@ -37,10 +37,9 @@ function Login() {
       
       if(decoded.role === 'Student')
       {
-        window.location.href = '/home'
+        window.location.href = '/'
       }
-      
-
+    
     }
     catch(error) {
       console.log(error);
