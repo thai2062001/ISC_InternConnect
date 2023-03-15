@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import classNames from "classnames/bind";
 import styles from './SlidebarCompanyAdmin.module.scss'
-import JobApplication from './../../../../JobApplication_Company/jobApplication_company';
+
 const cx = classNames.bind(styles)
 
 function Slidebar() {

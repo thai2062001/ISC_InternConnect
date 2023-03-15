@@ -3,13 +3,31 @@ import styles from './Home.module.scss'
 import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
-import bannerimages from '../images/banner.PNG'
+import ReactPaginate from 'react-paginate';
+
 
 
 const cx = classNames.bind(styles)
 function Home() {
   const [accounts, setAccount] = useState([])
   const [listJobPosts, setListJobPosts] = useState([])
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+
+
+  const pageCount  = Math.ceil(listJobPosts.length / postsPerPage);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = listJobPosts.slice(indexOfFirstPost, indexOfLastPost);
+  
+  const handlePageClick = (data) => {
+    const selectedPage = data.selected + 1;
+    setCurrentPage(selectedPage);
+    console.log(currentPage);
+  };
+
+
 
   const URL = 'http://localhost:5000/admin/account'
   useEffect(() => {
@@ -45,7 +63,7 @@ function Home() {
 
   const handleDetail = (id) => {
     window.location.href = `/${id}`
-}
+  }
 
   return (
     <div className={cx('container_full')}>
@@ -80,15 +98,35 @@ function Home() {
           <div className={cx('jobpost-title')}>
             <span>Thực tập hấp dẫn</span>
             <ul className={cx('jobpost-preview')}>
-              {listJobPosts.map((jobPost,index) => (
-               <div onClick={()=>handleDetail(jobPost._id)} className={cx('jobpost-description')} key={index}>
-               <p >{jobPost.title}</p>
-             </div>
+              {currentPosts.map((jobPost, index) => (
+                <div onClick={() => handleDetail(jobPost._id)} className={cx('jobpost-description')} key={index}>
+                  <div className={cx('logo')}>
+                    <img src={jobPost.logo} />
+                  </div>
+                  <div className={cx('jobpost_detail')}>
+                    <h2 >{jobPost.title}</h2>
+                    <span className={cx('detail_span','company')}>{jobPost.namecompany}</span>
+                    <span className={cx('detail_span','location')}>{jobPost.location}</span>
+                    <span className={cx('detail_span','salary')}>{jobPost.salary}</span>
+                  </div>
+                </div>
               ))}
             </ul>
           </div>
+          
+      {/* Hiển thị nút phân trang */}
+      <ReactPaginate
+        previousLabel={'Trang trước'}
+        nextLabel={'Trang sau'}
+        breakLabel={'...'}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName={cx('pagination')}
+        activeClassName={'active'}
+      />
         </div>
-
 
         <div className={cx('wrapper')}>
           <h1>Các công ty nổi bật</h1>

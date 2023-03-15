@@ -8,6 +8,9 @@
   padding: 40px 0;
   font-size: 20px;
   flex-shrink: 0;
+  width: 100%;
+z-index: 0;
+
 
   &__content {
     max-width: 1500px;

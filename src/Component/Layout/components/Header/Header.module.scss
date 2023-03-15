@@ -5,11 +5,13 @@
 
 .header {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
     height: 70px;
     padding: 0 2rem;
-    background-color: #fff;
+    background-color: #ffffff;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
   
@@ -19,6 +21,10 @@
     justify-content: space-between;
     width: 1600px;
     height: 100%;
+  }
+  .header__logo{
+    margin-left: 130px;
+    cursor: pointer;
   }
   .header__logo a {
     font-size: 1.5rem;
@@ -64,6 +70,40 @@
   .header__actions {
     display: flex;
     align-items: center;
+    position: relative;
+  }
+  .header__actions .menu_item{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 150px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 2;
+    border-radius: 5px;
+
+  }
+  .header__actions:hover .menu_item {
+    display: block;
+  }
+  
+  .menu-li {
+    display: block;
+    padding: 10px;
+    color: #444;
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .menu-li:last-child {
+    border-bottom: none;
+  }
+  
+  .menu-li:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
   }
   
   .header__login {
