@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import { Mail as MailIcon } from '@material-ui/icons';
+import {FaDownload} from 'react-icons/fa';
 import SendingMail from "./SendingMail/SendingMail";
 import Popup from "reactjs-popup";
 
@@ -28,9 +29,16 @@ function JobApplication() {
         { title: "Email", field: "email" },
         { title: "School", field: "nameschool" },
         { title: "Major", field: "major" },
-        { title: "CV", field: "url" },
         { title: "Date", field: "date" },
         { title: "Company", field: "namecompany" },
+        {
+            title: 'CV',
+            render: rowData => (
+              <a style={{textAlign:'left'}} target="_blank" href={rowData.url} >
+                <FaDownload style={{fontSize:'15px'}}/>
+              </a>
+            ),
+          },
     ]
     useEffect(() => {
         const localstore = localStorage.getItem('user-save')

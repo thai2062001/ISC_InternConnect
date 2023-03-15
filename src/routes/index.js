@@ -25,12 +25,14 @@ import AdminLogin from '../AdminLogin/adminLogin';
 import HomeLogin from './../HomeLogin/homeLogin';
 import HeaderLogin from '../Component/Layout/components/Header/HeaderLogin/headerLogin';
 import HomeJobPostDetail from '../HomeJobPostDetails/homeJobPostDetail';
+import Settings from '../Settings/settings';
 
 //public routers
 
 
 const publicRouters = [
     {path: '/',component: Home,layout:HeaderOnly},
+    {path: '/accountSettings',component: Settings,layout:HeaderOnly},
     {path: '/:id',component: HomeJobPostDetail,layout:HeaderOnly},
     // {path: '/home',component: HomeLogin,layout:HeaderLogin},
     {path: '/settings',component: AccountSettings,layout: null},

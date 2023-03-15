@@ -13,6 +13,7 @@
 }
 .search{
     width: 100%;
+    margin-top: 70px;
 
 }
 .search-banner{
@@ -110,10 +111,48 @@
 }
 .jobpost-description{
     border: 1px solid rgb(134, 134, 215);
-    margin-top: 15px;
-    border-radius: 15px;
-    height: 100px;
-    width: 1500px;
+    margin-top: 10px;
+    margin-left: 100px;
+    border-radius: 5px;
+    background-color: #FAFAFA;
+    height: 140px;
+    width: 1200px;
+    display: flex;
+}
+.logo img{
+    width: 110px;
+    height: 80px;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.jobpost_detail{
+    width: 100%;
+    height: 100%;
+    margin-left: 30px;
+    padding: 5px;
+
+}
+.jobpost_detail h2{
+    font-weight: 600;
+    color:#00448f;
+    margin-left: 10px;
+}
+.jobpost_detail .detail_span{
+    font-size: 14px;
+    display: block;
+    margin-left: 10px;
+    line-height: 24px;
+}
+.company{
+    text-transform:uppercase;
+}
+.location{
+    opacity: 0.5;
+    font-weight: 200;
+}
+.salary{
+    color:rgb(120, 63, 173)
 }
 
 .jobpost-description:hover{
@@ -127,15 +166,82 @@
   padding: 10px;
   margin: 10px;
 }
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1200px;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    margin-top: 40px;
+
+  padding: 10px;
+  }
+  
+  .pagination li {
+    margin: 5px;
+  }
+  
+  .pagination a {
+    color: black;
+    padding: 5px 10px;
+    font-size: 18px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    transition: background-color .3s;
+  }
+  
+  .pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1
+    px solid #4CAF50;
+  }
+  .pagination a:focus {
+    background-color: #515b51;
+    color: white;
+  }
+
+  
+  .pagination a:hover:not(.active) {
+    background-color: #ddd;
+  }
+  
+  .pagination .next,
+  .pagination .previous {
+    border: 1px solid #ddd;
+    color: black;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px;
+    text-decoration: none;
+  }
+  
+  .pagination .next:hover:not(.disabled),
+  .pagination .previous:hover:not(.disabled) {
+    background-color: #ddd;
+  }
+  
+  .pagination .disabled {
+    color: #ddd;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+
+
+
+
 
 
 .wrapper{
     position: absolute;
-    top:300%;
+    top:350%;
     left: 50%;
     transform: translate(-50%,-50%);
     width: 1000px;
-    height: 600px;
+    height: 700px;
     padding: 50px;
     border-radius: 20px;
     background-color: #F7F7F7;

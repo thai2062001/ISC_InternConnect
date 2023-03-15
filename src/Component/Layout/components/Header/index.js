@@ -14,6 +14,10 @@ function Header() {
   const handleLogin = () => {
     window.location.href = "/login"
   }
+
+  const handleSettings = () => {
+    window.location.href = "/accountSettings"
+  }
   const handleLogo = () => {
     window.location.href = '/'
   }
@@ -33,6 +37,14 @@ function Header() {
           </ul>
           <div className={cx('header__actions')}>
             <FaUser onClick={handleLogin} className={cx('header__login')} />
+           <div className={cx('menu_item')}>
+           <ul className="header__login-menu">
+            <li className={cx('menu-li')} onClick={handleLogin}>Đăng nhập</li>
+            <li className={cx('menu-li')}  onClick={handleSettings} >Cài đặt</li>
+            <li className={cx('menu-li')} >Đăng xuất</li>
+          </ul>
+           </div>
+
           </div>
         </nav></div>
 
