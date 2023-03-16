@@ -13,7 +13,7 @@ function Signup() {
   const [account, setAccount] = useState([]);
   const [schoolList, setSchoolList] = useState([{'nameschool': '', 'id':''}])
   const [username, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [mail, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confpassword, setConfirmPass] = useState('');
   const [phonenumber, setPhone] = useState('');
@@ -34,18 +34,23 @@ function Signup() {
   function handleOptionChange(event) {
     setSchool(event.target.value);
   }
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+  }
 
-  const HandleSignup = async () => {
-    fetch('http://localhost:5000/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, email, password ,confpassword,phonenumber,gender,school})
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-      })
-      .catch(error => console.error(error));
+  const HandleSignup =  (mailsend) => {
+
+    console.log(mailsend);
+    // fetch('http://localhost:5000/auth/register', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ username, email, password ,confpassword,phonenumber,gender,school})
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log(data)
+    //   })
+    //   .catch(error => console.error(error));
   };
 
 
@@ -59,10 +64,6 @@ function Signup() {
   }, [])
 
   
-        
- 
-
-
   return (
     <div>
       <img
@@ -99,8 +100,7 @@ function Signup() {
               <div className={cx("div")}>
                 <input
                   placeholder="Email"
-                  value= {email}
-                  onChange={(e)=>(setEmail(e.target.value))}
+                  onChange={handleEmailChange}
                   type="text"
                   id="Email"
                   className={cx("input-user")}
@@ -191,7 +191,7 @@ function Signup() {
                 <span className={cx("gender")}>Female</span>
               </div>
             </div>
-            <button onClick={HandleSignup} className={cx("btn")}>
+            <button onClick={()=>{HandleSignup(mail)}} className={cx("btn")}>
               Signup
             </button>
           </div>
