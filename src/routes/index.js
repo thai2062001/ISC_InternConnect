@@ -26,14 +26,18 @@ import HomeLogin from './../HomeLogin/homeLogin';
 import HeaderLogin from '../Component/Layout/components/Header/HeaderLogin/headerLogin';
 import HomeJobPostDetail from '../HomeJobPostDetails/homeJobPostDetail';
 import Settings from '../Settings/settings';
+import ForgotPW from '../Login/ForgotPW/forgotPW';
+import AuForgot from '../Login/ForgotPW/AuForgot/auForgot';
+import VerifyAccount from '../SignUp/VerifyAccount/verify';
+
 
 //public routers
 
 
 const publicRouters = [
     {path: '/',component: Home,layout:HeaderOnly},
-    {path: '/accountSettings',component: Settings,layout:HeaderOnly},
     {path: '/:id',component: HomeJobPostDetail,layout:HeaderOnly},
+    {path: '/accountSettings',component: Settings,layout:HeaderOnly},
     // {path: '/home',component: HomeLogin,layout:HeaderLogin},
     {path: '/settings',component: AccountSettings,layout: null},
     {path: '/search',component: Search},
@@ -41,9 +45,12 @@ const publicRouters = [
     {path: '/uploadcv',component: UploadCV,layout: HeaderOnly},
     {path: '/homeadmin',component: HomeAdmin,layout: SlidebarOnly},
     {path: '/login',component: Login,layout: null},
+    {path: '/auth/forgot-password/',component: ForgotPW,layout: null},
+    {path: '/auth/forgot-password/:email',component:AuForgot ,layout: null},
     {path: '/admin/adminlogin',component: AdminLogin,layout: null},
     {path: '/signout',component: SignOut},
-    {path: '/signup',component: Signup,layout: null},
+    {path: '/auth/confirm',component: Signup,layout: null},
+    {path: '/auth/confirm/:mailsend',component: VerifyAccount,layout: null},
     {path: '/homeadmin/schoolAdmin',component: SchoolAdmin,layout: SlidebarOnly},
     {path: '/homeadmin/majorAdmin',component:MajorAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/companyAdmin',component:CompanyAdmin ,layout: SlidebarOnly},
