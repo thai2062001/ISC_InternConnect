@@ -13,7 +13,7 @@ function Signup() {
   const [account, setAccount] = useState([]);
   const [schoolList, setSchoolList] = useState([{'nameschool': '', 'id':''}])
   const [username, setName] = useState('');
-  const [mail, setEmail] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confpassword, setConfirmPass] = useState('');
   const [phonenumber, setPhone] = useState('');
@@ -37,23 +37,6 @@ function Signup() {
   function handleEmailChange(event) {
     setEmail(event.target.value);
   }
-
-  const HandleSignup =  (mailsend) => {
-
-    console.log(mailsend);
-    // fetch('http://localhost:5000/auth/register', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ username, email, password ,confpassword,phonenumber,gender,school})
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log(data)
-    //   })
-    //   .catch(error => console.error(error));
-  };
-
-
   useEffect(() =>{
     const fecthData = async () =>{
       const response = await fetch("http://localhost:5000/admin/school");
@@ -63,7 +46,23 @@ function Signup() {
     fecthData();
   }, [])
 
-  
+
+  const HandleSignup =  (email) => {
+
+    fetch('http://localhost:5000/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password ,confpassword,phonenumber,gender,school})
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+      })
+      .catch(error => console.error(error));
+  };
+
+
+
   return (
     <div>
       <img
@@ -191,7 +190,7 @@ function Signup() {
                 <span className={cx("gender")}>Female</span>
               </div>
             </div>
-            <button onClick={()=>{HandleSignup(mail)}} className={cx("btn")}>
+            <button onClick={()=>{HandleSignup(email)}} className={cx("btn")}>
               Signup
             </button>
           </div>

@@ -11,6 +11,11 @@ const cx = classNames.bind(styles)
 
 
 function Header() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+
+
   const handleLogin = () => {
     window.location.href = "/login"
   }
@@ -21,6 +26,34 @@ function Header() {
   const handleLogo = () => {
     window.location.href = '/'
   }
+
+  
+  const handleLogOut = () => {
+    localStorage.removeItem('user-save');
+    setIsLoggedIn(false);
+    setUsername('');
+    window.location.href = '/';
+  }
+
+
+  const handleName = () => {
+    const jobpost_token = localStorage.getItem('user-save');
+    if (jobpost_token) {
+      const decodeEmail = jwt_decode(jobpost_token);
+      const Username = decodeEmail.username;
+      setUsername(Username);
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+      setUsername('');
+    }
+  }
+
+  useEffect(() => {
+    handleName();
+  }, []);
+
+
 
   return (
     <header className={cx('header')}>
@@ -36,15 +69,23 @@ function Header() {
             <li className={cx('header__item')}><a href="/contact">Contact</a></li>
           </ul>
           <div className={cx('header__actions')}>
-            <FaUser onClick={handleLogin} className={cx('header__login')} />
-           <div className={cx('menu_item')}>
-           <ul className="header__login-menu">
-            <li className={cx('menu-li')} onClick={handleLogin}>Đăng nhập</li>
-            <li className={cx('menu-li')}  onClick={handleSettings} >Cài đặt</li>
-            <li className={cx('menu-li')} >Đăng xuất</li>
-          </ul>
-           </div>
-
+            {isLoggedIn ? (
+              <>
+                <span>{username}</span>
+                <div className={cx('menu_item')}>
+                  <ul className="header__login-menu">
+                    <li className={cx('menu-li')} onClick={handleSettings}>
+                      Cài đặt
+                    </li>
+                    <li className={cx('menu-li')} onClick={handleLogOut}>
+                      Đăng xuất
+                    </li>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <FaUser onClick={handleLogin} className={cx('header__login')} />
+            )}
           </div>
         </nav></div>
 

@@ -1,24 +1,21 @@
 import classNames from "classnames/bind";
-import styles from './majorAdmin.module.scss'
+import styles from './skillAdmin.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
-import axios, { Axios } from 'axios';
-
 
 const cx = classNames.bind(styles)
 
-
-function MajorAdmin() {
+function SkillAdmin() {
 
 
     const [name, setName] = useState('')
     const [accounts, setAccount] = useState([])
     const columns = [
-        { title: "Major", field: "namemajor" , validate: rowData => {
-          if (rowData.namemajor === undefined || rowData.namemajor === "") {
+        { title: "Skill", field: "nameskill" , validate: rowData => {
+          if (rowData.nameskill === undefined || rowData.nameskill === "") {
             return "Required"
-          } else if (rowData.namemajor.length <3 ) {
+          } else if (rowData.nameskill.length <3 ) {
             return "Name should contains atleast 3 chars "
           }
           return true
@@ -32,7 +29,7 @@ function MajorAdmin() {
         console.log(decodeUser.email);
         setName(decodeUser.username)
     }, [])
-    const URL = 'http://localhost:5000/admin/major'
+    const URL = 'http://localhost:5000/admin/skill'
     useEffect(() => {
         const fetchData = async () => {
             const result = await fetch(URL)
@@ -75,7 +72,7 @@ function MajorAdmin() {
         editable={{
          onRowAdd: (newRow) => new Promise((resolve, reject) => {
             const token_create = localStorage.getItem('user-save');
-            fetch('http://localhost:5000/admin/major/create', {
+            fetch('http://localhost:5000/admin/skill/create', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -93,7 +90,6 @@ function MajorAdmin() {
               console.log(updatedRows);
               setTimeout(() => {
                 setAccount(updatedRows)
-                 window.location.reload();
                 resolve()
               }, 2000)
             })
@@ -107,7 +103,7 @@ function MajorAdmin() {
             const id = accounts[index]._id;
             console.log(id);
 
-            fetch(`http://localhost:5000/admin/major/${id}`, {
+            fetch(`http://localhost:5000/admin/skill/${id}`, {
               method: 'DELETE',
               headers: {
                 'Authorization': `Bearer ${token}`
@@ -120,7 +116,6 @@ function MajorAdmin() {
                 setTimeout(() => {
                   setAccount(updatedRows)
                   resolve()
-                  window.location.reload();
                 },2000)
               } else {
                 reject(response.statusText)
@@ -133,9 +128,9 @@ function MajorAdmin() {
           }),
           onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
             const id = oldData._id;
-            console.log(id);
+            console.log(oldData._id);
             const token_update = localStorage.getItem('user-save');
-            fetch(`http://localhost:5000/admin/major/details/${id}`, {
+            fetch(`http://localhost:5000/admin/skill/details/${id}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -151,9 +146,8 @@ function MajorAdmin() {
                 setTimeout(() => {
                   setAccount(updatedRows);
                   resolve();
-                  window.location.reload();
                 }, 2000);
-
+                window.location.reload();
               } else {
                 throw new Error(response.statusText);
               }
@@ -184,4 +178,4 @@ function MajorAdmin() {
      );
 }
 
-export default MajorAdmin;
+export default SkillAdmin;
