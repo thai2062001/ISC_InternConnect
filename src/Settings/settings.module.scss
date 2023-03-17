@@ -1,98 +1,116 @@
 .wrapper {
-  max-width: 800px; /* Giới hạn chiều rộng tối đa của phần tử cha */
-  margin: 0 auto; /* Canh giữa phần tử cha */
-  padding: 20px;
-}
-
-h1 {
-  font-size: 36px;
-  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f0f0;
 }
 
 .settings-item {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-label {
+.settings-item label {
+  width: 150px;
+  margin-right: 150px;
+}
+.info_input {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 5px;
+  height: 30px;
+  padding: 5px;
+  font-size: 16px;
   width: 200px;
-  font-weight: bold;
-  margin-right: 20px;
 }
 
-p {
-  margin: 0;
+.action_span {
+  color: #fff;
+  background-color: #3f51b5;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.action_span:hover {
+  background-color: #1a237e;
+}
+.popup-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+
+.info_input {
+  background-color:#f0f0f0;
+  border: none;
+  border-radius: 5px;
+  height: 30px;
+  padding: 5px;
+  font-size: 16px;
+  width: 200px;
 }
 
 .settings-option {
   display: flex;
+  width: 600px;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.settings-option label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.settings-option span {
+  margin-left: 90px;
 }
 
 .settings-option button {
-  margin-left: 20px;
-  background-color: #4CAF50;
-  color: white;
+  padding: 10px;
+  background-color: #2196f3;
   border: none;
-  height: 40px;
-  width: 150px;
-  padding: 8px 16px;
-  border-radius: 4px;
+  color: #fff;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .settings-option button:hover {
-  background-color: #3e8e41;
-}
-
-.popup {
-  padding: 20px;
-  background-color: white;
-  border-radius: 4px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.popup input {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.popup button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.popup button:hover {
-  background-color: #3e8e41;
-}
-.update-info-wrapper{
-  display: flex;
-}
-.update_info {
-  width: 150px;
-  height: 40px;
-  padding: 5px 10px;
-  margin-left: 73px;
-  border-radius: 5px;
-  border: none;
-  color: #fff;
-  background-color: #4CAF50;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-
-.update_info:hover {
-  background-color: #0066cc;
+  background-color: #0d8bf2;
 }

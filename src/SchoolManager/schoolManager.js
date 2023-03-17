@@ -18,7 +18,7 @@ function SchoolManager() {
         { title: "Name", field: "studentname" , },
         { title: "Email", field: "studentemail" , },
         { title: "Phone", field: "studentphone" , },
-        { title: "Academic Year", field: "academicyear" , },
+        { title: "Year", field: "academicyear" , },
         { title: "Address", field: "address" , },
         { title: "Gender", field: "gender" , },
         { title: "Major", field: "major" , },
@@ -98,6 +98,7 @@ function SchoolManager() {
                 updatedRows[index] = { ...newData, id: oldData.id };
                 setTimeout(() => {
                   setAccount(updatedRows);
+                  window.location.reload();
                   resolve();
                 }, 2000);
               } else {

@@ -136,6 +136,7 @@ function HomeAdmin() {
               const updatedRows = [...accounts, { id: data.id, ...newRow }]
               setTimeout(() => {
                 setAccount(updatedRows)
+                window.location.reload();
                 resolve()
               }, 2000)
             })

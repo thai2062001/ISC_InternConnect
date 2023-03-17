@@ -58,6 +58,13 @@ function Slidebar() {
        </a>
        <span className={cx('tooltip')}>Job Post</span>
      </li>
+     <li>
+       <a href="/homeadmin/skill">
+         <i className='bx bx-list-ul' ></i>
+         <span className={cx('links_name')}>Skill</span>
+       </a>
+       <span className={cx('tooltip')}>Skill</span>
+     </li>
 
      <li className={cx('profile')}>
      <a href="/admin/adminlogin" onClick={handleLogOutUser}>

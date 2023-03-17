@@ -24,17 +24,13 @@ function CompanyAdmin() {
         { title: "Email", field: "emailcompany",validate: rowData =>{
             if(rowData.namecompany === undefined || rowData.namecompany === ""){
                 return "Required"
-            }else if (!rowData.emailcompany.includes('@' && '.')) {
-                return "Enter valid email address"
-              }
+            }
             return true
           
           } },
         { title: "Website", field: "websitecompany" ,validate: rowData =>{
             if(rowData.websitecompany === undefined || rowData.websitecompany === ""){
                 return "Required"
-            }else if(!rowData.emailcompany.includes('.')){
-              return "Websitecompany should contains atleast 3 chars"
             }
             return true
           
@@ -109,6 +105,7 @@ function CompanyAdmin() {
                                     const updatedRows = [...accounts, { id: data.id, ...newRow }]
                                     setTimeout(() => {
                                         setAccount(updatedRows)
+                                        window.location.reload();
                                         resolve()
                                     }, 2000)
                                 })
@@ -166,6 +163,7 @@ function CompanyAdmin() {
                                             resolve();
                                         }, 2000);
                                         // location.reload(); reload lại web để update data
+                            
                                         window.location.reload();
                                     } else {
                                         throw new Error(response.statusText);

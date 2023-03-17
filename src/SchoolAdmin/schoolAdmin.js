@@ -12,10 +12,6 @@ const cx = classNames.bind(styles)
 function SchoolAdmin() {
     const [name, setName] = useState('')
     const [accounts, setAccount] = useState([])
-    const [provinces, setProvinces] = useState([]);
-    const [provinceList, setProvinceList] = useState({});
-    const [showDropdown, setShowDropdown] = useState(false);
-
     const columns = [
         {
             title: "Name School", field: "nameschool", validate: rowData => {
@@ -28,28 +24,12 @@ function SchoolAdmin() {
             }
         },
         {
-            title: "Location", field: "location", lookup: showDropdown ? provinceList : null,
+            title: "Location", field: "location",
         },
         { title: "Email School", field: "emailschool" },
         { title: "Phone Number", field: 'phoneschool' },
         { title: 'websiteschool', field: 'websiteschool' },
     ]
-
-        
-    useEffect(() => {
-        fetch('https://vapi.vnappmob.com/api/province')
-            .then(response => response.json())
-            .then(data => {
-                setProvinces(data.results);
-                setProvinceList(
-                    data.results.reduce((list, province) => {
-                        list[province.province_id] = province.province_name;
-                        return list;
-                    }, {})
-                );
-            })
-            .catch(error => console.error(error));
-    }, []);
     useEffect(() => {
         const localstore = localStorage.getItem('user-save')
         const decodeUser = jwt_decode(localstore);
@@ -94,7 +74,6 @@ function SchoolAdmin() {
                         isDeleteHidden: (row) => row.role == 'Admin' && row.email === emailUser,
                         onRowAdd: (newRow) => new Promise((resolve, reject) => {
                             const token_create = localStorage.getItem('user-save');
-                            setShowDropdown(true)
                             fetch('http://localhost:5000/admin/school/create', {
                                 method: 'POST',
                                 headers: {
@@ -113,6 +92,7 @@ function SchoolAdmin() {
                                     setTimeout(() => {
                                         setAccount(updatedRows)
                                         resolve()
+                                        window.location.reload();
                                     }, 2000)
                                 })
                                 .catch(error => {

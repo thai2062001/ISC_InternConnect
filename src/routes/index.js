@@ -29,7 +29,7 @@ import Settings from '../Settings/settings';
 import ForgotPW from '../Login/ForgotPW/forgotPW';
 import AuForgot from '../Login/ForgotPW/AuForgot/auForgot';
 import VerifyAccount from '../SignUp/VerifyAccount/verify';
-
+import SkillAdmin from '../Skill_Admin/skillAdmin';
 
 //public routers
 
@@ -43,7 +43,6 @@ const publicRouters = [
     {path: '/search',component: Search},
     {path: '/profile',component: Profile},
     {path: '/uploadcv',component: UploadCV,layout: HeaderOnly},
-    {path: '/homeadmin',component: HomeAdmin,layout: SlidebarOnly},
     {path: '/login',component: Login,layout: null},
     {path: '/auth/forgot-password/',component: ForgotPW,layout: null},
     {path: '/auth/forgot-password/:email',component:AuForgot ,layout: null},
@@ -51,10 +50,12 @@ const publicRouters = [
     {path: '/signout',component: SignOut},
     {path: '/auth/confirm',component: Signup,layout: null},
     {path: '/auth/confirm/:mailsend',component: VerifyAccount,layout: null},
+    {path: '/homeadmin',component: HomeAdmin,layout: SlidebarOnly},
     {path: '/homeadmin/schoolAdmin',component: SchoolAdmin,layout: SlidebarOnly},
     {path: '/homeadmin/majorAdmin',component:MajorAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/companyAdmin',component:CompanyAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/jobpost',component:AllJobPost ,layout: SlidebarOnly},
+    {path: '/homeadmin/skill',component:SkillAdmin ,layout: SlidebarOnly},
     {path: '/schooladmin',component:SchoolManager ,layout: SlidebarSchool },
     {path: '/companyadmin',component:CompanyManager ,layout: SlidebarCompany },
     {path: '/companyadmin/jobapp',component:JobApplication ,layout: SlidebarCompany },
