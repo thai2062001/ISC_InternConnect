@@ -3,13 +3,15 @@ import styles from './companyAdmin.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
-
+import {  MenuItem, Select } from "@material-ui/core";
 const cx = classNames.bind(styles)
 
 
 function CompanyAdmin() {
     const [name, setName] = useState('')
     const [accounts, setAccount] = useState([])
+    const [filteredAccounts, setFilteredAccounts] = useState([]);
+    const [location, setLocation] = useState('all')
 
     const columns = [
         { title: "Company", field: "namecompany",validate: rowData =>{
@@ -66,6 +68,16 @@ function CompanyAdmin() {
         localStorage.removeItem('user-save');
         window.location.href = '/login'
     }
+
+    useEffect(() => {
+        if (location === 'all') {
+          setFilteredAccounts(accounts);
+        } else {
+          setFilteredAccounts(accounts.filter(dt => dt.location === location));
+        }
+      }, [location, accounts]);
+    
+
     // dung de luu lai xem tai khoan nao da login
     const token = localStorage.getItem('user-save');
     const decodeEmail = jwt_decode(token);
@@ -80,9 +92,28 @@ function CompanyAdmin() {
             </div>
             <div className={cx('table-wrapper')}>
                 <MaterialTable className={cx('Table')}
-                    data={accounts}
+                    data={filteredAccounts}
                     title = 'Company Data'
                     columns={columns}
+                    actions={[
+                        {
+                          icon: () => <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            style={{ width: 100 }}
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                          >
+                            <MenuItem value={'all'}><em>All</em></MenuItem>
+                            <MenuItem value={'HCM'}>HCM</MenuItem>
+                            <MenuItem value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
+                            <MenuItem value={'Hà Nội'}>Hà Nội</MenuItem>
+                            <MenuItem value={'Hải Phòng'}>Hải Phòng</MenuItem>
+                          </Select>,
+                          tooltip: "Filter Location",
+                          isFreeAction: true
+                        }
+                      ]}
                     editable={{
                         onRowAdd: (newRow) => new Promise((resolve, reject) => {
                             const token_create = localStorage.getItem('user-save');
