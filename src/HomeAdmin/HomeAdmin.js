@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import Is_valid_password from "./CheckPassword";
-import { Checkbox, MenuItem, Select } from "@material-ui/core";
+import {  MenuItem, Select } from "@material-ui/core";
 const cx = classNames.bind(styles)
 
 // http://localhost:5000/admin/account

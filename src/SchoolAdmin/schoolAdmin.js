@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import axios, { Axios } from 'axios';
-import Select from '@material-ui/core/Select';
+import {  MenuItem, Select } from "@material-ui/core";
 
 
 const cx = classNames.bind(styles)
@@ -12,6 +12,9 @@ const cx = classNames.bind(styles)
 function SchoolAdmin() {
     const [name, setName] = useState('')
     const [accounts, setAccount] = useState([])
+    const [filteredAccounts, setFilteredAccounts] = useState([]);
+    const [location, setLocation] = useState('all')
+
     const columns = [
         {
             title: "Name School", field: "nameschool", validate: rowData => {
@@ -55,6 +58,14 @@ function SchoolAdmin() {
         localStorage.removeItem('user-save');
         window.location.href = '/login'
     }
+    useEffect(() => {
+        if (location === 'all') {
+          setFilteredAccounts(accounts);
+        } else {
+          setFilteredAccounts(accounts.filter(dt => dt.location === location));
+        }
+      }, [location, accounts]);
+    
 
     return (
         <div className="App">
@@ -67,8 +78,27 @@ function SchoolAdmin() {
             <div className={cx('table-wrapper')}>
                 <MaterialTable className={cx('Table_wrapper')}
                     title="School Data"
-                    data={accounts}
+                    data={filteredAccounts}
                     columns={columns}
+                    actions={[
+                        {
+                          icon: () => <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            style={{ width: 100 }}
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                          >
+                            <MenuItem value={'all'}><em>All</em></MenuItem>
+                            <MenuItem value={'HCM'}>HCM</MenuItem>
+                            <MenuItem value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
+                            <MenuItem value={'Hà Nội'}>Hà Nội</MenuItem>
+                            <MenuItem value={'Hải Phòng'}>Hải Phòng</MenuItem>
+                          </Select>,
+                          tooltip: "Filter Location",
+                          isFreeAction: true
+                        }
+                      ]}
                     editable={{
                         isDeleteHidden: (row) => row.role === 'Student' || row.role === 'School' || row.role === 'Company',
                         isDeleteHidden: (row) => row.role == 'Admin' && row.email === emailUser,

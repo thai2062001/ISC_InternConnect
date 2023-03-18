@@ -21,26 +21,44 @@ function SchoolManager() {
     const [major, setMajor] = useState('all')
 
     useEffect(() => {
-      const filteredAccounts = accounts.filter(account => {
-        if (year !== 'all' && account.academicyear !== year) {
-          return false;
-        }
-        if (address !== 'all' && account.address !== address) {
-          return false;
-        }
-        if (gender !== 'all' && account.gender !== gender) {
-          return false;
-        }
-        if (verify !== 'all' && account.verify !== verify) {
-          return false;
-        }
-        if (major !== 'all' && account.major !== major) {
-          return false;
-        }
-        return true;
-      });
-      setFilteredAccounts(filteredAccounts);
-    }, [accounts, year, address, gender, verify, major]);
+      if (year === 'all') {
+        setFilteredAccounts(accounts);
+      } else {
+        setFilteredAccounts(accounts.filter(dt => dt.academicyear === year));
+      }
+    }, [year, accounts]);
+  
+    useEffect(() => {
+      if (address === 'all') {
+        setFilteredAccounts(accounts);
+      } else {
+        setFilteredAccounts(accounts.filter(dt => dt.address === address));
+      }
+    }, [address, accounts]);
+  
+    useEffect(() => {
+      if (gender === 'all') {
+        setFilteredAccounts(accounts);
+      } else {
+        setFilteredAccounts(accounts.filter(dt => dt.gender === gender));
+      }
+    }, [gender, accounts]);
+    useEffect(() => {
+      if (major === 'all') {
+        setFilteredAccounts(accounts);
+      } else {
+        setFilteredAccounts(accounts.filter(dt => dt.major === major));
+      }
+    }, [major, accounts]);
+  
+    useEffect(() => {
+      if (verify === 'all') {
+        setFilteredAccounts(accounts);
+      } else {
+        setFilteredAccounts(accounts.filter(dt => dt.verify === verify));
+      }
+    }, [verify, accounts]);
+  
   
     const columns = [
         { title: "ID", field: "code" , },
@@ -80,28 +98,8 @@ function SchoolManager() {
         fetchData();
     }, []);
 
-
-     // Ham logout ve trang homelogin
-    function handleLogOutUser() {
-      localStorage.removeItem('user-save');
-      window.location.href = '/login'
-  }
-
-
-  const token = localStorage.getItem('user-save');
-  const decodeEmail = jwt_decode(token);
-  const emailUser = decodeEmail.email;
-
-
     return ( 
         <div className="App">
-        <div className={cx('wrapper')}>
-        <h1 align="center">Trang quản lý Admin</h1>
-        <div className={cx('user_log')}>
-          <h2 className={cx('name_set')}>{name}</h2>
-        </div>
-        </div>
-        
         <div className={cx('table-wrapper')}>
         <MaterialTable className = {cx('table')} 
         title="Account Data"
@@ -161,74 +159,8 @@ function SchoolManager() {
           tooltip: "Filter Gender",
           isFreeAction: true
           }
-          ,{
-            icon: () => <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            style={{ width: 100 }}
-            value={major}
-            onChange={(e) => setMajor(e.target.value)}
-          >
-            <MenuItem value={'all'}><em>All</em></MenuItem>
-            <MenuItem value={'Công nghệ thông tin'}>Công nghệ thông tin</MenuItem>
-            <MenuItem value={'Kế toán'}>Kế toán</MenuItem>
-            <MenuItem value={'Quản trị kinh doanh'}>Quản trị kinh doanh</MenuItem>
-            <MenuItem value={'Quản trị khách sạn'}>Quản trị khách sạn</MenuItem>
-            <MenuItem value={'Du lịch lữ hành'}>Du lịch lữ hành</MenuItem>
-          </Select>,
-          tooltip: "Filter Major",
-          isFreeAction: true
-          },
-          {
-            icon: () => <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              style={{ width: 100 }}
-              value={verify}
-              onChange={(e) => setVerify(e.target.value)}
-            >
-              <MenuItem value={'all'}><em>All</em></MenuItem>
-              <MenuItem value={true}>True</MenuItem>
-              <MenuItem value={false}>False</MenuItem>
-            </Select>,
-            tooltip: "Filter Verify",
-            isFreeAction: true
-          }
+        
         ]}
-        editable={{
-          
-          onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
-            const id = oldData._id;
-            const token_update = localStorage.getItem('user-save');
-            fetch(`http://localhost:5000/uni/details/${id}`, {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token_update}`
-              },
-              body: JSON.stringify(newData)
-            })
-            .then(response => {
-              if (response.ok) {
-                const updatedRows = [...accounts];
-                const index = updatedRows.findIndex(row => row.id === oldData.id);
-                updatedRows[index] = { ...newData, id: oldData.id };
-                setTimeout(() => {
-                  setAccount(updatedRows);
-                  window.location.reload();
-                  resolve();
-                }, 2000);
-              } else {
-                throw new Error(response.statusText);
-              }
-            })
-            .catch(error => {
-              console.error(error);
-              reject(error);
-            });
-          }),
-
-        }}
         options={{
           actionsColumnIndex: -1, addRowPosition: "first",
           headerStyle: {
