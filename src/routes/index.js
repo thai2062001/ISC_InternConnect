@@ -30,6 +30,7 @@ import ForgotPW from '../Login/ForgotPW/forgotPW';
 import AuForgot from '../Login/ForgotPW/AuForgot/auForgot';
 import VerifyAccount from '../SignUp/VerifyAccount/verify';
 import SkillAdmin from '../Skill_Admin/skillAdmin';
+import CreateCV from '../CreateCV/createCV';
 
 //public routers
 
@@ -40,6 +41,7 @@ const publicRouters = [
     {path: '/accountSettings',component: Settings,layout:HeaderOnly},
     // {path: '/home',component: HomeLogin,layout:HeaderLogin},
     {path: '/settings',component: AccountSettings,layout: null},
+    {path: '/createcv',component: CreateCV,layout: null},
     {path: '/search',component: Search},
     {path: '/profile',component: Profile},
     {path: '/uploadcv',component: UploadCV,layout: HeaderOnly},

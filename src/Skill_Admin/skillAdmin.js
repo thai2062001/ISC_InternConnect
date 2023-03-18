@@ -53,7 +53,7 @@ function SkillAdmin() {
     return ( 
         <div className="App">
         <div className={cx('wrapper')}>
-        <h1 align="center">Trang quản lý Major</h1>
+        <h1 align="center">Trang quản lý Skill</h1>
         <div className={cx('user_log')}>
           <h2 className={cx('name_set')}>{name}</h2>
         </div>
@@ -62,7 +62,7 @@ function SkillAdmin() {
         <div className={cx('table-wrapper')}>
         <MaterialTable className = {cx('Table')} 
         data={accounts}
-        title = 'Major Data'
+        title = 'Skill Data'
         columns={columns}
         actions ={[
           {

@@ -23,8 +23,7 @@ function ApplyCV(props) {
     setNameSchool(props.school);
     setTitle(props.title)
   }, []);
-  const handleApply = (event) => {
-    event.preventDefault();
+  const handleApply = () => {
     const cvFile = cvInputRef.current.files[0];
         const formData = new FormData();
         formData.append("date", date);
@@ -41,7 +40,7 @@ function ApplyCV(props) {
         })
           .then((response) => response.json())
           .then((data) => {
-            // xử lý kết quả trả về từ server
+            
           })
           .catch((error) => {
             // xử lý lỗi
@@ -49,7 +48,6 @@ function ApplyCV(props) {
   };
 
   const handleOnClose = () => {
-    console.log("onClose is called");
     if (props.onClose) {
       props.onClose();
     }
@@ -62,7 +60,7 @@ function ApplyCV(props) {
         <span className={cx("close")} onClick={handleOnClose}>
           &times;
         </span>
-        <form>
+        <form type = "submit">
           <label htmlFor="Email">Email:</label>
           <input
             className={cx("email-input")}
