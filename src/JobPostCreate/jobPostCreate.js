@@ -77,18 +77,19 @@ function JobPostCreate() {
                 <div className={cx('container')}>
                     <div className={cx('logo-info')}>
                     {logo && <img src={logo.preview} alt="Logo preview" />}
-                        <input  type="file"
+                        <input className={cx('logo-input')} type="file"
                             onChange={handlePreviewLogo}
                         />
                         <h3>{accounts.namecompany}</h3>
                     </div>
                     <div className={cx('input-img')}>
-                        <label style={{ marginRight: '10px' }}>Date</label>
+                        <label className={cx('label')} style={{ marginRight: '10px' }}>Date</label>
                         <DatePicker
                             selected={selectedDate}
                             onChange={handleDateChange}
                             dateFormat="dd/MM/yyyy"
                             placeholderText="Chọn ngày hết hạn"
+                            className={cx('datepicker')}
                         />
                     </div>
                 </div>

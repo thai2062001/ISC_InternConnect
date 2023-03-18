@@ -72,6 +72,35 @@
 
 }
 
+.input-img {
+    display: flex;
+    align-items: center;
+  }
+  
+  .label {
+    margin-right: 10px;
+  }
+
+  .datepicker {
+    width: 150px;
+    height: 30px;
+    
+    .react-datepicker__input-container input:focus {
+        outline: none;
+        border-color: blue;
+    }
+    
+    .react-datepicker__input-container svg {
+        fill: red;
+    }
+    
+    .react-datepicker__day--selected {
+        background-color: yellow;
+        color: black;
+    }
+
+}
+
 
 .wrapper-des {
     display: flex;
