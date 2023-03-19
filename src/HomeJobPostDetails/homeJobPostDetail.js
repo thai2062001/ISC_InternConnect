@@ -3,15 +3,18 @@ import styles from './homeJobPostDetail.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
-import { useParams,useNavigate  } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FaLocationArrow, FaMoneyBillAlt, FaCalendarDay, FaHeart } from 'react-icons/fa';
 import moment from 'moment';
 import Popup from "reactjs-popup";
 import ApplyCV from "./ApplyCV/ApplyCV";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const cx = classNames.bind(styles)
 function HomeJobPostDetail() {
+
     const [showPopup, setShowPopup] = useState(false)
     const [jobPosts, setJobPost] = useState({})
     const [recommentPosts, setRecommentPosts] = useState([])
@@ -22,11 +25,12 @@ function HomeJobPostDetail() {
     const { id } = useParams();
     const url = new URL(window.location.href);
     const idDetail = url.pathname.split('/').pop();
+    const favorite = url.pathname.split('/').pop();
     const jobpost_token = localStorage.getItem('user-save');
     const decodeEmail = jwt_decode(jobpost_token);
     const emailUser = decodeEmail.email;
     const Username = decodeEmail.username;
-
+    console.log(student);
 
     useEffect(() => {
         const studentApi = `http://localhost:5000/profile?email=${emailUser}`;
@@ -95,14 +99,101 @@ function HomeJobPostDetail() {
 
 
     const handleApply = () => {
+        toast.success('Sucess!', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
         setShowPopup(true)
     }
 
-    const handleRecommentPost = (id)=>{
+    const handleFavorite = () => {
+        const access_token = localStorage.getItem('user-save');
+        const decodeEmail = jwt_decode(access_token);
+        const url = `http://localhost:5000/details/${favorite}`;
+      
+        const isIdInFavorite = (id) => {
+          if (student.favorite.includes(id)) {
+            return true;
+          }
+          return false;
+        }
+        
+        if (isIdInFavorite(favorite)) {
+          // Remove the ID from the favorite array if it exists
+          const index = student.favorite.indexOf(favorite);
+          if (index > -1) {
+            student.favorite.splice(index, 1);
+          }
+          // Update the server
+          fetch(url, {
+            method: "PUT",
+            headers: {
+              "Authorization": "Bearer " + access_token,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ favorite: student.favorite })
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            toast.success('Removed from favorites!', {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        } else {
+          // Add the ID to the favorite array
+          student.favorite.push(favorite);
+          // Update the server
+          fetch(url, {
+            method: "PUT",
+            headers: {
+              "Authorization": "Bearer " + access_token,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ favorite: student.favorite })
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            toast.success('Added to favorites!', {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        }
+      }
+
+
+    const handleRecommentPost = (id) => {
         const path = `/${id}`
         console.log(id);
-       navigate(path)
-       window.location.href = path
+        navigate(path)
+        window.location.href = path
     }
 
     const date_string = jobPosts.expdate;
@@ -153,8 +244,9 @@ function HomeJobPostDetail() {
                         )}
 
                         <div className={cx('apply_button')}>
-                            <button onClick={handleApply}>Nộp đơn ngay</button>
-                            <button className={cx('like_button')}><FaHeart style={{ marginTop: '7px' }} /></button>
+                            <button className={cx('action_button')} onClick={handleApply}>Nộp đơn ngay</button>
+                            <ToastContainer />
+                            <button onClick={handleFavorite} className={cx('like_button')}><FaHeart style={{ marginTop: '7px' }} /></button>
                         </div>
 
                         <div className={cx('div-nav-des')}>
@@ -196,7 +288,7 @@ function HomeJobPostDetail() {
                 <ul>
                     {recommentPosts.map((recommentPost) => {
                         return (
-                            <div key={recommentPost._id} onClick={()=>handleRecommentPost(recommentPost._id)} className={cx('recommentPost')}>
+                            <div key={recommentPost._id} onClick={() => handleRecommentPost(recommentPost._id)} className={cx('recommentPost')}>
                                 <div className={cx('jobpost')}>
                                     <div className={cx('logo_recomment')}>
                                         <img src={recommentPost.logo} />

@@ -5,6 +5,11 @@ import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import Is_valid_password from "./CheckPassword";
 import {  MenuItem, Select } from "@material-ui/core";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+
 const cx = classNames.bind(styles)
 
 // http://localhost:5000/admin/account
@@ -13,6 +18,9 @@ function HomeAdmin() {
   const [accounts, setAccount] = useState([])
   const [filteredAccounts, setFilteredAccounts] = useState([]);
   const [role, setRole] = useState('all')
+
+
+  const notify = () => toast("Wow so easy!");
 
   const columns = [
     {
@@ -92,13 +100,47 @@ function HomeAdmin() {
     fetchData();
   }, []);
 
-
+  const handleRowUpdate = (newData, oldData) => {
+    const id = oldData._id;
+    const token_update = localStorage.getItem('user-save');
+    fetch(`http://localhost:5000/admin/account/details/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token_update}`
+      },
+      body: JSON.stringify(newData)
+    })
+      .then(response => {
+        if (response.ok) {
+          const updatedRows = [...accounts];
+          const index = updatedRows.findIndex(row => row.id === oldData.id);
+          updatedRows[index] = { ...newData, id: oldData.id };
+          setAccount(updatedRows);
+          window.location.reload();
+          toast.success('Account updated successfully!', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+          });
+        } else {
+          throw new Error(response.statusText);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
   // Ham logout ve trang homelogin
   function handleLogOutUser() {
     localStorage.removeItem('user-save');
     window.location.href = '/login'
   }
-
 
   // dung de luu lai xem tai khoan nao da login
 
@@ -129,7 +171,7 @@ function HomeAdmin() {
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
               >
-                <MenuItem value={'all'}><em>All</em></MenuItem>
+                <MenuItem value={'all'}><em>Role</em></MenuItem>
                 <MenuItem value={'Admin'}>Admin</MenuItem>
                 <MenuItem value={'Company'}>Company</MenuItem>
                 <MenuItem value={'School'}>School</MenuItem>
@@ -204,36 +246,7 @@ function HomeAdmin() {
                   reject(error)
                 })
             }),
-            onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
-              const id = oldData._id;
-              const token_update = localStorage.getItem('user-save');
-              fetch(`http://localhost:5000/admin/account/details/${id}`, {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${token_update}`
-                },
-                body: JSON.stringify(newData)
-              })
-                .then(response => {
-                  if (response.ok) {
-                    const updatedRows = [...accounts];
-                    const index = updatedRows.findIndex(row => row.id === oldData.id);
-                    updatedRows[index] = { ...newData, id: oldData.id };
-                    setTimeout(() => {
-                      setAccount(updatedRows);
-                      resolve();
-                    }, 2000);
-                    window.location.reload();
-                  } else {
-                    throw new Error(response.statusText);
-                  }
-                })
-                .catch(error => {
-                  console.error(error);
-                  reject(error);
-                });
-            }),
+          onRowUpdate :((newData, oldData) => handleRowUpdate(newData, oldData))
           }}
           options={{
             actionsColumnIndex: -1,
@@ -243,6 +256,7 @@ function HomeAdmin() {
 
           }}
         />
+        <ToastContainer/>
       </div>
 
       <link

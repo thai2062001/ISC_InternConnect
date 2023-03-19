@@ -17,7 +17,7 @@ function SendingMail(props) {
     const sub = "Thư mời làm việc"
     const Mess = "Lời đầu tiên, chúng tôi vô cùng cảm ơn vì bạn đã quan tâm và dành thời gian ứng tuyển vị trí Thực tập IT Developer tại công ty chúng tôi. Thông qua buổi phỏng vấn cũng như trao đổi, chúng tôi đánh giá cao kinh nghiệm và kỹ năng của bạn.Bởi vậy, chúng tôi xin trân trọng mời bạn gia nhập vào đội ngũ công ty AITECH ASIA, với vị trí Thực tập IT Developer . Bạn vui lòng bắt đầu đến nhận việc vào 01/04/2023, từ 9:00, tại 45 đường 3/2 phường 11, quận 10, HCM.Khi nhận được Email này, bạn vui lòng xác nhận lại cho chúng tôi trước 27/03/2023. Nếu có bất cứ thắc mắc nào, bạn hãy liên hệ với chúng tôi qua thuctap@aitechasia.vn.Chúng tôi rất mong đợi được đón tiếp bạn như một thành viên của đội ngũ. Xin chân thành cảm ơn bạn!"
     useEffect(() => {
-        if (props.email && props.company_email) {
+        if (props.email && props.company_email && props.idSending) {
             setToEmail(props.email);
             setToComEmail(props.company_email)
             setToId(props.idSending)
@@ -30,35 +30,40 @@ function SendingMail(props) {
                 props.onClose();
               }
         }
-        const handleFormSubmit = (event,toId) => {
-            event.preventDefault();
-            // Tạo payload gửi đi
-            const payload = {
+        const handleFormSubmit = (event) => {
+          event.preventDefault();
+      
+          // Check if toId is valid ObjectId
+          if (!toId.match(/^[0-9a-fA-F]{24}$/)) {
+              console.error('Invalid toId: ', toId);
+              return;
+          }
+      
+          // Tạo payload gửi đi
+          const payload = {
               fromMail: toComEmail,
               toMail: toEmail,
               subject: subject,
               message: message
-            };
-          
-            // Thực hiện gửi email
-            fetch(`http://localhost:5000/company/list-cv/details/${toId}/send-email`, {
+          };
+      
+          // Thực hiện gửi email
+          fetch(`http://localhost:5000/company/list-cv/details/${toId}/send-email`, {
               method: 'POST',
               headers: {
-                'Content-Type': 'application/json'
-
+                  'Content-Type': 'application/json'
               },
               body: JSON.stringify(payload)
-            })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error(error));
-          
-            // Gọi onClose
-            if (props.onClose) {
+          })
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+      
+          // Gọi onClose
+          if (props.onClose) {
               props.onClose();
-            }
-          };
-
+          }
+      };
     return (
         <div className={cx('sending-mail')}>
             <div className={cx('sending-mail-content')}>
@@ -77,7 +82,7 @@ function SendingMail(props) {
                         type="text"
                         id="subject"
                         name="subject"
-                        value={sub}
+                        
                         onChange={(event) => setSubject(event.target.value)}
                         required
                     />
@@ -86,7 +91,7 @@ function SendingMail(props) {
                     <textarea
                         id="message"
                         name="message"
-                        value={Mess}
+                       
                         onChange={(event) => setMessage(event.target.value)}
                         required
                     ></textarea>

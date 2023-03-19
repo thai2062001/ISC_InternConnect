@@ -89,7 +89,7 @@ function SchoolAdmin() {
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
                           >
-                            <MenuItem value={'all'}><em>All</em></MenuItem>
+                            <MenuItem value={'all'}><em>Location</em></MenuItem>
                             <MenuItem value={'HCM'}>HCM</MenuItem>
                             <MenuItem value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
                             <MenuItem value={'Hà Nội'}>Hà Nội</MenuItem>
