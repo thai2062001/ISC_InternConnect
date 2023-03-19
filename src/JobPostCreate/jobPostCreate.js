@@ -7,12 +7,17 @@ import SlidebarCompany from '../Component/Layout/SlidebarCompany'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+
 const cx = classNames.bind(styles)
 function JobPostCreate() {
     const [accounts, setAccount] = useState({})
     const [name, setName] = useState('')
     const [logo, setLogo] = useState()
     const [selectedDate, setSelectedDate] = useState(null);
+
+ 
+
+
 
     useEffect(() => {
         const localstore = localStorage.getItem('user-save')

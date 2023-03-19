@@ -1,0 +1,80 @@
+/* Wrapper container */
+.wrapper {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+  }
+  
+  /* Main container */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  /* Job Application List */
+  .jobapp {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  
+  /* Job Application Card Container */
+  .jobapp_container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    height: 95px;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
+  }
+  
+  /* Company Logo */
+  .logo {
+    margin-right: 1rem;
+  }
+  
+  .logo img {
+    height: 3rem;
+    object-fit: contain;
+  }
+  
+  /* Job Application Detail */
+  .jobapp_detail {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Job Title */
+  .jobapp_span.title_span {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Company Name */
+  .jobapp_span.company_span {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  .jobapp_span.date_span {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Job Status */
+  .jobapp_span.status_span {
+    font-size: 1rem;
+    font-style: italic;
+    color: #3fbb67;
+  }

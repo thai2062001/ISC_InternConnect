@@ -19,6 +19,12 @@ function Header() {
   const handleLogin = () => {
     window.location.href = "/login"
   }
+  const handleCV = () => {
+    window.location.href = "/statuscv"
+  }
+  const handleFavorite = () => {
+    window.location.href = "/favorite_jobapp"
+  }
 
   const handleSettings = () => {
     window.location.href = "/accountSettings"
@@ -76,6 +82,12 @@ function Header() {
                   <ul className="header__login-menu">
                     <li className={cx('menu-li')} onClick={handleSettings}>
                       Cài đặt
+                    </li>
+                    <li className={cx('menu-li')} onClick={handleCV}>
+                      Theo dõi tình trạng CV
+                    </li>
+                    <li className={cx('menu-li')} onClick={handleFavorite}>
+                      JobApp yêu thích
                     </li>
                     <li className={cx('menu-li')} onClick={handleLogOut}>
                       Đăng xuất

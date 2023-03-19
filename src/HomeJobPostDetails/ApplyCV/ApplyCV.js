@@ -1,6 +1,8 @@
 import classNames from "classnames/bind";
 import styles from "./ApplyCV.module.scss";
 import React, { useState, useEffect, useRef } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const cx = classNames.bind(styles);
 
@@ -28,6 +30,7 @@ function ApplyCV(props) {
         const formData = new FormData();
         formData.append("date", date);
         formData.append("email", email);
+        formData.append("title", title);
         formData.append("name", name);
         formData.append("major", major);
         formData.append("nameschool", nameschool);
@@ -40,6 +43,16 @@ function ApplyCV(props) {
         })
           .then((response) => response.json())
           .then((data) => {
+            toast.success('Sucess!', {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+          });
             
           })
           .catch((error) => {
@@ -76,6 +89,7 @@ function ApplyCV(props) {
           <button type="submit" onClick={handleApply}>
             Gửi
           </button>
+          <ToastContainer/>
         </form>
       </div>
     </div>

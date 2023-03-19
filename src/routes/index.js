@@ -31,7 +31,8 @@ import AuForgot from '../Login/ForgotPW/AuForgot/auForgot';
 import VerifyAccount from '../SignUp/VerifyAccount/verify';
 import SkillAdmin from '../Skill_Admin/skillAdmin';
 import CreateCV from '../CreateCV/createCV';
-
+import StatusCV from '../Home/StatusCV/statusCV';
+import Favorite_JobApp from '../Home/Favorite_JobApp/favorite_JobApp';
 //public routers
 
 
@@ -39,6 +40,8 @@ const publicRouters = [
     {path: '/',component: Home,layout:HeaderOnly},
     {path: '/:id',component: HomeJobPostDetail,layout:HeaderOnly},
     {path: '/accountSettings',component: Settings,layout:HeaderOnly},
+    {path: '/statuscv',component: StatusCV,layout:HeaderOnly},
+    {path: '/favorite_jobapp',component: Favorite_JobApp,layout:HeaderOnly},
     // {path: '/home',component: HomeLogin,layout:HeaderLogin},
     {path: '/settings',component: AccountSettings,layout: null},
     {path: '/createcv',component: CreateCV,layout: null},
