@@ -3,49 +3,72 @@ import styles from './changPassword.module.scss'
 import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const cx = classNames.bind(styles)
-function ChangePassword() {
-    const [newpassword, setNewPassword] = useState("");
-    const [confpassword, setConfirmNewPassword] = useState("");
+function ChangePassword(props) {
+
+    const [oldPass, setOldPassword] = useState("");
+    const [newPass, setNewPassword] = useState("");
+    const [cfmPass, setConfirmNewPassword] = useState("");
 
     const jobpost_token = localStorage.getItem('user-save');
     const decodeEmail = jwt_decode(jobpost_token);
     const email = decodeEmail.email;
 
     const handleClose = () => {
-      
-    };
+        if (props.onClose) {
+          props.onClose();
+        }
+      };
+
   
-  const handleSubmit = (event) => {
-  event.preventDefault();
-  if (newpassword !== confpassword) {
-    alert("Mật khẩu mới và xác nhận mật khẩu mới không khớp");
-    return;
-  }
-
-  const request = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email,
-      newpassword,
-      confpassword,
-    }),
-  };
-
-  fetch("http://localhost:5000/auth/reset-password", request)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Lỗi khi đổi mật khẩu");
+    const handleChangePassword = async (event) => {
+      event.preventDefault();
+      const URL = 'http://localhost:5000/setting/change-password';
+      const jobapptoken = localStorage.getItem('user-save');
+    
+      const data = {
+        oldPass: oldPass,
+        newPass: newPass,
+        cfmPass: cfmPass,
+      };
+    
+      try {
+        const response = await fetch(URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jobapptoken}`,
+          },
+          body: JSON.stringify(data),
+        });
+    
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Something went wrong!');
+        }
+    
+        const result = await response.json();
+        console.log(result);
+        toast.success('Change password successfully!', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message || 'Failed to change password!');
       }
-      alert("Đổi mật khẩu thành công");
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-};
+    };
+
 return (
   <div>
     (
@@ -53,31 +76,46 @@ return (
         <button className={cx('close-button')} onClick={handleClose}>
           X
         </button>
-        <form className={cx('change-password-form')} onSubmit={handleSubmit}>
+        <form className={cx('change-password-form')} onSubmit={handleChangePassword}>
           <h2>Đổi mật khẩu</h2>
+          <div>
+            <label className={cx('lable_input')} htmlFor="oldpassword">Nhập mật khẩu cũ:</label>
+            <input
+            className={cx('pass_input')}
+              type="password"
+              id="oldpassword"
+              value={oldPass}
+              onChange={(event) => setOldPassword(event.target.value)}
+              required
+            />
+          </div>
           
           <div>
-            <label htmlFor="newPassword">Nhập mật khẩu mới:</label>
+            <label className={cx('lable_input')} htmlFor="newPassword">Nhập mật khẩu mới:</label>
             <input
+              className={cx('pass_input')}
               type="password"
               id="newPassword"
-              value={newpassword}
+              value={newPass}
               onChange={(event) => setNewPassword(event.target.value)}
               required
             />
           </div>
 
           <div>
-            <label htmlFor="confirmNewPassword">Nhập lại mật khẩu mới:</label>
+            <label className={cx('lable_input')} htmlFor="confirmNewPassword">Nhập lại mật khẩu mới:</label>
             <input
+              className={cx('pass_input')}
               type="password"
               id="confirmNewPassword"
-              value={confpassword}
+              value={cfmPass}
               onChange={(event) => setConfirmNewPassword(event.target.value)}
               required
             />
           </div>
-          <button type="submit">Lưu thay đổi</button>
+        
+          <button className={cx('submit_button')} type="submit">Lưu thay đổi</button>
+          
         </form>
       </div>
     )
