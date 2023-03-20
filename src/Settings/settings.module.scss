@@ -14,18 +14,10 @@
 }
 
 .settings-item label {
-  width: 150px;
+  width: 200px;
   margin-right: 150px;
 }
-.info_input {
-  background-color: rgba(255, 255, 255, 0.5);
-  border: none;
-  border-radius: 5px;
-  height: 30px;
-  padding: 5px;
-  font-size: 16px;
-  width: 200px;
-}
+
 
 .action_span {
   color: #fff;
@@ -57,21 +49,6 @@
   right: 10px;
   cursor: pointer;
 }
-.wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
-  background-color: #f0f0f0;
-}
-
-.settings-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
 
 .info_input {
   background-color:#f0f0f0;
@@ -85,7 +62,7 @@
 
 .settings-option {
   display: flex;
-  width: 600px;
+  width: 800px;
   align-items: center;
   justify-content: space-between;
   margin-top: 20px;
@@ -95,15 +72,24 @@
 
 .settings-option label {
   font-weight: bold;
-  margin-right: 10px;
+margin-left: 80px;
+  width: 250px;
 }
 
-.settings-option span {
-  margin-left: 90px;
+.password_input{
+  background-color:#f0f0f0;
+  border: none;
+  border-radius: 5px;
+  margin-left: 48px;
+  height: 30px;
+  padding: 5px;
+  font-size: 16px;
+  width: 150px;
 }
 
-.settings-option button {
+.settings-option .action_button {
   padding: 10px;
+  margin-right:32px;
   background-color: #2196f3;
   border: none;
   color: #fff;

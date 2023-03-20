@@ -99,17 +99,7 @@ function HomeJobPostDetail() {
 
 
     const handleApply = () => {
-        toast.success('Sucess!', {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-        setShowPopup(true)
+        setShowPopup(true)  
     }
 
     const handleFavorite = () => {
@@ -234,6 +224,7 @@ function HomeJobPostDetail() {
                                     expdate={jobPosts.expdate}
                                     username={Username}
                                     major={student.major}
+                                    logo={jobPosts.logo}
                                     title={jobPosts.title}
                                     email={decodeEmail.email}
                                     company={jobPosts.namecompany}

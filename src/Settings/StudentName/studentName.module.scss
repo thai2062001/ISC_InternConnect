@@ -50,8 +50,14 @@
   border-radius: 5px;
 }
 
+.action_buttons{
+  display: flex;
+
+}
+
 .change-password-form .submit_button {
   margin-top: 20px;
+  margin-left: 20px;
   padding: 10px;
   background-color: #4CAF50;
   color: #fff;
@@ -59,7 +65,6 @@
   border-radius: 5px;
   cursor: pointer;
 }
-
 .change-password-form .submit_button:hover {
   background-color: #3e8e41;
 }

@@ -13,6 +13,7 @@ function ApplyCV(props) {
   const [email, setEmail] = useState(props.initialEmail || "");
   const [namecompany, setnameCompany] = useState("");
   const [nameschool, setNameSchool] = useState("");
+  const [logo, setLogo] = useState("");
   const [title, setTitle] = useState("");
   const cvInputRef = useRef(null);
 
@@ -21,17 +22,20 @@ function ApplyCV(props) {
     setName(props.username);
     setMajor(props.major);
     setEmail(props.email);
+    setLogo(props.logo);
     setnameCompany(props.company);
     setNameSchool(props.school);
     setTitle(props.title)
   }, []);
-  const handleApply = () => {
+  const handleApply = (event) => {
+    event.preventDefault()
     const cvFile = cvInputRef.current.files[0];
         const formData = new FormData();
         formData.append("date", date);
         formData.append("email", email);
         formData.append("title", title);
         formData.append("name", name);
+        formData.append("logo", logo);
         formData.append("major", major);
         formData.append("nameschool", nameschool);
         formData.append("namecompany", namecompany);
@@ -42,23 +46,19 @@ function ApplyCV(props) {
           body: formData,
         })
           .then((response) => response.json())
-          .then((data) => {
-            toast.success('Sucess!', {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-          });
-            
+          .then((data) => {  
+            toast.success('Ứng tuyển thành công!');
+            handleOnClose(); // đóng popup sau khi thực hiện xong
           })
           .catch((error) => {
             // xử lý lỗi
           });
   };
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+    handleApply();
+    props.onClose();
+  }
 
   const handleOnClose = () => {
     if (props.onClose) {
@@ -73,7 +73,7 @@ function ApplyCV(props) {
         <span className={cx("close")} onClick={handleOnClose}>
           &times;
         </span>
-        <form type = "submit">
+        <form onSubmit={handleApply}>
           <label htmlFor="Email">Email:</label>
           <input
             className={cx("email-input")}
@@ -86,7 +86,7 @@ function ApplyCV(props) {
 
           <label htmlFor="CV">Hồ sơ xin việc *</label>
           <input type="file" name="CV" id="CV" ref={cvInputRef} />
-          <button type="submit" onClick={handleApply}>
+          <button type="submit" >
             Gửi
           </button>
           <ToastContainer/>
