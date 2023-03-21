@@ -105,7 +105,7 @@ function HomeJobPostDetail() {
     const handleFavorite = () => {
         const access_token = localStorage.getItem('user-save');
         const decodeEmail = jwt_decode(access_token);
-        const urlDelete = `http://localhost:5000/details/delete-fa/${favorite}`;
+        const url = `http://localhost:5000/details/${favorite}`;
       
         const isIdInFavorite = (id) => {
           if (student.favorite.includes(id)) {
@@ -121,7 +121,7 @@ function HomeJobPostDetail() {
             student.favorite.splice(index, 1);
           }
           // Update the server
-          fetch(urlDelete, {
+          fetch(url, {
             method: "PUT",
             headers: {
               "Authorization": "Bearer " + access_token,
@@ -147,11 +147,10 @@ function HomeJobPostDetail() {
             console.error('Error:', error);
           });
         } else {
-            const urlAdd = `http://localhost:5000/details/${favorite}`;
           // Add the ID to the favorite array
           student.favorite.push(favorite);
           // Update the server
-          fetch(urlAdd, {
+          fetch(url, {
             method: "PUT",
             headers: {
               "Authorization": "Bearer " + access_token,
@@ -223,7 +222,6 @@ function HomeJobPostDetail() {
                             <Popup open={showPopup} onClose={() => setShowPopup(false)}>
                                 <ApplyCV
                                     expdate={jobPosts.expdate}
-                                    id_post = {jobPosts._id}
                                     username={Username}
                                     major={student.major}
                                     logo={jobPosts.logo}

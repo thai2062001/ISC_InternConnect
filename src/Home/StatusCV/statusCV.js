@@ -47,13 +47,17 @@ function StatusCV() {
     const date_string = jobApplication.date;
     const formatted_date = moment(date_string).format('DD/MM/YYYY');
 
+
+    const handleJobpost = (id)=>{
+        window.location.href = `${id}`
+    }
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
                 <ul className={cx('jobapp')}>
                     {jobApplication.slice(pagesVisited, pagesVisited + applicationsPerPage).map((jobApp, index) => {
                         return (
-                            <div className={cx('jobapp_container')} key={index}>
+                            <div onClick={()=>handleJobpost(jobApp.id_post)} className={cx('jobapp_container')} key={index}>
                                 <div className={cx('logo')}>
                                     <img src={jobApp.logo}/>
                                 </div>

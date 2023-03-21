@@ -3,7 +3,7 @@ import styles from "./Signup.module.scss";
 import { FaUserAlt, FaLock, FaEnvelope, FaPhoneAlt, FaSchool } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 
 function Signup() {
   const [account, setAccount] = useState([]);
-  const [schoolList, setSchoolList] = useState([{'nameschool': '', 'id':''}])
+  const [schoolList, setSchoolList] = useState([{ 'nameschool': '', 'id': '' }])
   const [username, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,13 +22,13 @@ function Signup() {
 
   const URL = 'http://localhost:5000/admin/account'
   useEffect(() => {
-      const fetchData = async () => {
-          const result = await fetch(URL)
-          result.json().then(json => {
-              setAccount(json)
-          })
-      }
-      fetchData();
+    const fetchData = async () => {
+      const result = await fetch(URL)
+      result.json().then(json => {
+        setAccount(json)
+      })
+    }
+    fetchData();
   }, []);
 
   function handleOptionChange(event) {
@@ -37,8 +37,8 @@ function Signup() {
   function handleEmailChange(event) {
     setEmail(event.target.value);
   }
-  useEffect(() =>{
-    const fecthData = async () =>{
+  useEffect(() => {
+    const fecthData = async () => {
       const response = await fetch("http://localhost:5000/admin/school");
       const newData = await response.json();
       setSchoolList(newData);
@@ -46,21 +46,47 @@ function Signup() {
     fecthData();
   }, [])
 
+  const checkDuplicate = () => {
+    for (let i = 0; i < account.length; i++) {
+      if (
+        account[i].username === username ||
+        account[i].email === email ||
+        account[i].phonenumber === phonenumber
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
 
-  const HandleSignup =  (email) => {
+  const HandleSignup = (email) => {
+
+    for (let i = 0; i < account.length; i++) {
+      if (account[i].username === username) {
+        toast.error("An account with this username already exists!");
+        return;
+      }
+      else if (account[i].email === email) {
+        toast.error("An account with this email already exists!");
+        return;
+      }
+      else if (account[i].phonenumber === phonenumber) {
+        toast.error("An account with this phone number already exists!");
+        return;
+      }
+    }
 
     fetch('http://localhost:5000/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, email, password ,confpassword,phonenumber,gender,school})
+      body: JSON.stringify({ username, email, password, confpassword, phonenumber, gender, school })
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        window.location.href = '/login'
       })
       .catch(error => console.error(error));
   };
-
 
 
   return (
@@ -82,10 +108,10 @@ function Signup() {
                 <FaUserAlt />
               </div>
               <div className={cx("div")}>
-                <input 
-                  placeholder="Username" 
-                  value= {username}
-                  onChange={(e)=>(setName(e.target.value))}
+                <input
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => (setName(e.target.value))}
                   type="text"
                   id="username"
                   className={cx("input-user")}
@@ -114,7 +140,7 @@ function Signup() {
                 <input
                   placeholder="Phone number"
                   value={phonenumber}
-                  onChange={(e)=>(setPhone(e.target.value))}
+                  onChange={(e) => (setPhone(e.target.value))}
                   type="text"
                   id="phone"
                   className={cx("input-user")}
@@ -129,7 +155,7 @@ function Signup() {
                 <input
                   placeholder="Password"
                   value={password}
-                  onChange={(e)=>(setPassword(e.target.value))}
+                  onChange={(e) => (setPassword(e.target.value))}
                   type="password"
                   id="password"
                   className={cx("input-user")}
@@ -144,7 +170,7 @@ function Signup() {
                 <input
                   placeholder="Re-enter password"
                   value={confpassword}
-                  onChange={(e)=>(setConfirmPass(e.target.value))}
+                  onChange={(e) => (setConfirmPass(e.target.value))}
                   type="password"
                   id="repass"
                   className={cx("input-user")}
@@ -152,45 +178,45 @@ function Signup() {
               </div>
             </div>
             <div className={cx("input-div phone")}>
-            <div className={cx("i")}>
+              <div className={cx("i")}>
                 <FaSchool />
               </div>
               <div className={cx("div")}>
-                <select  value={school} onChange={handleOptionChange} name="school" className={cx("input-school")}>
-                  <option  value="schoolName">Choose School Name</option>
+                <select value={school} onChange={handleOptionChange} name="school" className={cx("input-school")}>
+                  <option value="schoolName">Choose School Name</option>
                   {
-                    schoolList.map(school =>(
-                      <option   id="school" key = {school.id}>{school.nameschool}</option>
+                    schoolList.map(school => (
+                      <option id="school" key={school.id}>{school.nameschool}</option>
                     ))
                   }
                 </select>
               </div>
             </div>
+            <ToastContainer />
             <div className={cx("input-div gender")}>
               <div className={cx("div-gender")}>
                 <input
                   name="gender"
-                  onChange={(e)=>(setGender(e.target.value))}
+                  onChange={(e) => (setGender(e.target.value))}
                   type="radio"
                   id="gender"
                   className={cx("input-gender")}
                   value="Male"
-            
+
                 />
                 <span className={cx("gender")}>Male</span>
                 <input
                   name="gender"
-                  onChange={(e)=>(setGender(e.target.value))}
+                  onChange={(e) => (setGender(e.target.value))}
                   type="radio"
                   id="gender"
                   className={cx("input-gender")}
                   value="Female"
-             
                 />
                 <span className={cx("gender")}>Female</span>
               </div>
             </div>
-            <button onClick={()=>{HandleSignup(email)}} className={cx("btn")}>
+            <button onClick={() => { HandleSignup(email) }} className={cx("btn")}>
               Signup
             </button>
           </div>

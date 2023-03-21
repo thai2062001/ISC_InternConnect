@@ -7,6 +7,10 @@ import { useState,useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import Popup from "reactjs-popup";
 import ForgotPW from './ForgotPW/forgotPW';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const cx = classNames.bind(styles)
 
 
@@ -56,6 +60,7 @@ return(
 			<div >
 				<img src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/82b8d8efd3b0ac6382b9d0d71a99c6cf9dcefa23/img/avatar.svg"/>
 				<h2 className={cx('title')}>Welcome</h2>
+        
            		<div className={cx('input-div one')}>
            		   <div className={cx('i')}>
                   <FaUserAlt/>
@@ -77,7 +82,7 @@ return(
               <a onClick={handleSignUp} >Sign Up?</a>
 
               </div>
-            	
+            	<ToastContainer/>
             	<button onClick={HandleLogin} className={cx('btn')}>Login</button>
             </div>
         </div>

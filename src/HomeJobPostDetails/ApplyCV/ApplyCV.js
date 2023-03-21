@@ -15,6 +15,7 @@ function ApplyCV(props) {
   const [nameschool, setNameSchool] = useState("");
   const [logo, setLogo] = useState("");
   const [title, setTitle] = useState("");
+  const [ID, setID] = useState("");
   const cvInputRef = useRef(null);
 
   useEffect(() => {
@@ -26,6 +27,7 @@ function ApplyCV(props) {
     setnameCompany(props.company);
     setNameSchool(props.school);
     setTitle(props.title)
+    setID(props.id_post)
   }, []);
   const handleApply = (event) => {
     event.preventDefault()
@@ -39,6 +41,7 @@ function ApplyCV(props) {
         formData.append("major", major);
         formData.append("nameschool", nameschool);
         formData.append("namecompany", namecompany);
+        formData.append("id_post", ID);
         formData.append("cv", cvFile);
     
         fetch("http://localhost:5000/create", {
