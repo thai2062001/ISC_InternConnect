@@ -4,6 +4,9 @@ import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, F
 import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
 import ReactPaginate from 'react-paginate';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
@@ -11,8 +14,10 @@ const cx = classNames.bind(styles)
 function Home() {
   const [accounts, setAccount] = useState([])
   const [listJobPosts, setListJobPosts] = useState([])
+  const [jobpostSearch, setJobPostSearch] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
+
 
 
   const pageCount  = Math.ceil(listJobPosts.length / postsPerPage);
@@ -46,10 +51,42 @@ function Home() {
       const result = await fetch(api)
       result.json().then(json => {
         setListJobPosts(json);
+        setJobPostSearch(json);
       })
     }
     fetchData();
   }, []);
+
+  const handleSearch = () => {
+
+  
+    const inputJob = document.getElementById('job-search').value.toLowerCase();
+    const inputLocation = document.getElementById('location-search').value.toLowerCase();
+  
+    if (!inputJob && !inputLocation) {
+      setListJobPosts(jobpostSearch);
+      return;
+    }
+  
+    const filteredPosts = jobpostSearch.filter((post) => {
+      const jobTitle = post.title.toLowerCase();
+      const location = post.location.toLowerCase();
+  
+      if (inputJob && inputLocation) {
+        return (
+          jobTitle.includes(inputJob.toLowerCase()) &&
+          location.includes(inputLocation.toLowerCase())
+        );
+      } else if (inputJob) {
+        return jobTitle.includes(inputJob.toLowerCase());
+      } else if (inputLocation) {
+        return location.includes(inputLocation.toLowerCase());
+      }
+    });
+  
+    setListJobPosts(filteredPosts);
+  };
+
 
   const HandleNext = () => {
     let lists = document.querySelectorAll('#item');
@@ -79,15 +116,16 @@ function Home() {
               <div className={cx('banner-div')}>
                 <div className={cx('input-1')}>
                   <FaSearch className={cx('seach-icon')} />
-                  <input placeholder='Nhập từ khóa,Công việc' />
+                  <input id='job-search' className={cx('input-search-job')} placeholder='Nhập từ khóa,Công việc' />
                 </div>
                 <div className={cx('input-2')}>
                   <FaLocationArrow className={cx('seach-icon')} />
-                  <input placeholder='Nhập thành phố' />
+                  <input id='location-search' className={cx('input-search-location')} placeholder='Nhập thành phố' />
                 </div>
                 <div className={cx('search-button')}>
                   <FaSearch className={cx('seach-icon-button')} />
-                  <button>Tìm kiếm</button>
+                  <button onClick={handleSearch}>Tìm kiếm</button>
+                  <ToastContainer/>
                 </div>
               </div>
             </div>
