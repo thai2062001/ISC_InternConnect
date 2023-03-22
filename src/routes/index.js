@@ -1,7 +1,6 @@
 
 import Home from './../Home/Home';
 import Search from '../Pages/Search/Search';
-import UploadCV from '../UploadCV/Upload';
 import HeaderOnly from '../Component/Layout/HeaderOnly';
 import Profile from '../Profile/Profile';
 import HomeAdmin from '../HomeAdmin/HomeAdmin';
@@ -33,6 +32,7 @@ import SkillAdmin from '../Skill_Admin/skillAdmin';
 import CreateCV from '../CreateCV/createCV';
 import StatusCV from '../Home/StatusCV/statusCV';
 import Favorite_JobApp from '../Home/Favorite_JobApp/favorite_JobApp';
+import IntroduceCompany from '../CompanyManager/IntroduceCompany/introduceCompany';
 //public routers
 
 
@@ -47,7 +47,6 @@ const publicRouters = [
     {path: '/createcv',component: CreateCV,layout: null},
     {path: '/search',component: Search},
     {path: '/profile',component: Profile},
-    {path: '/uploadcv',component: UploadCV,layout: HeaderOnly},
     {path: '/login',component: Login,layout: null},
     {path: '/auth/forgot-password/',component: ForgotPW,layout: null},
     {path: '/auth/forgot-password/:email',component:AuForgot ,layout: null},
@@ -63,6 +62,7 @@ const publicRouters = [
     {path: '/homeadmin/skill',component:SkillAdmin ,layout: SlidebarOnly},
     {path: '/schooladmin',component:SchoolManager ,layout: SlidebarSchool },
     {path: '/companyadmin',component:CompanyManager ,layout: SlidebarCompany },
+    {path: '/companyadmin/companyinfo',component:IntroduceCompany ,layout: SlidebarCompany },
     {path: '/companyadmin/jobapp',component:JobApplication ,layout: SlidebarCompany },
     {path: '/companyadmin/create',component:JobPostCreate ,layout: SlidebarCompany },
     {path:'/companyadmin/:id' ,component:PageDetail,layout: SlidebarCompany },
