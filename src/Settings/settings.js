@@ -87,55 +87,11 @@ function Settings() {
       fetchData();
   }
 
-  const handleUploadCV = () => {
-    const formData = new FormData();
-    formData.append('cv1', file); // thêm file vào FormData
-  
-    fetch('http://localhost:5000/addcv', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Authorization': `Bearer ${Student_token}`
-      },
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Upload success:', data);
-      // Thông báo thành công
-      toast.success('Upload CV thành công!');
-    })
-    .catch(error => {
-      console.error('Upload error:', error);
-      // Thông báo lỗi
-      toast.error('Upload CV thất bại!');
-    });
-  }
-  const handleFileChange = (event) => {
-    if (event.target) {
-      setFile(event.target.files[0]);
-      console.log(file);
-    }
-  }
   return (
 
     <div className={cx('wrapper')}>
       <h1>Settings</h1>
       <div className={cx('update-info-wrapper')}>
-
-        <div className={cx('settings-option')}>
-          <label htmlFor="changePassword">Upload CV:</label>
-          <input className={cx('file_input')} 
-          type="file" 
-          accept="*" 
-          onChange={(e) => handleFileChange(e.target.files[0])}
-          />
-          <button onClick={handleUploadCV} className={cx('action_button')} >Upload CV</button>
-        </div>
-
-
-
-
-
 
         <div className={cx('settings-option')}>
           <label htmlFor="changePassword">Đổi mật khẩu:</label>
