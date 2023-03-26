@@ -34,7 +34,7 @@ function Favorite_JobApp() {
         },
       })
       const json = await result.json();
-      const student = json.profile.find(item => item.studentemail === emailUser);
+      const student = json.profile.studentemail === emailUser ? json.profile : null;
       if (student) {
         setStudent(student);
       } else {

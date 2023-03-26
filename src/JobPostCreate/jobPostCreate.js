@@ -14,19 +14,6 @@
         const [name, setName] = useState('')
         const [logo, setLogo] = useState()
         const [selectedDate, setSelectedDate] = useState(null);
-        const [skills, setSkills] = useState([]);
-        const [checkedSkills, setCheckedSkills] = useState([]);
-
-
-        const URLSkill = 'http://localhost:5000/company/list-skill'
-        useEffect(() => {
-            async function fetchSkills() {
-                const response = await fetch(URLSkill);
-                const data = await response.json();
-                setSkills(data);
-            }
-            fetchSkills();
-        }, []);
 
         useEffect(() => {
             const localstore = localStorage.getItem('user-save')
@@ -64,7 +51,7 @@
                 formData.append('benefit', document.getElementById('benefitInput').value);
                 formData.append('required', document.getElementById('requiredInput').value);
                 formData.append('responsibility', document.getElementById('ResponInput').value);
-                    formData.append('skill', checkedSkills.join(','));
+                formData.append('skill', document.getElementById('skillInput').value);
                 formData.append('expdate', selectedDate);
                 formData.append('logo', logo);
                 const response = await fetch('http://localhost:5000/company/create', {
@@ -85,15 +72,7 @@
             }
         };
 
-        const handleSkillChange = (e) =>{
- const skill = e.target.value;
-  const isChecked = e.target.checked;
-  if (isChecked) {
-    setCheckedSkills([...checkedSkills, skill]); // add the skill to the array
-  } else {
-    setCheckedSkills(checkedSkills.filter((s) => s !== skill)); // remove the skill from the array
-  }
-        }
+        
         return (
             <div className={cx('wrapper')} >
                 <h1 >Create a Jobpost</h1>
@@ -161,14 +140,7 @@
                     </div>
                     <div className={cx('wrapper-ip')}>
                     <label className={cx('label-des')} htmlFor="skillinput">Kỹ năng</label>
-                        <div className={cx('checkbox_wrapper')}>
-                        {skills.map(skill => (
-                            <div className={cx('input_wrapper_checkbox')} key={skill.id}>
-                                <input type="checkbox" id={`skill-${skill._id}`} name="skills" value={skill.nameskill} onChange={handleSkillChange} />
-                                <label htmlFor={`skill-${skill._id}`}>{skill.nameskill}</label>
-                            </div>
-                        ))}
-                        </div>
+                    <textarea id="skillInput" type="text" className={cx('input-res')} />
                     </div>
                     <div className={cx('button-action-div')}>
                         <button className={cx('button-action')} onClick={createJobPost}>Đăng bài</button>

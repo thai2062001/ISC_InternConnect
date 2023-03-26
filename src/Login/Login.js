@@ -9,7 +9,7 @@ import Popup from "reactjs-popup";
 import ForgotPW from './ForgotPW/forgotPW';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Helmet } from 'react-helmet';
 
 const cx = classNames.bind(styles)
 
@@ -47,6 +47,9 @@ function Login() {
 
 return(
       <div>
+              <Helmet>
+        <title>Đăng nhập</title>
+      </Helmet>
       <img className={cx('wave')} src="https://github.com/sefyudem/Responsive-Login-Form/blob/master/img/wave.png?raw=true"/>
 	<div className={cx('container')}>
 		<div className={cx('img')}>

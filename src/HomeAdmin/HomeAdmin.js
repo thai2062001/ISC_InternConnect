@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from './HomeAdmin.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
-import MaterialTable, { MTablePagination } from "material-table";
+import MaterialTable from "material-table";
 import Is_valid_password from "./CheckPassword";
 import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
 import { ToastContainer, toast } from 'react-toastify';
@@ -24,6 +24,9 @@ function HomeAdmin() {
 
 
   const columns = [
+    {
+      title: "ID", field: "_id",
+    },
     {
       title: "Name", field: "username",
     },
@@ -281,6 +284,11 @@ function HomeAdmin() {
           }}
           options={{
             actionsColumnIndex: -1,
+            headerStyle: {
+              fontSize: '18px',
+              width: '200px',
+            },
+            columnsButton:true,
             addRowPosition: "first",
             filtering: true,
             lookupFilter: true,

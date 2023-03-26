@@ -5,7 +5,13 @@ import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import { IconButton } from '@material-ui/core';
 import { Add as AddIcon, Edit as EditIcon,Mail as MailIcon  } from '@material-ui/icons';
-import {  MenuItem, Select } from "@material-ui/core";
+import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import * as XLSX from 'xlsx';
+import PrintIcon from '@material-ui/icons/Print'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 
 const cx = classNames.bind(styles)
@@ -16,7 +22,16 @@ function CompanyManager() {
     const [filteredAccounts, setFilteredAccounts] = useState([]);
     const [expdate, setDate] = useState('all')
     const [location, setLocation] = useState('all')
+    const [defaultFilters, setDefaultFilters] = useState({
+        expdate: 'all',
+        location: 'all'
+      });
 
+      const resetFilters = () => {
+        setDate(defaultFilters.expdate);
+        setLocation(defaultFilters.location);
+      };
+    
     useEffect(() => {
         const filteredAccounts = accounts.filter(account => {
           if (location !== 'all' && account.location !== location) {
@@ -29,6 +44,8 @@ function CompanyManager() {
         });
         setFilteredAccounts(filteredAccounts);
       }, [accounts,location,expdate]);
+
+
 
     const columns = [
         { title: "title", field: "title" },
@@ -89,6 +106,33 @@ function CompanyManager() {
         localStorage.removeItem('user-save');
         window.location.href = '/login'
     }
+
+    
+      const downloadExcel = () => {
+        const newData = filteredAccounts.map(row => {
+          delete row.tableData
+          return row
+        })
+        const workSheet = XLSX.utils.json_to_sheet(newData)
+        const workBook = XLSX.utils.book_new()
+        XLSX.utils.book_append_sheet(workBook, workSheet, "accounts")
+        //Buffer
+        let buf = XLSX.write(workBook, { bookType: "xlsx", type: "buffer" })
+        //Binary string
+        XLSX.write(workBook, { bookType: "xlsx", type: "binary" })
+        //Download
+        XLSX.writeFile(workBook, "CompanyManagerData.xlsx")
+      }
+      const downloadPdf = () => {
+        const doc = new jsPDF()
+        doc.text("Account Details", 20, 10)
+        doc.autoTable({
+          theme: "grid",
+          columns: columns.map(col => ({ ...col, dataKey: col.field })),
+          body: filteredAccounts
+        })
+        doc.save('CompanyManagerData.pdf')
+      }
     return (
             <div className="App">
                 <div className={cx('wrapper')}>
@@ -105,6 +149,17 @@ function CompanyManager() {
                         data={filteredAccounts}
                         title='Company Data'
                         columns={columns}
+                        components={{
+                            Pagination: (props) => <>
+                
+                              <Grid container style={{ padding: 15 }}>
+                                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
+                                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+                              </Grid>
+                              <Divider />
+                              <TablePagination {...props} />
+                            </>
+                          }}
                         actions={[
                             {
                                 icon: () => <Select
@@ -122,7 +177,26 @@ function CompanyManager() {
                                 </Select>,
                                 tooltip: "Filter Location",
                                 isFreeAction: true
-                              }
+                              },
+                              {
+                                icon: () => <img style={{width:'25px',height:'25px'}} src="https://img.icons8.com/ultraviolet/40/null/restart--v2.png"/>,
+                                tooltip: "Reset Filters",
+                                onClick:()=>resetFilters(),
+                                isFreeAction: true
+                              },
+                              {
+                                icon: () => <img style={{width:'25px',height:'25px'}} src="https://img.icons8.com/color/48/null/ms-excel.png"/>,// you can pass icon too
+                                tooltip: "Export to Excel",
+                                onClick: () => downloadExcel(),
+                                isFreeAction: true
+                              },
+                              {
+                                icon: () =><img style={{width:'25px',height:'25px'}} src="https://img.icons8.com/color/48/null/pdf-2--v1.png"/>,// you can pass icon too
+                                tooltip: "Export to Pdf",
+                                onClick: () => downloadPdf(),
+                                isFreeAction: true
+                              },
+
                         ]}
                         editable={{
                             onRowDelete: selectedRow => new Promise((resolve, reject) => {
@@ -155,13 +229,16 @@ function CompanyManager() {
 
                         }}
                         options={{
-                            actionsColumnIndex: -1, addRowPosition: "first",
+                            actionsColumnIndex: -1,
                             headerStyle: {
-                                fontSize: '18px',
-                                width: '200px',
-                              },
-                              columnsButton:true,
-                        }}
+                              fontSize: '18px',
+                              width: '200px',
+                            },
+                            columnsButton: true,
+                            addRowPosition: "first",
+                            filtering: true,
+                            lookupFilter: true,
+                          }}
                     />
                 </div>
 
