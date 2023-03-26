@@ -58,27 +58,30 @@ function SchoolManager() {
       useEffect(() => {
         const localstore = localStorage.getItem('user-save')
         const decodeUser = jwt_decode(localstore);
-        console.log(decodeUser.username);
-        console.log(decodeUser.email);
         setName(decodeUser.username)
     }, [])
     const school_token = localStorage.getItem('user-save');
-    const URL = 'http://localhost:5000/uni'
+    const URL = 'http://localhost:5000/uni';
+    
     useEffect(() => {
         const fetchData = async () => {
-            const result = await fetch(URL,{
-                method:'GET',
-                headers:{
+            const result = await fetch(URL, {
+                method: 'GET',
+                headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${school_token}`
                 },
-            })
-            result.json().then(json => {
-                setAccount(json)
-            })
-        }
+            });
+            const data = await result.json();
+    
+            // Tìm tất cả các object có trường "school" bằng với biến "name"
+            const targetObjects = data.filter(obj => obj.school === name);
+    
+            // Gán dữ liệu vào state "account"
+            setAccount(targetObjects);
+        };
         fetchData();
-    }, []);
+    }, [name]);
 
 
      // Ham logout ve trang homelogin

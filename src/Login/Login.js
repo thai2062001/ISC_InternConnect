@@ -21,14 +21,9 @@ function Login() {
   const [account,setAccount] = useState([])
   const [showPopup, setShowPopup] = useState(false)
 
-
-  useEffect(()=>{
-  },[]);
-
    async function HandleLogin(e){
     try{
       const response = await axios.post('http://localhost:5000/auth/login', {email,password})
-      console.log(response.data.token.accessToken);
       const token = response.data.token.accessToken
       var decoded = jwt_decode(token);
       const localstored = localStorage.setItem('user-save',token)
@@ -41,6 +36,7 @@ function Login() {
       console.log(error);
     };
    }
+   
    const handleForgotPW = ()=>{
     window.location.href='/auth/forgot-password'
    }

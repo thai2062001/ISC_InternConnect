@@ -33,6 +33,7 @@ import CreateCV from '../CreateCV/createCV';
 import StatusCV from '../Home/StatusCV/statusCV';
 import Favorite_JobApp from '../Home/Favorite_JobApp/favorite_JobApp';
 import IntroduceCompany from '../CompanyManager/IntroduceCompany/introduceCompany';
+import SchoolUpdate from '../SchoolManager/schoolUpdate/schoolUpdate';
 //public routers
 
 
@@ -61,6 +62,7 @@ const publicRouters = [
     {path: '/homeadmin/jobpost',component:AllJobPost ,layout: SlidebarOnly},
     {path: '/homeadmin/skill',component:SkillAdmin ,layout: SlidebarOnly},
     {path: '/schooladmin',component:SchoolManager ,layout: SlidebarSchool },
+    {path: '/schooladmin/updateinfo',component:SchoolUpdate ,layout: SlidebarSchool },
     {path: '/companyadmin',component:CompanyManager ,layout: SlidebarCompany },
     {path: '/companyadmin/companyinfo',component:IntroduceCompany ,layout: SlidebarCompany },
     {path: '/companyadmin/jobapp',component:JobApplication ,layout: SlidebarCompany },
