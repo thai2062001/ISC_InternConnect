@@ -41,11 +41,11 @@ function SendingMail(props) {
       
           // Tạo payload gửi đi
           const payload = {
-              fromMail: toComEmail,
-              toMail: toEmail,
-              subject: subject,
-              message: message
-          };
+            fromEmail: toComEmail,
+            toEmail: toEmail,
+            subject: subject,
+            message: message
+        };
       
           // Thực hiện gửi email
           fetch(`http://localhost:5000/company/list-cv/details/${toId}/send-email`, {

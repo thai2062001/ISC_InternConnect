@@ -1,227 +1,129 @@
 .wrapper {
-    width: 1200px;
-    height: 1700px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    margin: 20px auto;
-    background-color: #ECF9FF;
-    flex-direction: column;
-}
-
-.wrapper h1 {
-   margin-right: auto;
-}   
-
-.form-detail {
-    width: 800px;
-    border-radius: 20px;
-    height: 1450px;
-    align-items: center;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    background-color: #ffffff;
-}
-
-.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .wrapper h1 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+  
+  .form-detail {
+    margin-top: 50px;
+  }
+  
+  .container {
     display: flex;
     justify-content: space-between;
-    height: 150px;
-}
-
-.logo-info {
-    display: flex;
-    position: relative;
-    margin-bottom: 20px;
-    width: 400px;
-    margin: 20px;
-}
-
-.logo-info img {
-    width: 120px;
-    height: 80px;
-
     align-items: center;
-}
-
-
-.logo-info h3 {
-    position: absolute;
-    bottom: -10px;
-    font-weight: 200;
-    text-align: center;
-    font-size: 15px;
-}
-
-
-.input-img {
+  }
+  
+  .logo-info {
     display: flex;
-
-    margin: auto;
-}
-
-.title_wrap{
-    margin: 40px ;
-}
-.input-title{
-    width: 700px;
-    margin-left: 10px;
-    border: 1px solid #eee;
-    padding: 5px;
-    border-radius: 5px;
-    background-color: #ECF9FF;
-
-}
-
-.input-img {
+    align-items: center;
+  }
+  
+  .logo-info img {
+    height: 100px;
+    margin-right: 20px;
+  }
+  
+  .logo-input {
+    margin-left: 20px;
+  }
+  
+  .input-img {
+    margin-top: 30px;
     display: flex;
     align-items: center;
   }
   
   .label {
+    font-size: 1.2rem;
+    font-weight: bold;
     margin-right: 10px;
   }
-
-  .datepicker {
-    width: 150px;
-    height: 30px;
-    
-    .react-datepicker__input-container input:focus {
-        outline: none;
-        border-color: blue;
-    }
-    
-    .react-datepicker__input-container svg {
-        fill: red;
-    }
-    
-    .react-datepicker__day--selected {
-        background-color: yellow;
-        color: black;
-    }
-
-}
-
-
-.wrapper-des {
-    display: flex;
-    justify-content: space-around;
-}
-
-
-.label-des {
-    display: block;
-    font-size: 15px;
-    margin-left: 10px;
-    font-weight: 500;
-}
-.label-des-one{
-    display: block;
-    font-size: 15px;
-    font-weight: 500;
-}
-
-.input-des {
-    width: 300px;
-    height: 40px;
-    border: 1px solid #eee;
-    padding: 8px;
-    border-radius: 5px;
-    background-color: #ECF9FF;
-
-}
-.wrapper-gen{
-   margin-top: 10px;
-    display: flex;
-    justify-content: space-around;
-
-}
-.wrapper-gen select{
-    background-color: #ECF9FF;
-    color: #333;
-    padding: 8px;
-    border: 1px solid #eee;
-    border-radius: 6px;
-    height: 40px;
-    width: 300px;
-}
-
-
-.wrapper-ip {
-    margin-top: 50px;
-    margin-left: 40px;
-    width: 700px;
-}
-
-.wrapper-ip p {
-    margin-left: 15px;
-}
-
-.input-field {
-    flex-direction: column-reverse;
-    margin-bottom: 10px;
-
-}
-
-.input-dt {
-    font-size: 18px;
-}
-
-.input-res {
-    width: 700px;
-    height: 120px;
-    margin-left: 10px;
-    border: 1px solid #eee;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #ECF9FF;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.react-datepicker-wrapper {
-    display: inline-block;
-    position: relative;
-    width: 300px;
-  }
   
-  .react-datepicker__input-container input {
+  .input-title {
+    font-size: 1.5rem;
     padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
     border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 10px;
   }
   
-  .react-datepicker__day--selected {
-    background-color: #00bcd4;
-    color: #fff;
+  .label-des {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 10px;
+    display: block;
   }
   
-  .react-datepicker__navigation {
-    background-color: #00bcd4;
-    color: #fff;
-    font-size: 20px;
+  .input-des {
+    font-size: 1.2rem;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 10px;
   }
-
-  .button-action-div{
+  
+  .wrapper-des {
+    margin-top: 30px;
     display: flex;
-    justify-content: end;
-    margin-top: 40px;
-    margin-right: 50px;
-}
-
-
-.button-action{
-    background-color: #3498db;
+    justify-content: space-between;
+  }
+  
+  .wrapper-gen {
+    margin-top: 30px;
+  }
+  
+  .input-res {
+    font-size: 1.2rem;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+  }
+  
+  .checkbox_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  
+  .input_wrapper_checkbox {
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .input_wrapper_checkbox label {
+    font-size: 1.2rem;
+    margin-left: 5px;
+  }
+  
+  .button-action-div {
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .button-action {
+    font-size: 1.5rem;
+    padding: 10px 20px;
+    background-color: #0077cc;
     color: #fff;
     border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .4);
-}
-
-
-
-.button-action:hover{
-    background-color: #2980b9;
-  cursor: pointer;
-}
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .button-action:hover {
+    background-color: #0066b2;
+  }

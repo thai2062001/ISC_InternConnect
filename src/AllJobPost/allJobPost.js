@@ -121,7 +121,8 @@ function AllJobPost() {
                           }
                     ]}
                     options={{
-                        actionsColumnIndex: -1, addRowPosition: "first"
+                        actionsColumnIndex: -1, addRowPosition: "first",
+                        columnsButton:true,
                     }}
                 />
             </div>

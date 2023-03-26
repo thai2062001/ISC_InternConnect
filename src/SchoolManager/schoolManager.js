@@ -49,7 +49,7 @@ function SchoolManager() {
         { title: "Phone", field: "studentphone" , },
         { title: "Year", field: "academicyear" , },
         { title: "Address", field: "address" , },
-        { title: "Gender", field: "gender" , },
+        { title: "Gender", field: "gender" ,      lookup: { Nam: "Nam", Nữ: "Nữ", Khác: "Khác" }, },
         { title: "Major", field: "major" , },
         { title: "School", field: "school" , },
         { title: "Verify", field: "verify" , },
@@ -58,27 +58,30 @@ function SchoolManager() {
       useEffect(() => {
         const localstore = localStorage.getItem('user-save')
         const decodeUser = jwt_decode(localstore);
-        console.log(decodeUser.username);
-        console.log(decodeUser.email);
         setName(decodeUser.username)
     }, [])
     const school_token = localStorage.getItem('user-save');
-    const URL = 'http://localhost:5000/uni'
+    const URL = 'http://localhost:5000/uni';
+    
     useEffect(() => {
         const fetchData = async () => {
-            const result = await fetch(URL,{
-                method:'GET',
-                headers:{
+            const result = await fetch(URL, {
+                method: 'GET',
+                headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${school_token}`
                 },
-            })
-            result.json().then(json => {
-                setAccount(json)
-            })
-        }
+            });
+            const data = await result.json();
+    
+            // Tìm tất cả các object có trường "school" bằng với biến "name"
+            const targetObjects = data.filter(obj => obj.school === name);
+    
+            // Gán dữ liệu vào state "account"
+            setAccount(targetObjects);
+        };
         fetchData();
-    }, []);
+    }, [name]);
 
 
      // Ham logout ve trang homelogin
@@ -235,6 +238,11 @@ function SchoolManager() {
             fontSize: '18px',
             width: '200px',
           },
+          columnsButton:true,
+          actionsColumnIndex: -1,
+          addRowPosition: "first",
+          filtering: true,
+          lookupFilter: true,
         }}
       />
         </div>

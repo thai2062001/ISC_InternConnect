@@ -2,12 +2,15 @@ import classNames from "classnames/bind";
 import styles from './HomeAdmin.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
-import MaterialTable from "material-table";
+import MaterialTable, { MTablePagination } from "material-table";
 import Is_valid_password from "./CheckPassword";
-import {  MenuItem, Select } from "@material-ui/core";
+import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import * as XLSX from 'xlsx';
+import PrintIcon from '@material-ui/icons/Print'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 
 const cx = classNames.bind(styles)
@@ -20,22 +23,12 @@ function HomeAdmin() {
   const [role, setRole] = useState('all')
 
 
-  const notify = () => toast("Wow so easy!");
-
   const columns = [
     {
-      title: "name", field: "username", defaultFieldValue: 'Name', validate: rowData => {
-        if (rowData.username === undefined || rowData.username === "") {
-          return "Required"
-        } else if (rowData.username.length < 3) {
-          return "Name should contains atleast 3 chars"
-        }
-        return true
-
-      },
+      title: "Name", field: "username",
     },
     {
-      title: "Email", field: "email", defaultFieldValue: 'Email@gmail.com', validate: rowData => {
+      title: "Email", field: "email", validate: rowData => {
         if (rowData.email === undefined || rowData.email === "") {
           return "Required"
         } else if (!rowData.email.includes('@' && '.')) {
@@ -45,22 +38,10 @@ function HomeAdmin() {
       }
     },
     {
-      title: "Password", field: "password", validate: rowData => {
-        if (rowData.password === undefined || rowData.password === "") {
-          return "Required"
-        } else if (!Is_valid_password(rowData.password)) {
-          return "Wrong"
-        }
-        return true
-      }
+      title: "Password", field: "password"
     },
     {
-      title: "Phone", field: "phonenumber", validate: rowData => {
-        if (rowData.phonenumber === undefined || rowData.phonenumber.length < 10) {
-          return "Required"
-        }
-        return true
-      }
+      title: "Phone", field: "phonenumber"
     },
 
     {
@@ -148,6 +129,33 @@ function HomeAdmin() {
   const decodeEmail = jwt_decode(token);
   const emailUser = decodeEmail.email;
 
+  const downloadExcel = () => {
+    const newData = filteredAccounts.map(row => {
+      delete row.tableData
+      return row
+    })
+    const workSheet = XLSX.utils.json_to_sheet(newData)
+    const workBook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workBook, workSheet, "accounts")
+    //Buffer
+    let buf = XLSX.write(workBook, { bookType: "xlsx", type: "buffer" })
+    //Binary string
+    XLSX.write(workBook, { bookType: "xlsx", type: "binary" })
+    //Download
+    XLSX.writeFile(workBook, "AccountsData.xlsx")
+  }
+  const downloadPdf = () => {
+    const doc = new jsPDF()
+    doc.text("Account Details", 20, 10)
+    doc.autoTable({
+      theme: "grid",
+      columns: columns.map(col => ({ ...col, dataKey: col.field })),
+      body: filteredAccounts
+    })
+    doc.save('table.pdf')
+  }
+
+
   return (
     <div className="App">
       <div className={cx('wrapper')}>
@@ -162,6 +170,17 @@ function HomeAdmin() {
           title="Account Data"
           data={filteredAccounts}
           columns={columns}
+          components={{
+            Pagination: (props) => <>
+
+              <Grid container style={{ padding: 15 }}>
+                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
+                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+              </Grid>
+              <Divider />
+              <TablePagination {...props} />
+            </>
+          }}
           actions={[
             {
               icon: () => <Select
@@ -178,6 +197,18 @@ function HomeAdmin() {
                 <MenuItem value={'Student'}>Student</MenuItem>
               </Select>,
               tooltip: "Filter Role",
+              isFreeAction: true
+            },
+            {
+              icon: () => <img style={{width:'25px',height:'25px'}} src="https://img.icons8.com/color/48/null/ms-excel.png"/>,// you can pass icon too
+              tooltip: "Export to Excel",
+              onClick: () => downloadExcel(),
+              isFreeAction: true
+            },
+            {
+              icon: () =><img style={{width:'25px',height:'25px'}} src="https://img.icons8.com/color/48/null/pdf-2--v1.png"/>,// you can pass icon too
+              tooltip: "Export to Pdf",
+              onClick: () => downloadPdf(),
               isFreeAction: true
             }
           ]}
@@ -246,17 +277,16 @@ function HomeAdmin() {
                   reject(error)
                 })
             }),
-          onRowUpdate :((newData, oldData) => handleRowUpdate(newData, oldData))
+            onRowUpdate: ((newData, oldData) => handleRowUpdate(newData, oldData))
           }}
           options={{
             actionsColumnIndex: -1,
             addRowPosition: "first",
             filtering: true,
-            lookupFilter: true
-
+            lookupFilter: true,
           }}
         />
-        <ToastContainer/>
+        <ToastContainer />
       </div>
 
       <link

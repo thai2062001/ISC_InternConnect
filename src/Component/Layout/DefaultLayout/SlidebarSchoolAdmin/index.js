@@ -27,35 +27,13 @@ function Slidebar() {
          <span className={cx('tooltip')}>Account</span>
       </li>
       <li>
-       <a href="#">
+       <a href="/schooladmin/updateinfo">
          <i className={cx('bx bxs-school')} ></i>
-         <span className={cx('links_name')}>School</span>
+         <span className={cx('links_name')}>Infomation</span>
        </a>
-       <span className={cx('tooltip')}>School</span>
+       <span className={cx('tooltip')}>Infomation</span>
      </li>
-     {/* <li>
-       <a href="/homeadmin/majorAdmin">
-         <i className={cx('bx bx-math')} ></i>
-         <span className={cx('links_name')}>Major</span>
-       </a>
-       <span className={cx('tooltip')}>Major</span>
-     </li>
-
-     <li>
-       <a href="/homeadmin/companyAdmin">
-         <i className='bx bx-building-house' ></i>
-         <span className={cx('links_name')}>Company</span>
-       </a>
-       <span className={cx('tooltip')}>Company</span>
-     </li>
-    
-     <li>
-       <a href="#">
-         <i className='bx bx-cog' ></i>
-         <span className={cx('links_name')}>Setting</span>
-       </a>
-       <span className={cx('tooltip')}>Setting</span>
-     </li>*/
+   
 
      <li className={cx('profile')}>
      <a href="/admin/adminlogin" onClick={handleLogOutUser}>
@@ -66,7 +44,7 @@ function Slidebar() {
      </li>
 
       
-      }
+
     </ul>
   </div>
 

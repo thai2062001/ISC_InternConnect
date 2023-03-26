@@ -17,6 +17,7 @@ function HomeJobPostDetail() {
 
     const [showPopup, setShowPopup] = useState(false)
     const [jobPosts, setJobPost] = useState({})
+    const [skill, setSkill] = useState([])
     const [recommentPosts, setRecommentPosts] = useState([])
     const [student, setStudent] = useState({})
     const [hasUserData, setHasUserData] = useState(!!localStorage.getItem('user-save'));
@@ -72,6 +73,7 @@ function HomeJobPostDetail() {
                 const jobpost = json.find(item => item._id === idDetail);
                 if (jobpost) {
                     setJobPost(jobpost);
+                    setSkill(jobpost.skill)
                 } else {
                     console.error('Không tồn tại bài đăng có id này');
                 }
@@ -81,7 +83,7 @@ function HomeJobPostDetail() {
     }, []);
 
     const CompanyName = jobPosts.namecompany
-
+console.log(skill);
 
     //recomment jobpost
     useEffect(() => {
@@ -153,7 +155,6 @@ function HomeJobPostDetail() {
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     toast.success('Removed from favorites!', {
                         position: "top-center",
                         autoClose: 5000,
@@ -183,7 +184,6 @@ function HomeJobPostDetail() {
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     toast.success('Added to favorites!', {
                         position: "top-center",
                         autoClose: 5000,
@@ -201,10 +201,9 @@ function HomeJobPostDetail() {
         }
     }
 
-
+console.log(skill.nameskill);
     const handleRecommentPost = (id) => {
         const path = `/${id}`
-        console.log(id);
         navigate(path)
         window.location.href = path
     }
@@ -271,6 +270,7 @@ function HomeJobPostDetail() {
                             <span>Phúc lợi</span>
                         </div>
                         <div className={cx('content')}>
+
                             <div className={cx('required')}>
                                 <span className={cx('span-title')}>Yêu cầu</span>
                                 <p>{jobPosts.required}</p>
@@ -283,7 +283,11 @@ function HomeJobPostDetail() {
 
                             <div className={cx('skill')}>
                                 <span className={cx('span-title')}>Kỹ năng</span>
-                                <p>{jobPosts.skill}</p>
+                                <ul>
+                                    {skill.map(skillPost=>{
+                                        <li>{skillPost.nameskill}</li>
+                                    })}
+                                </ul>
                             </div>
 
                             <div className={cx('benefit')}>
