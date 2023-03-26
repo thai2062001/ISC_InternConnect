@@ -25,3 +25,21 @@
     margin-right: 5px;
 
 } 
+.export_button-action {
+  background-color: #4CAF50; /* Màu nền */
+  border: none; /* Bỏ viền */
+  color: white; /* Màu chữ */
+  padding: 12px 24px; /* Kích thước của button */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px; /* Bo viền */
+  transition: background-color 0.3s; /* Hiệu ứng hover */
+}
+
+.export_button-action:hover {
+  background-color: #3e8e41; /* Hiệu ứng hover */
+}

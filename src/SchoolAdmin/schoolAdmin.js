@@ -199,6 +199,7 @@ function SchoolAdmin() {
                             fontSize: '18px',
                             width: '200px',
                           },
+                          columnsButton:true,
                     
                     }}
 

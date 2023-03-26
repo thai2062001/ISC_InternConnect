@@ -49,7 +49,7 @@ function SchoolManager() {
         { title: "Phone", field: "studentphone" , },
         { title: "Year", field: "academicyear" , },
         { title: "Address", field: "address" , },
-        { title: "Gender", field: "gender" , },
+        { title: "Gender", field: "gender" ,      lookup: { Nam: "Nam", Nữ: "Nữ", Khác: "Khác" }, },
         { title: "Major", field: "major" , },
         { title: "School", field: "school" , },
         { title: "Verify", field: "verify" , },
@@ -238,6 +238,11 @@ function SchoolManager() {
             fontSize: '18px',
             width: '200px',
           },
+          columnsButton:true,
+          actionsColumnIndex: -1,
+          addRowPosition: "first",
+          filtering: true,
+          lookupFilter: true,
         }}
       />
         </div>

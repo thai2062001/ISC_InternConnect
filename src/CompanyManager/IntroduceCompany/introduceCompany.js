@@ -90,6 +90,7 @@ function IntroduceCompany() {
     return (
         <div className="App">
             <div className={cx('wrapper')}>
+                <h1>Profile</h1>
            
             {accounts && accounts.profile && accounts.profile.length > 0 && (
                 <div>
