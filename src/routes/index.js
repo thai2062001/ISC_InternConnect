@@ -34,6 +34,7 @@ import StatusCV from '../Home/StatusCV/statusCV';
 import Favorite_JobApp from '../Home/Favorite_JobApp/favorite_JobApp';
 import IntroduceCompany from '../CompanyManager/IntroduceCompany/introduceCompany';
 import SchoolUpdate from '../SchoolManager/schoolUpdate/schoolUpdate';
+import TermOfServices from '../TermofServices/termofservice';
 //public routers
 
 
@@ -41,6 +42,7 @@ const publicRouters = [
     {path: '/',component: Home,layout:HeaderOnly},
     {path: '/:id',component: HomeJobPostDetail,layout:HeaderOnly},
     {path: '/accountSettings',component: Settings,layout:HeaderOnly},
+    {path: '/services',component: TermOfServices,layout:HeaderOnly},
     {path: '/statuscv',component: StatusCV,layout:HeaderOnly},
     {path: '/favorite_jobapp',component: Favorite_JobApp,layout:HeaderOnly},
     // {path: '/home',component: HomeLogin,layout:HeaderLogin},

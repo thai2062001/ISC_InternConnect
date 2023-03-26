@@ -48,7 +48,7 @@ function HomeJobPostDetail() {
                 },
             });
             result.json().then(json => {
-                setStudent(json.profile[0]);
+                setStudent(json.profile);
             });
         };
         fetchData();
@@ -81,10 +81,10 @@ function HomeJobPostDetail() {
         }
         fetchData();
     }, []);
+ 
 
     const CompanyName = jobPosts.namecompany
-console.log(skill);
-
+    
     //recomment jobpost
     useEffect(() => {
         const jobpostApi = 'http://localhost:5000/'
@@ -200,8 +200,6 @@ console.log(skill);
                 });
         }
     }
-
-console.log(skill.nameskill);
     const handleRecommentPost = (id) => {
         const path = `/${id}`
         navigate(path)
@@ -305,7 +303,7 @@ console.log(skill.nameskill);
             </div>
             <div className={cx('jobpost-recomment')}>
                 <ul>
-                    {recommentPosts.map((recommentPost) => {
+                    {recommentPosts.slice(0,8).map((recommentPost) => {
                         return (
                             <div key={recommentPost._id} onClick={() => handleRecommentPost(recommentPost._id)} className={cx('recommentPost')}>
                                 <div className={cx('jobpost')}>

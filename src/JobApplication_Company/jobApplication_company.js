@@ -7,9 +7,13 @@
   import {FaDownload, FaTimes} from 'react-icons/fa';
   import SendingMail from "./SendingMail/SendingMail";
   import Popup from "reactjs-popup";
-  import {  MenuItem, Select } from "@material-ui/core";
+  import 'react-toastify/dist/ReactToastify.css';
   import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+  import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
+import * as XLSX from 'xlsx';
+import PrintIcon from '@material-ui/icons/Print'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 
   const cx = classNames.bind(styles)
@@ -31,7 +35,21 @@ import 'react-toastify/dist/ReactToastify.css';
       const [major, setMajor] = useState('all')
       const [date, setDate] = useState('all')
       const [statusFitter, setStatusFitter] = useState('all')
+      const [defaultFilters, setDefaultFilters] = useState({
+        school: 'all',
+        major: 'all',
+        date: 'all',
+        statusFitter: 'all',
+      });
 
+      const resetFilters = () => {
+        setSchool(defaultFilters.school);
+        setMajor(defaultFilters.major);
+        setDate(defaultFilters.date);
+        setStatusFitter(defaultFilters.statusFitter);
+
+      };
+    
       
       useEffect(() => {
           const filteredAccounts = accounts.filter(account => {
@@ -103,8 +121,8 @@ import 'react-toastify/dist/ReactToastify.css';
           { title: "Major", field: "major" },
           { title: "Date", field: "date" },
           { title: "Company", field: "namecompany" },
-
-          {
+            { title: "Status", field: "status" ,cellStyle: { width: "250px" } },
+            {
               title: 'CV',
               render: rowData => (
                 <a style={{textAlign:'left'}} target="_blank" href={rowData.url} >
@@ -112,7 +130,6 @@ import 'react-toastify/dist/ReactToastify.css';
                 </a>
               ),
             },
-            { title: "Status", field: "status" ,cellStyle: { width: "250px" } },
       ]
       useEffect(() => {
           const localstore = localStorage.getItem('user-save')
@@ -164,8 +181,31 @@ import 'react-toastify/dist/ReactToastify.css';
 
       }
       
-
-      const token = localStorage.getItem('user-save');
+      const downloadExcel = () => {
+        const newData = filteredAccounts.map(row => {
+          delete row.tableData
+          return row
+        })
+        const workSheet = XLSX.utils.json_to_sheet(newData)
+        const workBook = XLSX.utils.book_new()
+        XLSX.utils.book_append_sheet(workBook, workSheet, "accounts")
+        //Buffer
+        let buf = XLSX.write(workBook, { bookType: "xlsx", type: "buffer" })
+        //Binary string
+        XLSX.write(workBook, { bookType: "xlsx", type: "binary" })
+        //Download
+        XLSX.writeFile(workBook, "JobApplicationData.xlsx")
+      }
+      const downloadPdf = () => {
+        const doc = new jsPDF()
+        doc.text("Account Details", 20, 10)
+        doc.autoTable({
+          theme: "grid",
+          columns: columns.map(col => ({ ...col, dataKey: col.field })),
+          body: filteredAccounts
+        })
+        doc.save('JobApplicationData.pdf')
+      }
       return (
           <div className="App">
               <div className={cx('wrapper')}>
@@ -184,6 +224,17 @@ import 'react-toastify/dist/ReactToastify.css';
                       data={filteredAccounts}
                       title='Company Data'
                       columns={columns}
+                      components={{
+                        Pagination: (props) => <>
+            
+                          <Grid container style={{ padding: 15 }}>
+                            <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
+                            <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+                          </Grid>
+                          <Divider />
+                          <TablePagination {...props} />
+                        </>
+                      }}
                       actions={[
                           {
                               icon: FaTimes,
@@ -268,16 +319,37 @@ import 'react-toastify/dist/ReactToastify.css';
                               tooltip: "Filter Verify",
                               isFreeAction: true
                             },
+                            {
+                              icon: () => <img style={{width:'25px',height:'25px'}} src="https://img.icons8.com/ultraviolet/40/null/restart--v2.png"/>,
+                              tooltip: "Reset Filters",
+                              onClick:()=>resetFilters(),
+                              isFreeAction: true
+                            },
+                            {
+                              icon: () => <img style={{width:'25px',height:'25px'}} src="https://img.icons8.com/color/48/null/ms-excel.png"/>,// you can pass icon too
+                              tooltip: "Export to Excel",
+                              onClick: () => downloadExcel(),
+                              isFreeAction: true
+                            },
+                            {
+                              icon: () =><img style={{width:'25px',height:'25px'}} src="https://img.icons8.com/color/48/null/pdf-2--v1.png"/>,// you can pass icon too
+                              tooltip: "Export to Pdf",
+                              onClick: () => downloadPdf(),
+                              isFreeAction: true
+                            },
 
                       ]}
 
                       options={{
-                          actionsColumnIndex: -1, addRowPosition: "first",
-                          headerStyle: {
-                              fontSize: '18px',
-                              width: '200px',
-                          },
-                          columnsButton:true,
+                        actionsColumnIndex: -1,
+                        headerStyle: {
+                          fontSize: '18px',
+                          width: '200px',
+                        },
+                        columnsButton: true,
+                        addRowPosition: "first",
+                        filtering: true,
+                        lookupFilter: true,
                       }}
                   />
               </div>

@@ -4,7 +4,6 @@ import styles from './Header.module.scss'
 import { FaUser } from 'react-icons/fa';
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
-
 import logo from './HeaderLogin/logo.png';
 const cx = classNames.bind(styles)
 

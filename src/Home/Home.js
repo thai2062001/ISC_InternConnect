@@ -6,7 +6,7 @@ import jwt_decode from "jwt-decode";
 import ReactPaginate from 'react-paginate';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Helmet } from 'react-helmet';
 
 
 
@@ -104,6 +104,9 @@ function Home() {
 
   return (
     <div className={cx('container_full')}>
+            <Helmet>
+        <title>Trang chủ</title>
+      </Helmet>
       <div className={cx('container')}>
 
         <div className={cx('search')}>

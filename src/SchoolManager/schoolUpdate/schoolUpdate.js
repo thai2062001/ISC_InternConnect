@@ -85,7 +85,7 @@ function SchoolUpdate() {
     return (
         <div className="App">
             <div className={cx('wrapper')}>
-                <h1></h1>
+                <h1>Profile</h1>
 
                 <div>
                     <div className={cx('form-group')}>

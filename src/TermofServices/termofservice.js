@@ -3,11 +3,16 @@ import classNames from "classnames/bind";
 import styles from "./termofservice.module.scss";
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from "react";
+import { Helmet } from 'react-helmet';
 
 const cx = classNames.bind(styles);
 function TermOfServices() {
+
   return (
     <div className={cx("wrapper")}>
+      <Helmet>
+        <title>Điều khoản</title>
+      </Helmet>
       <h1>ĐIỀU KHOẢN SỬ DỤNG DỊCH VỤ VỚI ỨNG VIÊN</h1>
       <div className={cx("form-detail")}>
         <div className={cx("paragraph")}>
