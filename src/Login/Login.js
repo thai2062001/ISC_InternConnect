@@ -26,7 +26,7 @@ function Login() {
       const response = await axios.post('http://localhost:5000/auth/login', {email,password})
       const token = response.data.token.accessToken
       var decoded = jwt_decode(token);
-      const localstored = localStorage.setItem('user-save',token)
+      const localstored = localStorage.setItem('user',token)
       if(decoded.role === 'Student')
       {
         window.location.href = '/'

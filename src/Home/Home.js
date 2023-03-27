@@ -54,10 +54,7 @@ function Home() {
     }
     fetchData();
   }, []);
-  const handleFilter = () =>{
-    const major = document.getElementById('major').value.toLowerCase();
-    const location = document.getElementById('location').value.toLowerCase();
-  }
+
 
   const handleSearch = () => {
     const inputJob = document.getElementById('job-search').value.toLowerCase();
@@ -133,28 +130,6 @@ function Home() {
             </div>
           </div>
 
-          <div className={cx('filter_wrapper')}>
-            <div className={cx('input-3')}>
-              <select onChange={handleFilter} id='major'>
-                <option value=''>Chọn chuyên ngành</option>
-                <option value='Công nghệ thông tin'>Công nghệ thông tin</option>
-                <option value='Tài chính'>Tài chính</option>
-                <option value='Kế toán'>Kế toán</option>
-                <option value='Quản trị kinh doanh'>Quản trị kinh doanh</option>
-              </select>
-            </div>
-            <div className={cx('input-4')}>
-              <select onChange={handleFilter} id='location'>
-                <option value=''>Chọn địa chỉ</option>
-                <option value='Hà nội'>Hà Nội</option>
-                <option value='HCM'>Hồ Chí Minh</option>
-                <option value='Đà Nẵng'>Đà Nẵng</option>
-              </select>
-            </div>
-
-          </div>
-
-
         </div>
       </div>
       <div className={cx('wrapper_jobpost')}>
@@ -170,6 +145,7 @@ function Home() {
                   <div className={cx('jobpost_detail')}>
                     <h2 >{jobPost.title}</h2>
                     <div className={cx('wrapper_content')}>
+                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png"/>
                       <span className={cx('detail_span', 'company')}>  {jobPost.namecompany}</span>
                     </div>
                     <div className={cx('wrapper_content')}>
@@ -180,13 +156,18 @@ function Home() {
                       <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
                       <span className={cx('detail_span', 'salary')}>{jobPost.salary}</span>
                     </div>
-
-
                   </div>
                 </div>
               ))}
             </ul>
+
           </div>
+          <div className={cx('banner_right')}>
+          <img src='https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2F500x600_122601.png&w=1920&q=75'/>
+          <div>
+            <img className={cx('img-2')} src ='https://img.timviec.com.vn/2021/06/dang-tin-tuyen-dung-14.jpg'/>
+          </div>
+        </div>
 
           {/* Hiển thị nút phân trang */}
           <ReactPaginate
@@ -201,6 +182,7 @@ function Home() {
             activeClassName={'active'}
           />
         </div>
+
       </div>
 
 

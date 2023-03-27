@@ -72,7 +72,7 @@ function ApplyCV(props) {
   return (
     <div className={cx("ApplyCV")}>
       <div className={cx("ApplyCV_content")}>
-        <h1>Ứng tuyển [{title}]</h1>
+        <h1 className={cx('h1_title')}>Ứng tuyển [{title}]</h1>
         <span className={cx("close")} onClick={handleOnClose}>
           &times;
         </span>

@@ -34,60 +34,77 @@
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
-    height: 95px;
+    height: 150px;
     padding: 1rem;
     border-radius: 1rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #f5f5f5;
+  }
+  .jobapp_container:hover {
+    box-shadow: 0 15 30px rgba(120, 110, 110, 0.1);
+    background-color: #ece6e6;
   }
   
   /* Company Logo */
   .logo {
     margin-right: 1rem;
     width: 100px;
+    height: 100px;
 
   }
   
   .logo img {
-    height: 9rem;
-    width: 9rem;
+    height: 10rem;
+    width: 10rem;
     object-fit: contain;
   }
   
   /* Job Application Detail */
-  .jobapp_detail {
-    display: flex;
-    flex-direction: column;
-  }
+
   
   /* Job Title */
+.info_content{
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
   .jobapp_span.title_span {
-    font-size: 1.5rem;
+    font-size: 2.1rem;
+    margin-left: 10px;
     font-weight: bold;
   }
   
   /* Company Name */
   .jobapp_span.company_span {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.7rem;
+    margin-left: 7px;
+    align-items: center;
+
   }
   .jobapp_span.date_span {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.7rem;
+    margin-left: 7px;
   }
   
   /* Job Status */
   .jobapp_span.status_span {
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-style: italic;
+    margin-left: 7px;
     color: #3fbb67;
   }
+
+
+
+
+
+
 
 
   .pagination-container{
 
    position: absolute;
-   top:55%;
+   top:65%;
    left: 45%;
   }
   ul.pagination {
