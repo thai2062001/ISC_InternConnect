@@ -13,11 +13,11 @@ function TermOfServices() {
       <Helmet>
         <title>Điều khoản</title>
       </Helmet>
-      <h1>ĐIỀU KHOẢN SỬ DỤNG DỊCH VỤ VỚI ỨNG VIÊN</h1>
+      <h1 className={cx('title')}>ĐIỀU KHOẢN SỬ DỤNG DỊCH VỤ VỚI ỨNG VIÊN</h1>
       <div className={cx("form-detail")}>
         <div className={cx("paragraph")}>
           <h2 className={cx("text")}>I. ĐIỀU KHOẢN CHUNG</h2>
-          <p>
+          <p className={cx('text_p')}>
             Bằng cách truy cập hoặc sử dụng trang web InternConnect, các dịch vụ
             hoặc bất kỳ ứng dụng nào do ISC cung cấp (gọi chung là "Dịch vụ"),
             dù truy cập bằng cách nào, bạn đồng ý chịu sự ràng buộc của các điều
@@ -28,7 +28,7 @@ function TermOfServices() {
             vụ. Nếu Bạn có bất kỳ câu hỏi nào liên quan đến Điều Khoản này, vui
             lòng liên hệ chúng tôi tại email: hptservices.group@gmail.com.
           </p>
-          <p>
+          <p className={cx('text_p')}>
             Chúng tôi có thể cập nhật Điều Khoản này theo thời gian vì các lý do
             pháp lý hoặc theo quy định hoặc để cho phép hoạt động thích hợp của
             trang web InternConnect. Mọi thay đổi sẽ được thông báo tới bạn bằng
@@ -43,33 +43,33 @@ function TermOfServices() {
         </div>
         <div className={cx("paragraph")}>
           <h2 className={cx("text")}>II. ĐỊNH NGHĨA VÀ GIẢI THÍCH</h2>
-          <p>
+          <p className={cx('text_p')}>
             "Các cơ sở dữ liệu ISC" bao gồm tất cả các bài quảng cáo việc làm
             đăng trên các trang web InternConnect và/hoặc tất cả thông tin của
             các ứng viên và/hoặc các nhà tuyển dụng được đăng ký với ISC.
           </p>
-          <p>
+          <p className={cx('text_p')}>
             "Cơ sở dữ liệu Hồ sơ ISC" hoặc "Các cơ sở dữ liệu Hồ sơ" là hồ sơ
             ứng viên được khởi tạo và/hoặc được đăng tại các cơ sở dữ liệu ISC.
           </p>
-          <p>
+          <p className={cx('text_p')}>
             "Dịch vụ InternConnect" là bất kỳ dịch vụ nào được cung cấp bởi ISC.
           </p>
-          <p>
+          <p className={cx('text_p')}>
             "Hồ sơ cá nhân" là các thông tin, CV cá nhân được tạo bởi Người
             dùng.
           </p>
-          <p>
+          <p className={cx('text_p')}>
             "Văn bản" bao gồm tất cả văn bản trên mọi trang của trang web
             InternConnect, cho dù là tài liệu có xác định tác giả, các nội dung
             tìm kiếm có định hướng hay thông tin hướng dẫn.
           </p>
-          <p>
+          <p className={cx('text_p')}>
             "Người dùng" đề cập đến bất kỳ cá nhân hoặc tổ chức nào sử dụng bất
             kỳ khía cạnh nào của trang web InternConnect và/hoặc các Dịch vụ
             InternConnect.
           </p>
-          <p>
+          <p className={cx('text_p')}>
             "Nội dung Người dùng" là tất cả thông tin, dữ liệu, văn bản, phần
             mềm, âm nhạc, âm thanh, hình ảnh, đồ họa, video, quảng cáo, tin nhắn
             hoặc các tài liệu khác được gửi, đăng hoặc biểu thị bởi Người dùng
@@ -78,7 +78,7 @@ function TermOfServices() {
         </div>
         <div className={cx("paragraph")}>
           <h2 className={cx("text")}>III. ĐĂNG KÝ</h2>
-          <p>
+          <p className={cx('text_p')}>
             Để sử dụng Dịch vụ bạn phải tạo một tài khoản theo yêu cầu của ISC,
             bạn cam kết rằng việc sử dụng tài khoản phải tuân thủ các quy định
             của ISC, đồng thời tất cả các thông tin bạn cung cấp cho chúng tôi
@@ -91,7 +91,7 @@ function TermOfServices() {
         </div>
         <div className={cx("paragraph")}>
           <h2 className={cx("text")}>IV. MẬT KHẨU VÀ BẢO MẬT</h2>
-          <p>
+          <p className={cx('text_p')}>
             Khi bạn đăng ký sử dụng bất kỳ dịch vụ nào thuộc trang web
             InternConnect bạn sẽ được yêu cầu khởi tạo mật khẩu. Để tránh việc
             gian lận, bạn phải giữ mật khẩu này bảo mật và không được tiết lộ
@@ -100,13 +100,13 @@ function TermOfServices() {
             tức bằng cách liên hệ với chúng tôi tại email
             hptservices.group@gmail.com.
           </p>
-          <p>
+          <p className={cx('text_p')}>
             Nếu ISC có lý do để tin rằng có khả năng có hành vi vi phạm bảo mật
             hoặc sử dụng không đúng mục đích trang web InternConnect, chúng tôi
             có thể yêu cầu bạn thay đổi mật khẩu hoặc chúng tôi có thể tạm dừng
             tài khoản của bạn.
           </p>
-          <p>
+          <p className={cx('text_p')}>
             Trường hợp bạn mất Mật khẩu hoặc hoặc sử dụng không đúng mục đích
             trang web InternConnect bạn phải chịu tất cả sự mất mát hoặc thiệt
             hại phát sinh và chịu trách nhiệm bồi thường hoàn toàn cho ISC trong
@@ -118,53 +118,53 @@ function TermOfServices() {
             V. QUYỀN TRUY CẬP VÀ THU THẬP THÔNG TIN
           </h2>
           <ol className={cx("main-li")}>
-            <li>
+            <li className={cx('text-li')}>
               Khi sử dụng trang web InternConnect, bạn thừa nhận rằng chúng tôi
               có quyền thu thập các thông tin sau của bạn
               <ul className={cx("sub-li")}>
-                <li>
+                <li className={cx('text-li')}>
                   Thông tin cá nhân: bao gồm các thông tin bạn cung cấp cho
                   chúng tôi để tạo hồ sơ như tên, số điện thoại, địa chỉ email;…
                 </li>
-                <li>
+                <li className={cx('text-li')}>
                   Thông tin chung: như các thông tin về kinh nghiệm làm việc,
                   định hướng nghề nghiệp, mục tiêu công việc; trình độ năng lực;
                   thu nhập;…
                 </li>
               </ul>
             </li>
-            <li>
+            <li className={cx('text-li')}>
               Bạn thừa nhận và đồng ý một mình chịu trách nhiệm về hình thức,
               nội dung và tính xác thực của bất kỳ hồ sơ hoăc tài liệu nào do
               bạn đăng tải trên trang web InternConnect, đồng thời đồng ý một
               mình chịu trách nhiệm cho bất kỳ hệ quả nào phát sinh từ việc đăng
               tải này.
             </li>
-            <li>
+            <li className={cx('text-li')}>
               ISC có quyền đề xuất đến bạn dịch vụ và sản phẩm của bên thứ ba
               dựa trên các mục phù hợp mà bạn xác định trong khi đăng ký và bất
               kỳ lúc nào sau đó hoặc khi bạn đã đồng ý tiếp nhận, các đề xuất
               này sẽ được thực hiện bởi ISC hoặc các bên thứ ba.
             </li>
-            <li>
+            <li className={cx('text-li')}>
               ISC được quyền tùy ý tuân theo các yêu cầu pháp lý, các yêu cầu từ
               cơ quan thi hành án hoặc yêu cầu của cơ quan quản lý, thậm chí sự
               tuân thủ này có thể bao gồm việc công bố một số thông tin Người
               dùng nhất định. Ngoài ra, bên thứ ba được phép giữ lại các bản sao
               lưu trữ thông tin Người dùng.
             </li>
-            <li>
+            <li className={cx('text-li')}>
               Bạn hiểu và thừa nhận rằng tất cả các thông tin do bạn cung cấp,
               Thông tin cá nhân, hồ sơ và/hoặc thông tin tài khoản của bạn, sẽ
               được công bố cho các Nhà tuyển dụng tiềm năng trên ISC.
             </li>
-            <li>
+            <li className={cx('text-li')}>
               ISC tôn trọng tuyệt đối quyền bảo mật thông tin của ứng viên. Nếu
               không muốn hồ sơ cá nhân của mình được công khai, bạn vui lòng tắt
               tính năng tìm việc & tính năng cho phép nhà tuyển dụng xem hồ sơ
               để tránh bị làm phiền.
             </li>
-            <li>
+            <li className={cx('text-li')}>
               Bạn hiểu và thừa nhận rằng bạn không có các quyền sở hữu trong tài
               khoản của bạn và nếu bạn hủy bỏ tài khoản trên trang web
               InternConnect hoặc tài khoản của bạn bị chấm dứt, tất cả các thông
@@ -178,7 +178,7 @@ function TermOfServices() {
               quan chức năng liên quan. Ngoài ra, các bên thứ ba được phép giữ
               lại bản sao thông tin của bạn.
             </li>
-            <li>
+            <li className={cx('text-li')}>
               ISC có quyền xỏa tài khoản và tất cả thông tin của bạn sau một
               thời gian dài không hoạt động.
             </li>
@@ -187,7 +187,7 @@ function TermOfServices() {
         <div className={cx("paragraph")}>
           <h2 className={cx("text")}>VI. TUYÊN BỐ VỀ QUYỀN SỞ HỮU TRÍ TUỆ</h2>
           <ol className={cx("main-li")}>
-            <li>
+            <li className={cx('text-li')}>
               Bạn tuyên bố và đảm bảo rằng: (i) bạn sở hữu Nội dung mà bạn đăng
               lên hoặc thông qua Dịch vụ hay nói cách khác, bạn có quyền cấp các
               quyền và giấy phép được quy định trong các Điều khoản sử dụng này;
@@ -201,7 +201,7 @@ function TermOfServices() {
               lực pháp lý để tham gia vào các Điều khoản sử dụng này trong quyền
               hạn của bạn.
             </li>
-            <li>
+            <li className={cx('text-li')}>
               Logo và tên ISC là các nhãn hiệu thương mại của ISC và không được
               sao chép, giả mạo hay sử dụng toàn bộ hoặc một phần khi chưa có sự
               cho phép trước bằng văn bản của ISC. Ngoài ra, tất cả các tiêu đề
@@ -210,7 +210,7 @@ function TermOfServices() {
               ISC và không được sao chép, giả mạo hay sử dụng toàn bộ hoặc một
               phần khi chưa có sự cho phép trước bằng văn bản của ISC.
             </li>
-            <li>
+            <li className={cx('text-li')}>
               Mặc dù mục đích của ISC là cung cấp Dịch vụ nhiều nhất có thể
               nhưng sẽ có trường hợp Dịch vụ có thể bị gián đoạn, bao gồm nhưng
               không giới hạn ở việc gián đoạn để bảo trì hoặc nâng cấp theo lịch
@@ -237,7 +237,7 @@ function TermOfServices() {
               dung nào. Bạn cũng xác nhận rằng Internet có thể không an toàn và
               rằng việc gửi Nội dung hoặc thông tin khác có thể không an toàn.
             </li>
-            <li>
+            <li className={cx('text-li')}>
               ISC sẽ không chịu trách nhiệm với bất cứ thông tin đăng tải của
               bên thứ ba nào, cho dù với lý do nào, do bất cứ tổ chức nào đăng
               tải nội dung trên ISC. Tuy nhiên, ISC sẽ cố gắng sử dụng mọi biện
@@ -288,20 +288,20 @@ function TermOfServices() {
         <div className={cx("paragraph")}>
           <h2 className={cx("text")}>VIII. HIỆU LỰC THỎA THUẬN CỦA HỢP ĐỒNG</h2>
           <ol className={cx("main-li")}>
-            <li>
+            <li className={cx('text-li')}>
               Các điều khoản quy định tại Quy định sử dụng này có thể được cập
               nhật, chỉnh sửa bất cứ lúc nào mà không cần phải thông báo trước
               tới người sử dụng. ISC sẽ công bố rõ trên Website, về những thay
               đổi, bổ sung đó.
             </li>
-            <li>
+            <li className={cx('text-li')}>
               Trong trường hợp một hoặc một số điều khoản Quy định sử dụng này
               xung đột với các quy định của luật pháp và bị Tòa án tuyên là vô
               hiệu, điều khoản đó sẽ được chỉnh sửa cho phù hợp với quy định
               pháp luật hiện hành, và phần còn lại của Quy định sử dụng vẫn giữ
               nguyên giá trị.
             </li>
-            <li>
+            <li className={cx('text-li')}>
               Thỏa thuận này có giá trị như Hợp Đồng. Người Dùng hiểu rằng, đây
               là hợp đồng điện tử, Giá trị pháp lý của hợp đồng điện tử không
               thể bị phủ nhận chỉ vì hợp đồng đó được thể hiện dưới dạng thông
@@ -315,7 +315,7 @@ function TermOfServices() {
         </div>
         <div className={cx("paragraph")}>
           <h2 className={cx("text")}>THÔNG TIN LIÊN LẠC</h2>
-          <p>
+          <p className={cx('text_p')}>
             Nếu bạn có câu hỏi về Điều khoản sử dụng này, vui lòng gửi email tới
             địa chỉ hptservices.group@gmail.com để được giải đáp nhanh nhất.
           </p>

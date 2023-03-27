@@ -14,50 +14,35 @@ const cx = classNames.bind(styles)
 function Settings() {
   const [showPopup, setShowPopup] = useState(false)
   const [showPopupInfo, setShowPopupInfo] = useState(false)
-  const [info, setInfo] = useState([]);
+  const [info, setInfo] = useState({});
   const [accounts, setAccount] = useState([])
-
-  const [file, setFile] = useState(null);
 
 
   const Student_token = localStorage.getItem('user-save');
   const decodeEmail = jwt_decode(Student_token);
   const emailUser = decodeEmail.email;
-  const usernameAccount = decodeEmail.username;
-  const passwordAccount = decodeEmail.password;
 
-
-  const URL = 'http://localhost:5000/admin/account'
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetch(URL)
-      result.json().then(json => {
-        setAccount(json)
-      })
-    }
-    fetchData();
-  }, []);
   //http://localhost:5000/profile
   useEffect(() => {
-    const fetchData = async () => {
-      const infoStudent = 'http://localhost:5000/profile'
-      const result = await fetch(infoStudent, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${Student_token}`
-        },
-      })
-      const json = await result.json();
-      const student = json.profile.find(item => item.studentemail === emailUser);
-      if (student) {
-        setInfo(student);
-      } else {
-        console.error('Không tồn tại bài đăng có id này');
+    async function fetchData() {
+      try {
+        const options = {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + Student_token,
+            'Content-Type': 'application/json'
+          }
+        };
+        const response = await fetch('http://localhost:5000/profile', options);
+        const data = await response.json();
+        setInfo(data);
+      } catch (error) {
+        console.error(error);
       }
     }
     fetchData();
   }, []);
+
 
   const handleChangePw = () => {
     setShowPopup(true);
@@ -67,35 +52,34 @@ function Settings() {
   }
   const handlePopupFalse = () => {
     setShowPopupInfo(false)
-      const fetchData = async () => {
-        const infoStudent = 'http://localhost:5000/profile'
-        const result = await fetch(infoStudent, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${Student_token}`
-          },
-        })
-        const json = await result.json();
-        const student = json.profile.find(item => item.studentemail === emailUser);
-        if (student) {
-          setInfo(student);
-        } else {
-          console.error('Không tồn tại bài đăng có id này');
-        }
-      }
-      fetchData();
+    // const fetchData = async () => {
+    //   const infoStudent = 'http://localhost:5000/profile'
+    //   const result = await fetch(infoStudent, {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Authorization': `Bearer ${Student_token}`
+    //     },
+    //   })
+    //   const json = await result.json();
+    //   const student = json.profile.find(item => item.studentemail === emailUser);
+    //   if (student) {
+    //     setInfo(student);
+    //   } else {
+    //     console.error('Không tồn tại sinh viên này');
+    //   }
+    // }
+    // fetchData();
   }
 
   return (
 
     <div className={cx('wrapper')}>
-      <h1>Settings</h1>
+      <h1>Cài đặt</h1>
       <div className={cx('update-info-wrapper')}>
 
         <div className={cx('settings-option')}>
           <label htmlFor="changePassword">Đổi mật khẩu:</label>
-          <input className={cx('password_input')} value="************" />
           <button className={cx('action_button')} onClick={handleChangePw} id="changePassword">Đổi mật khẩu</button>
         </div>
         <Popup open={showPopup} onClose={() => setShowPopup(false)}>
@@ -106,18 +90,26 @@ function Settings() {
       </div>
 
       <div className={cx('settings-option')}>
-          <label htmlFor="UpdateInfo">Thông tin cá nhân:</label>
-          <button className={cx('action_button')} onClick={handleUpdateInfo} id="UpdateInfo">Cập nhật thông tin</button>
-        </div>
+        <label htmlFor="UpdateInfo">Thông tin cá nhân:</label>
+        <button className={cx('action_button')} onClick={handleUpdateInfo} id="UpdateInfo">Cập nhật thông tin</button>
+      </div>
+      {info.profile && (
         <Popup open={showPopupInfo} onClose={() => handlePopupFalse()}>
-          <StudentName name={info.studentname} address = {info.address} gender = {info.gender} code = {info.code} major ={info.major} school ={info.school}
+          <StudentName
+            name={info.profile.studentname}
+            address={info.profile.address}
+            gender={info.profile.gender}
+            code={info.profile.code}
+            major={info.profile.major}
+            school={info.profile.school}
             onClose={() => setShowPopupInfo(false)}
           />
         </Popup>
-        <ToastContainer/>
-      </div>
+      )}
+      <ToastContainer />
+    </div>
 
-   
+
   );
 };
 

@@ -10,9 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const cx = classNames.bind(styles)
 function StudentName(props) {
 
-
-  console.log(props.name);
-
     const [studentName, setStudentName] = useState("");
     const [gender, setGender] = useState("");
     const [address, setAddress] = useState("");
@@ -22,6 +19,7 @@ function StudentName(props) {
     const jobpost_token = localStorage.getItem('user-save');
     const decodeEmail = jwt_decode(jobpost_token);
 
+ 
     useEffect(()=>{
       setStudentName(props.name)
       setGender(props.gender)
@@ -68,7 +66,6 @@ function StudentName(props) {
         }
     
         const result = await response.json();
-        console.log(result);
         toast.success('Sucess!', {
           position: "top-right",
           autoClose: 5000,
@@ -94,7 +91,7 @@ return (
         </button>
         <form className={cx('change-password-form')} onSubmit={handleChangeInfo}>
           <h2>Cập nhật thông tin cá nhân</h2>
-          <div>
+          <div className={cx('wrapper')}>
             <label className={cx('lable_input')} htmlFor="studentName"> Name:</label>
             <input
               className={cx('pass_input')}

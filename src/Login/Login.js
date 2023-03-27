@@ -41,7 +41,7 @@ function Login() {
     window.location.href='/auth/forgot-password'
    }
    const handleSignUp = ()=>{
-    window.location.href='/auth/confirm'
+    window.location.href='/signup'
    }
 
 

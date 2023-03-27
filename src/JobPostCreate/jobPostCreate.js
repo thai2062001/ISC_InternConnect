@@ -51,7 +51,6 @@
                 formData.append('benefit', document.getElementById('benefitInput').value);
                 formData.append('required', document.getElementById('requiredInput').value);
                 formData.append('responsibility', document.getElementById('ResponInput').value);
-                formData.append('skill', document.getElementById('skillInput').value);
                 formData.append('expdate', selectedDate);
                 formData.append('logo', logo);
                 const response = await fetch('http://localhost:5000/company/create', {
@@ -123,6 +122,7 @@
                                 <option value="Nam">Nam</option>
                                 <option value="Nữ">Nữ</option>
                                 <option value="Khác">Khác</option>
+                                <option value="Không yêu cầu">Không yêu cầu</option>
                             </select>
                         </div>
                     </div>
@@ -137,10 +137,6 @@
                     <div className={cx('wrapper-ip')}>
                         <label className={cx('label-des')} for="input-field">Yêu cầu</label>
                         <textarea id="requiredInput" type="text" className={cx('input-res')} />
-                    </div>
-                    <div className={cx('wrapper-ip')}>
-                    <label className={cx('label-des')} htmlFor="skillinput">Kỹ năng</label>
-                    <textarea id="skillInput" type="text" className={cx('input-res')} />
                     </div>
                     <div className={cx('button-action-div')}>
                         <button className={cx('button-action')} onClick={createJobPost}>Đăng bài</button>

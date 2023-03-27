@@ -20,13 +20,13 @@ function Footer() {
             </div>
             <div className={cx( 'footer__links')}>
               <ul className={cx( 'footer__list')}>
-                <li className={cx( 'footer__item')}><a href="/">Home</a></li>
-                <li className={cx( 'footer__item')}><a href="/about">About</a></li>
-                <li className={cx( 'footer__item')}><a href="/contact">Contact</a></li>
+                <li className={cx( 'footer__item')}><a href="/">Trang chủ</a></li>
+                <li className={cx( 'footer__item')}><a href="/services">Điều khoản</a></li>
+                <li className={cx( 'footer__item')}><a href="#">Liên hệ</a></li>
               </ul>
             </div>
             <div className={cx( 'footer__social')}>
-              <a href="https://facebook.com"><FaFacebookF/></a>
+              <a href="https://www.facebook.com/profile.php?id=100007820205601"> <FaFacebookF/></a>
               <a href="https://twitter.com"><FaTwitch /></a>
               <a href="https://instagram.com"><FaInstagram /></a>
             </div>
