@@ -74,7 +74,6 @@ function PageDetail() {
           document.getElementById('required').readOnly = true;
           document.getElementById('benefit').readOnly = true;
           document.getElementById('responsibility').readOnly = true;
-          document.getElementById('skill').readOnly = true;
           document.getElementById('date').readOnly = true;
           isEditing = false;
         } else {
@@ -85,7 +84,6 @@ function PageDetail() {
           document.getElementById('required').readOnly = false;
           document.getElementById('benefit').readOnly = false;
           document.getElementById('responsibility').readOnly = false;
-          document.getElementById('skill').readOnly = false;
           document.getElementById('date').readOnly = false;
           isEditing = true;
         }
@@ -105,7 +103,6 @@ function PageDetail() {
           document.getElementById('required').readOnly = false;
           document.getElementById('benefit').readOnly = false;
           document.getElementById('responsibility').readOnly = false;
-          document.getElementById('skill').readOnly = false;
           document.getElementById('date').readOnly = false;
         });
       }
@@ -120,8 +117,6 @@ function PageDetail() {
     const benefit = document.getElementById("benefit").value;
     const responsibility = document.getElementById("responsibility").value;
     const required = document.getElementById("required").value;
-    const skill = document.getElementById("skill").value;
-    
     // const companyNameInput = document.getElementById("datepicker").value;
 
     // Lấy ID của company
@@ -140,7 +135,6 @@ function PageDetail() {
         required: required,
         benefit: benefit,
         responsibility:responsibility,
-        skill:skill,
         expdate: selectedDate
       })
     })
@@ -201,15 +195,12 @@ function PageDetail() {
         </div>
         <div className={cx('wrapper-gen')}>
           <div >
-            <label className={cx('label-des-one')}>Skill</label>
-            <input id="skill" value={accounts.skill} readOnly className={cx('input-des')} onChange={(event) => setAccount({ ...accounts, skill: event.target.value })} />
-          </div>
-          <div >
             <label className={cx('label-des-one')} for="gender">Giới tính</label>
             <select readOnly value={accounts.gender} id="gender" name="gender">
               <option value="Nam">Nam</option>
               <option value="Nữ">Nữ</option>
               <option value="Khác">Khác</option>
+              <option value="Không yêu cầu">Không yêu cầu</option>
             </select>
           </div>
         </div>

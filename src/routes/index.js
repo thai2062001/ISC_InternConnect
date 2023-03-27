@@ -55,7 +55,7 @@ const publicRouters = [
     {path: '/auth/forgot-password/:email',component:AuForgot ,layout: null},
     {path: '/admin/adminlogin',component: AdminLogin,layout: null},
     {path: '/signout',component: SignOut},
-    {path: '/auth/confirm',component: Signup,layout: null},
+    {path: '/signup',component: Signup,layout: null},
     {path: '/auth/confirm/:mailsend',component: VerifyAccount,layout: null},
     {path: '/homeadmin',component: HomeAdmin,layout: SlidebarOnly},
     {path: '/homeadmin/schoolAdmin',component: SchoolAdmin,layout: SlidebarOnly},

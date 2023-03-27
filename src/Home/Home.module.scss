@@ -1,13 +1,13 @@
 
 .container_full{
     width: 100%;
-    height: 3000px;
+    height: 5000px;
     margin-right: auto;
     margin-left: auto;
 }
 .container{
     width: 100%;
-    height: 700px;
+    height: 400px;
     position: relative;
     z-index: 1;
 }
@@ -19,6 +19,7 @@
 .search-banner{
     position: relative;
 }
+
 .banner-wrapper-search h1{
     position: absolute;
     top:30%;
@@ -90,6 +91,52 @@
     height: 400px;
 }
 
+.filter_wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  select {
+    width: 200px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  
+  select option {
+    background-color: #fff;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  select:hover {
+    border: 1px solid #333;
+  }
+  
+  select:focus {
+    outline: none;
+    border: 1px solid #333;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .filter_wrapper {
+      flex-wrap: wrap;
+    }
+  
+    select {
+      width: 100%;
+      margin: 10px 0;
+    }
+  }
 
 
 //Jobpost
@@ -101,10 +148,10 @@
 }
 
 .jobpost-title{
-    margin-top: 60px;
+    margin-top: 80px;
 }
 .jobpost-title span{
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 600;
     margin-left: 40px;
 
@@ -113,15 +160,16 @@
     border: 1px solid rgb(134, 134, 215);
     margin-top: 10px;
     margin-left: 100px;
+    cursor: pointer;
     border-radius: 5px;
     background-color: #FAFAFA;
-    height: 140px;
+    height: 200px;
     width: 1200px;
     display: flex;
 }
 .logo img{
-    width: 110px;
-    height: 80px;
+    width: 140px;
+    height: 100px;
     margin-left: 30px;
     margin-top: 30px;
 }
@@ -139,8 +187,10 @@
     margin-left: 10px;
 }
 .jobpost_detail .detail_span{
-    font-size: 14px;
+    font-size: 18px;
     display: block;
+    align-items: center;
+    padding: 10px;
     margin-left: 10px;
     line-height: 24px;
 }
@@ -162,14 +212,29 @@
 .jobpost-preview p{
     color: red;
   font-size: 12px;
-  
   padding: 10px;
   margin: 10px;
 }
+
+.wrapper_jobpost{
+    position: relative;
+
+}
+
+.wrapper_content{
+    display: flex;
+    align-items: center;
+}
+
+
+
 .pagination {
     display: flex;
     flex-wrap: wrap;
     width: 1200px;
+    position: absolute;
+    top: 360%;
+    left: 12%;
     justify-content: center;
     align-items: center;
     list-style: none;
@@ -237,7 +302,7 @@
 
 .wrapper{
     position: absolute;
-    top:350%;
+    top:480%;
     left: 50%;
     transform: translate(-50%,-50%);
     width: 1000px;
