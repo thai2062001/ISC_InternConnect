@@ -18,7 +18,7 @@ function Settings() {
   const [accounts, setAccount] = useState([])
 
 
-  const Student_token = localStorage.getItem('user-save');
+  const Student_token = localStorage.getItem('user');
   const decodeEmail = jwt_decode(Student_token);
   const emailUser = decodeEmail.email;
 

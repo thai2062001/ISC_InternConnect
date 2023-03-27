@@ -34,7 +34,7 @@ function Header() {
 
   
   const handleLogOut = () => {
-    localStorage.removeItem('user-save');
+    localStorage.removeItem('user');
     setIsLoggedIn(false);
     setUsername('');
     window.location.href = '/';
@@ -42,7 +42,7 @@ function Header() {
 
 
   const handleName = () => {
-    const jobpost_token = localStorage.getItem('user-save');
+    const jobpost_token = localStorage.getItem('user');
     if (jobpost_token) {
       const decodeEmail = jwt_decode(jobpost_token);
       const Username = decodeEmail.username;

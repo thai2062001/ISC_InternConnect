@@ -1,7 +1,7 @@
 
 .container_full{
     width: 100%;
-    height: 5000px;
+    height: 4800px;
     margin-right: auto;
     margin-left: auto;
 }
@@ -138,13 +138,17 @@
     }
   }
 
-
 //Jobpost
+
+.banner_right{
+    margin-top: 100px;
+}
 .jobpost{
-    width: 1600px;
+    width: 1300px;
     height: 900px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 40px;
+    display: flex;
+
 }
 
 .jobpost-title{
@@ -157,12 +161,11 @@
 
 }
 .jobpost-description{
-    border: 1px solid rgb(134, 134, 215);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
     margin-top: 10px;
     margin-left: 100px;
-    cursor: pointer;
     border-radius: 5px;
-    background-color: #FAFAFA;
+    background-color: #f0f7ff;
     height: 200px;
     width: 1200px;
     display: flex;
@@ -170,6 +173,7 @@
 .logo img{
     width: 140px;
     height: 100px;
+    cursor: pointer;
     margin-left: 30px;
     margin-top: 30px;
 }
@@ -183,22 +187,32 @@
 }
 .jobpost_detail h2{
     font-weight: 600;
-    color:#00448f;
+    cursor: pointer;
+    color:#317ccc;
     margin-left: 10px;
+}
+.jobpost_detail h2:hover{
+    color:#2662a2;
+
 }
 .jobpost_detail .detail_span{
     font-size: 18px;
     display: block;
     align-items: center;
     padding: 10px;
+    font-weight: 400;
     margin-left: 10px;
     line-height: 24px;
 }
 .company{
     text-transform:uppercase;
+    cursor: pointer;
+    font-weight: 700;
+}
+.company:hover{
+    color: #1C6DD0;
 }
 .location{
-    opacity: 0.5;
     font-weight: 200;
 }
 .salary{
@@ -206,7 +220,7 @@
 }
 
 .jobpost-description:hover{
-    box-shadow: 0 15px 50px #bdbdbd;
+    box-shadow: 0 5px 20px #bdbdbd;
 }
 
 .jobpost-preview p{
@@ -224,6 +238,12 @@
 .wrapper_content{
     display: flex;
     align-items: center;
+}
+
+
+.banner_right .img-2{
+    margin-left: 40px;
+    width: 460px;
 }
 
 
@@ -297,12 +317,9 @@
 
 
 
-
-
-
 .wrapper{
     position: absolute;
-    top:480%;
+    top:470%;
     left: 50%;
     transform: translate(-50%,-50%);
     width: 1000px;

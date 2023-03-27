@@ -19,7 +19,7 @@ function HomeJobPostDetail() {
     const [jobPosts, setJobPost] = useState({})
     const [recommentPosts, setRecommentPosts] = useState([])
     const [student, setStudent] = useState({})
-    const [hasUserData, setHasUserData] = useState(!!localStorage.getItem('user-save'));
+    const [hasUserData, setHasUserData] = useState(!!localStorage.getItem('user'));
     const navigate = useNavigate();
 
 
@@ -27,7 +27,7 @@ function HomeJobPostDetail() {
     const url = new URL(window.location.href);
     const idDetail = url.pathname.split('/').pop();
     const favorite = url.pathname.split('/').pop();
-    const jobpost_token = localStorage.getItem('user-save');
+    const jobpost_token = localStorage.getItem('user');
     const decodeEmail = jobpost_token ? jwt_decode(jobpost_token) : null;
     const emailUser = decodeEmail ? decodeEmail.email : null;
     const Username = decodeEmail ? decodeEmail.username : null;
@@ -53,7 +53,7 @@ function HomeJobPostDetail() {
         fetchData();
     }, [emailUser]);
     useEffect(() => {
-        setHasUserData(!!localStorage.getItem('user-save'));
+        setHasUserData(!!localStorage.getItem('user'));
       }, []);
     
 
@@ -125,7 +125,7 @@ function HomeJobPostDetail() {
       };
 
     const handleFavorite = () => {
-        const access_token = localStorage.getItem('user-save');
+        const access_token = localStorage.getItem('user');
         const decodeEmail = jwt_decode(access_token);
         const urlDelete = `http://localhost:5000/details/delete-fa/${favorite}`;
 
@@ -290,6 +290,7 @@ function HomeJobPostDetail() {
 
             </div>
             <div className={cx('jobpost-recomment')}>
+                <h2 style={{fontSize:'30px',marginLeft:'10px',fontWeight:'500'}}>Gợi ý việc làm</h2>
                 <ul>
                     {recommentPosts.slice(0,8).map((recommentPost) => {
                         return (
@@ -301,9 +302,20 @@ function HomeJobPostDetail() {
                                     <div className={cx('detail_post')}>
                                         <h2 className={cx('jobpost-title')}>{recommentPost.title}</h2>
                                         <div className={cx('jobpost-meta')}>
-                                            <p className={cx('jobpost_company')}>{recommentPost.namecompany}</p>
-                                            <p className={cx('jobpost_location')}>{recommentPost.location}</p>
-                                            <p className={cx('jobpost_salary')}>{recommentPost.salary}</p>
+                                          <div className={cx('info_content')}>
+                                          <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png"/>
+                                          <span className={cx('jobpost_company')}>{recommentPost.namecompany}</span>
+                                          </div>
+                                          <div  className={cx('info_content')}>
+                                          <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/officel/30/null/place-marker--v1.png" />
+                                          <span className={cx('jobpost_location')}>{recommentPost.location}</span>
+                                          </div>
+                                          <div  className={cx('info_content')}>
+                                          <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
+                                          <span className={cx('jobpost_salary')}>{recommentPost.salary}</span>
+                                          </div>
+                                        
+                                            
                                         </div>
                                     </div>
 
