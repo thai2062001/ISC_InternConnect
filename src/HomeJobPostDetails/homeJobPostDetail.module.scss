@@ -46,7 +46,22 @@
     color: #00133f;
 }
 
-.company-title span{
+.company_a a{
+    font-size: 15px;
+    color: #000000;
+    margin-left: 5px;
+    cursor: pointer;
+    display: block;
+    text-align: left;
+
+}
+
+.company_span:hover{
+    font-size: 15px;
+    color: #0051a8;
+}
+
+.company-title .namecompany_span{
     color: #0e1225;
     display: inline;
     font-weight: 500;
@@ -63,6 +78,11 @@
     margin-right: 5px;
     color: #495057;
     font-size: 18px;
+}
+
+#company_span{
+    font-size: 15px;
+    margin-left: 5px;
 }
 
 

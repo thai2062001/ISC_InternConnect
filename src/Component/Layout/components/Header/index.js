@@ -70,7 +70,7 @@ function Header() {
         <nav className={cx('header__nav')}>
           <ul className={cx('header__list')}>
             <li className={cx('header__item')}><a href="/">Trang chủ</a></li>
-            <li className={cx('header__item')}><a href="/companyinfo">Công ty</a></li>
+            <li className={cx('header__item')}><a href="/listcompany">Công ty</a></li>
             <li className={cx('header__item')}><a href="#">Liên hệ</a></li>
           </ul>
           <div className={cx('header__actions')}>
