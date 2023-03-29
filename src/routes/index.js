@@ -36,13 +36,17 @@ import IntroduceCompany from '../CompanyManager/IntroduceCompany/introduceCompan
 import SchoolUpdate from '../SchoolManager/schoolUpdate/schoolUpdate';
 import TermOfServices from '../TermofServices/termofservice';
 import Company from '../Home/Company/company';
+import DetailCompany from '../Home/DetailCompany/detailCompany';
 //public routers
 
 
 const publicRouters = [
     {path: '/',component: Home,layout:HeaderOnly},
     {path: '/:id',component: HomeJobPostDetail,layout:HeaderOnly},
+
     {path: '/listcompany',component: Company,layout:HeaderOnly},
+    {path: '/listcompany/:id',component: DetailCompany,layout:HeaderOnly},
+
     {path: '/accountSettings',component: Settings,layout:HeaderOnly},
     {path: '/services',component: TermOfServices,layout:HeaderOnly},
     {path: '/statuscv',component: StatusCV,layout:HeaderOnly},

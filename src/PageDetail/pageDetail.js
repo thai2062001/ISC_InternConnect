@@ -5,6 +5,8 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const cx = classNames.bind(styles)
@@ -16,11 +18,32 @@ function PageDetail() {
   const [image, setImage] = useState(null);
   const { id } = useParams();
   const [selectedDate, setSelectedDate] = useState(null);
+  const [listmajor, setListMajor] = useState([])
 
 
   const url = new URL(window.location.href);
   const idDetail = url.pathname.split('/').pop();
   const company_token = localStorage.getItem('user-save');
+
+
+  const apiUrl = 'http://localhost:5000/company/listmajor'
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${company_token}`
+        },
+      });
+      result.json().then(json => {
+        setListMajor(json);
+      });
+    };
+    fetchData();
+  }, []);
+
+
   useEffect(() => {
     const companyApi = 'http://localhost:5000/company'
     const fetchData = async () => {
@@ -67,24 +90,28 @@ function PageDetail() {
     if (editButton) {
       editButton.addEventListener("click", function () {
         if (isEditing) {
+
           document.getElementById('title').readOnly = true;
           document.getElementById('salary').readOnly = true;
           document.getElementById('location').readOnly = true;
-          document.getElementById('gender').readOnly = true;
+          document.getElementById('gender').disabled = true;
           document.getElementById('required').readOnly = true;
           document.getElementById('benefit').readOnly = true;
           document.getElementById('responsibility').readOnly = true;
           document.getElementById('date').readOnly = true;
+          document.getElementById('majorInput').disabled = true;
           isEditing = false;
         } else {
+
           document.getElementById('title').readOnly = false;
           document.getElementById('salary').readOnly = false;
           document.getElementById('location').readOnly = false;
-          document.getElementById('gender').readOnly = false;
+          document.getElementById('gender').disabled = false;
           document.getElementById('required').readOnly = false;
           document.getElementById('benefit').readOnly = false;
           document.getElementById('responsibility').readOnly = false;
           document.getElementById('date').readOnly = false;
+          document.getElementById('majorInput').disabled = false;
           isEditing = true;
         }
       });
@@ -111,6 +138,7 @@ function PageDetail() {
   function updateDetails() {
     // Lấy giá trị của input và DatePicker
     const title = document.getElementById("title").value;
+    const major = document.getElementById("majorInput").value;
     const salary = document.getElementById("salary").value;
     const location = document.getElementById("location").value;
     const gender = document.getElementById("gender").value;
@@ -129,18 +157,29 @@ function PageDetail() {
       },
       body: JSON.stringify({
         title: title,
+        major: major,
         salary: salary,
         gender: gender,
         location: location,
         required: required,
         benefit: benefit,
-        responsibility:responsibility,
+        responsibility: responsibility,
         expdate: selectedDate
       })
     })
       .then(response => {
         if (response.ok) {
           // Thực hiện các hành động khác khi cập nhật thành công
+          toast.success('Đã cập nhật thông tin công ty!', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
         } else {
           // Thông báo lỗi nếu không thành công
         }
@@ -150,7 +189,7 @@ function PageDetail() {
       });
   }
 
-  
+
   return (
     <div className={cx('wrapper')} >
       <h1 >Detais_page</h1>
@@ -161,12 +200,13 @@ function PageDetail() {
           </div>
           <div className={cx('input-img')}>
             <label style={{ marginRight: '10px' }}>Date</label>
-            <DatePicker
+            <DatePicker className={cx('datepicker_info')}
               id="date"
               selected={selectedDate}
               onChange={date => {
                 setSelectedDate(date)
-                updateDetails(date)}
+                updateDetails(date)
+              }
               }
               dateFormat="dd/MM/yyyy"
               placeholderText="Chọn ngày hết hạn"
@@ -185,24 +225,35 @@ function PageDetail() {
 
         <div className={cx('wrapper-des')}>
           <div >
-            <label className={cx('label-des-one')}>Địa chỉ</label>
+            <label className={cx('label-des')}>Địa chỉ</label>
             <input id="location" className={cx('input-des')} readOnly value={accounts.location} onChange={(event) => setAccount({ ...accounts, location: event.target.value })} />
           </div>
           <div >
-            <label className={cx('label-des-one')}>Trợ cấp</label>
+            <label className={cx('label-des')}>Trợ cấp</label>
             <input id="salary" readOnly className={cx('input-des')} value={accounts.salary} onChange={(event) => setAccount({ ...accounts, salary: event.target.value })} />
           </div>
         </div>
         <div className={cx('wrapper-gen')}>
           <div >
-            <label className={cx('label-des-one')} for="gender">Giới tính</label>
-            <select readOnly value={accounts.gender} id="gender" name="gender">
+            <label className={cx('label-des')} for="gender">Giới tính</label>
+            <select disabled value={accounts.gender}  className={cx('input-des')}id="gender" name="gender" onChange={(e) => setAccount({ ...accounts, gender: e.target.value })}>
               <option value="Nam">Nam</option>
               <option value="Nữ">Nữ</option>
-              <option value="Khác">Khác</option>
               <option value="Không yêu cầu">Không yêu cầu</option>
             </select>
           </div>
+          <ToastContainer style={{width:'400px'}}/>
+
+          <div >
+            <label className={cx('label-des')}>Ngành nghề</label>
+            <select disabled id="majorInput" className={cx('input-des')} value={accounts.major} onChange={(e) => setAccount({ ...accounts, major: e.target.value })} >
+              <option value="">Chọn ngành nghề</option>
+              {listmajor.map(major => (
+                <option key={major._id} value={major.namemajor}>{major.namemajor}</option>
+              ))}
+            </select>
+          </div>
+
         </div>
         <div className={cx('wrapper-ip')}>
           <label className={cx('label-des')} for="input-field">Phúc lợi thực tập</label>

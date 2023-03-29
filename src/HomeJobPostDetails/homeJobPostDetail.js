@@ -23,9 +23,6 @@ function HomeJobPostDetail() {
     const [hasUserData, setHasUserData] = useState(!!localStorage.getItem('user'));
 
     const navigate = useNavigate();
-
-    const tabs = ['posts', 'comments', 'albums', 'photos', 'todos', 'users']
-
     const { id } = useParams();
     const url = new URL(window.location.href);
     const idDetail = url.pathname.split('/').pop();
