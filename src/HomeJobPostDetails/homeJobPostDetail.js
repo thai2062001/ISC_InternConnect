@@ -23,9 +23,6 @@ function HomeJobPostDetail() {
     const [hasUserData, setHasUserData] = useState(!!localStorage.getItem('user'));
 
     const navigate = useNavigate();
-
-    const tabs = ['posts', 'comments', 'albums', 'photos', 'todos', 'users']
-
     const { id } = useParams();
     const url = new URL(window.location.href);
     const idDetail = url.pathname.split('/').pop();
@@ -63,7 +60,6 @@ function HomeJobPostDetail() {
 
 
     useEffect(() => {
-
         const jobpostApi = 'http://localhost:5000/'
         const fetchData = async () => {
             const result = await fetch(jobpostApi, {
@@ -87,7 +83,7 @@ function HomeJobPostDetail() {
 
 
     const CompanyName = jobPosts.namecompany
-
+    console.log(company);
     //recomment jobpost
     useEffect(() => {
         const jobpostApi = 'http://localhost:5000/'
@@ -247,11 +243,6 @@ function HomeJobPostDetail() {
                         <div className={cx('company-title')}>
                             <div><h1>{jobPosts.title}</h1></div>
                             <div><span className={cx('namecompany_span')}>{jobPosts.namecompany}</span></div>
-                            <div className={cx('company_a')} >
-                                <a className={cx('company_span')} id="company_span" href="https://example.com" target="_blank"> Về công ty
-                                
-                                </a>
-                            </div>
 
                         </div>
                     </div>
@@ -314,16 +305,15 @@ function HomeJobPostDetail() {
                                 <span className={cx('span-title')}>Phúc lợi</span>
                                 <p>{jobPosts.benefit}</p>
                             </div>
-                            <div className={cx('benefit')}>
-                                <span className={cx('span-title')}>Giới thiệu công ty</span>
-                                <p>{company.introduce}</p>
-                            </div>
+                            {company && (
+                                <div className={cx('benefit')}>
+                                    <span className={cx('span-title')}>Giới thiệu công ty</span>
+                                    <p>{company.introduce}</p>
+                                </div>
+                            )}
+
 
                         </div>
-
-                        
-
-
                     </div>
                     <div>
 

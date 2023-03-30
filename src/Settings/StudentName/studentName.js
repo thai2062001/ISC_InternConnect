@@ -16,7 +16,7 @@ function StudentName(props) {
     const [Code, setCode] = useState("");
     const [Major, setMajor] = useState("");
     const [School, setSchool] = useState("");
-    const jobpost_token = localStorage.getItem('user-save');
+    const jobpost_token = localStorage.getItem('user');
     const decodeEmail = jwt_decode(jobpost_token);
 
  
@@ -39,7 +39,7 @@ function StudentName(props) {
     const handleChangeInfo = async (event) => {
       event.preventDefault();
       const URL = 'http://localhost:5000/update-profile'
-      const info_token = localStorage.getItem('user-save');
+      const info_token = localStorage.getItem('user');
 
       const data = {
         studentname:studentName,

@@ -152,9 +152,9 @@
 }
 
 .jobpost-title{
-    margin-top: 80px;
+    margin-top: 40px;
 }
-.jobpost-title span{
+.jobpost-title .span-title{
     font-size: 30px;
     font-weight: 600;
     margin-left: 40px;
@@ -179,7 +179,7 @@
 }
 
 .jobpost_detail{
-    width: 100%;
+    width: 50%;
     height: 100%;
     margin-left: 30px;
     padding: 5px;
@@ -221,6 +221,15 @@
 
 .jobpost-description:hover{
     box-shadow: 0 5px 20px #bdbdbd;
+}
+
+
+.major-span{
+    font-size: 14px;
+    padding: 10px;
+    font-weight: 400;
+    margin-left: 10px;
+    line-height: 24px;
 }
 
 .jobpost-preview p{

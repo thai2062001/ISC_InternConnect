@@ -16,12 +16,12 @@ function StatusCV() {
     const pagesVisited = pageNumber * applicationsPerPage;
 
     useEffect(() => {
-        const localstore = localStorage.getItem('user-save')
+        const localstore = localStorage.getItem('user')
         const decodeUser = jwt_decode(localstore);
     }, [])
 
     const URL = 'http://localhost:5000/cv';
-    const jobapptoken = localStorage.getItem('user-save');
+    const jobapptoken = localStorage.getItem('user');
 
     useEffect(() => {
         const fetchData = async () => {

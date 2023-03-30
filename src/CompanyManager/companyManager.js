@@ -51,6 +51,7 @@ function CompanyManager() {
         { title: "title", field: "title" },
         { title: "expdate", field: "expdate" },
         { title: "location", field: "location" },
+        { title: "major", field: "major" },
         { title: "salary", field: "salary" },
         {
             title: 'Details',
@@ -68,7 +69,9 @@ function CompanyManager() {
     useEffect(() => {
         const localstore = localStorage.getItem('user-save')
         const decodeUser = jwt_decode(localstore);
+        console.log(decodeUser);
         setName(decodeUser.username)
+        console.log(decodeUser.username);
     }, [])
 
     //call api fill data
@@ -133,6 +136,8 @@ function CompanyManager() {
         })
         doc.save('CompanyManagerData.pdf')
       }
+
+      console.log(name);
     return (
             <div className="App">
                 <div className={cx('wrapper')}>

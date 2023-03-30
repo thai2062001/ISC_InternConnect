@@ -67,3 +67,47 @@
   .material-icons {
     font-size: 24px;
   }
+
+  .logo_com{
+    width: 500px;
+    display: flex;
+    height: 100px;
+    margin-bottom: 60px;
+  }
+
+  .logo_img-old{
+    width: 250px;
+    object-fit: contain;
+    height: 100px;  
+  }
+  .logo_img-new{
+    width: 250px;
+    object-fit: contain;
+    height: 100px;  
+  }
+  .upload_button {
+    background-color: #4CAF50; /* màu nền */
+    color: white; /* màu chữ */
+    border: none; /* không viền */
+    padding: 10px 20px; /* độ lớn của nút */
+    text-align: center; /* căn giữa nội dung */
+    text-decoration: none; /* không gạch chân */
+    display: inline-block; /* hiển thị dạng block */
+    font-size: 16px; /* kích thước chữ */
+    margin: 10px; /* khoảng cách với các phần tử khác */
+    cursor: pointer; /* biến con trỏ chuột thành hình tay */
+  }
+  
+  .logo-input{
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #5b6ea7;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .logo-input:hover {
+    background-color: #6f84c3;
+  }
