@@ -14,7 +14,7 @@ function ChangePassword(props) {
     const [newPass, setNewPassword] = useState("");
     const [cfmPass, setConfirmNewPassword] = useState("");
 
-    const jobpost_token = localStorage.getItem('user-save');
+    const jobpost_token = localStorage.getItem('user');
     const decodeEmail = jwt_decode(jobpost_token);
     const email = decodeEmail.email;
 

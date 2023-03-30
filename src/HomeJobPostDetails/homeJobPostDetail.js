@@ -83,7 +83,6 @@ function HomeJobPostDetail() {
 
 
     const CompanyName = jobPosts.namecompany
-    console.log(company);
     //recomment jobpost
     useEffect(() => {
         const jobpostApi = 'http://localhost:5000/'
@@ -261,7 +260,7 @@ function HomeJobPostDetail() {
                             <FaCalendarDay className={cx('icon-d1')} />
                             {formatted_date}
                         </div>
-                        {jobPosts && student && localStorage.getItem('user-save') && (
+                        {jobPosts && student && localStorage.getItem('user') && (
                             <Popup open={showPopup} onClose={() => setShowPopup(false)}>
                                 <ApplyCV
                                     expdate={jobPosts.expdate}
