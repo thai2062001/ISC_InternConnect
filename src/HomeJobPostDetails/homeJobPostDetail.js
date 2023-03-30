@@ -60,7 +60,6 @@ function HomeJobPostDetail() {
 
 
     useEffect(() => {
-
         const jobpostApi = 'http://localhost:5000/'
         const fetchData = async () => {
             const result = await fetch(jobpostApi, {
@@ -244,11 +243,6 @@ function HomeJobPostDetail() {
                         <div className={cx('company-title')}>
                             <div><h1>{jobPosts.title}</h1></div>
                             <div><span className={cx('namecompany_span')}>{jobPosts.namecompany}</span></div>
-                            <div className={cx('company_a')} >
-                                <a className={cx('company_span')} id="company_span" href="https://example.com" target="_blank"> Về công ty
-                                
-                                </a>
-                            </div>
 
                         </div>
                     </div>
@@ -317,10 +311,6 @@ function HomeJobPostDetail() {
                             </div>
 
                         </div>
-
-                        
-
-
                     </div>
                     <div>
 

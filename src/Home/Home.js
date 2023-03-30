@@ -15,8 +15,12 @@ function Home() {
   const [accounts, setAccount] = useState([])
   const [listJobPosts, setListJobPosts] = useState([])
   const [jobpostSearch, setJobPostSearch] = useState([])
+  const [jobpostFilter, setJobPostFilter] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(15);
+  const [listmajor, setListMajor] = useState([])
+  const [originalJobPosts, setOriginalJobPosts] = useState([]);
+  const [selectedMajor, setSelectedMajor] = useState('');
 
   const pageCount = Math.ceil(listJobPosts.length / postsPerPage);
 
@@ -29,6 +33,23 @@ function Home() {
     setCurrentPage(selectedPage);
     window.scrollTo(0, 0);
   };
+  const apiUrl = 'http://localhost:5000/listmajor'
+  const major_token = localStorage.getItem('user');
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${major_token}`
+        },
+      });
+      result.json().then(json => {
+        setListMajor(json);
+      });
+    };
+    fetchData();
+  }, []);
 
 
 
@@ -49,7 +70,9 @@ function Home() {
       const result = await fetch(api)
       result.json().then(json => {
         setListJobPosts(json);
+        setOriginalJobPosts(json);
         setJobPostSearch(json);
+        setJobPostFilter(json)
       })
     }
     fetchData();
@@ -98,6 +121,24 @@ function Home() {
     window.location.href = `/${id}`
   }
 
+
+  const handleFilter = (e) => {
+    const selectedMajor = e.target.value;
+    setSelectedMajor(selectedMajor);
+  
+    if (selectedMajor === 'Tất cả') { // Kiểm tra nếu giá trị được chọn là 'Tất cả'
+      setListJobPosts(jobpostFilter); // Set lại danh sách jobpost ban đầu
+    } else if (selectedMajor !== '') {
+      const filteredPosts = jobpostFilter.filter((post) => { // Sử dụng allJobPosts thay vì listJobPosts để filter
+        const jobmajor = post.major
+        return jobmajor && jobmajor.includes(selectedMajor);
+      });
+      setListJobPosts(filteredPosts);
+    } else {
+      setListJobPosts(jobpostFilter); // Nếu không có giá trị được chọn, set lại danh sách jobpost ban đầu
+    }
+  };
+
   return (
     <div className={cx('container_full')}>
       <Helmet>
@@ -135,7 +176,17 @@ function Home() {
       <div className={cx('wrapper_jobpost')}>
         <div className={cx('jobpost')}>
           <div className={cx('jobpost-title')}>
-            <span>Thực tập hấp dẫn</span>
+            <div >
+              <select onChange={handleFilter}>
+                <option value="">Tất cả</option>
+                {listmajor.map((major) => (
+                  <option key={major._id} value={major.namemajor}>
+                    {major.namemajor}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <span className={cx('span-title')}>Thực tập hấp dẫn</span>
             <ul className={cx('jobpost-preview')}>
               {currentPosts.splice(0, 15).map((jobPost, index) => (
                 <div onClick={() => handleDetail(jobPost._id)} className={cx('jobpost-description')} key={index}>
@@ -145,7 +196,7 @@ function Home() {
                   <div className={cx('jobpost_detail')}>
                     <h2 >{jobPost.title}</h2>
                     <div className={cx('wrapper_content')}>
-                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png"/>
+                      <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
                       <span className={cx('detail_span', 'company')}>  {jobPost.namecompany}</span>
                     </div>
                     <div className={cx('wrapper_content')}>
@@ -157,17 +208,20 @@ function Home() {
                       <span className={cx('detail_span', 'salary')}>{jobPost.salary}</span>
                     </div>
                   </div>
+                  <div style={{ marginTop: '120px', padding: '10px' }}>
+                    <span className={cx('major-span')}>{jobPost.major}</span>
+                  </div>
                 </div>
               ))}
             </ul>
 
           </div>
           <div className={cx('banner_right')}>
-          <img src='https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2F500x600_122601.png&w=1920&q=75'/>
-          <div>
-            <img className={cx('img-2')} src ='https://img.timviec.com.vn/2021/06/dang-tin-tuyen-dung-14.jpg'/>
+            <img src='https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2F500x600_122601.png&w=1920&q=75' />
+            <div>
+              <img className={cx('img-2')} src='https://img.timviec.com.vn/2021/06/dang-tin-tuyen-dung-14.jpg' />
+            </div>
           </div>
-        </div>
 
           {/* Hiển thị nút phân trang */}
           <ReactPaginate
