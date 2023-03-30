@@ -28,7 +28,7 @@ function ChangePassword(props) {
     const handleChangePassword = async (event) => {
       event.preventDefault();
       const URL = 'http://localhost:5000/setting/change-password';
-      const jobapptoken = localStorage.getItem('user-save');
+      const jobapptoken = localStorage.getItem('user');
     
       const data = {
         oldPass: oldPass,
@@ -82,7 +82,7 @@ return (
             <label className={cx('lable_input')} htmlFor="oldpassword">Nhập mật khẩu cũ:</label>
             <input
             className={cx('pass_input')}
-              type="password"
+              type="text"
               id="oldpassword"
               value={oldPass}
               onChange={(event) => setOldPassword(event.target.value)}
@@ -94,7 +94,7 @@ return (
             <label className={cx('lable_input')} htmlFor="newPassword">Nhập mật khẩu mới:</label>
             <input
               className={cx('pass_input')}
-              type="password"
+              type="text"
               id="newPassword"
               value={newPass}
               onChange={(event) => setNewPassword(event.target.value)}
@@ -106,7 +106,7 @@ return (
             <label className={cx('lable_input')} htmlFor="confirmNewPassword">Nhập lại mật khẩu mới:</label>
             <input
               className={cx('pass_input')}
-              type="password"
+              type="text"
               id="confirmNewPassword"
               value={cfmPass}
               onChange={(event) => setConfirmNewPassword(event.target.value)}

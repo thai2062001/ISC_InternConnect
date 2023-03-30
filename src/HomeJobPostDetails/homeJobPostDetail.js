@@ -83,7 +83,7 @@ function HomeJobPostDetail() {
 
 
     const CompanyName = jobPosts.namecompany
-
+    console.log(company);
     //recomment jobpost
     useEffect(() => {
         const jobpostApi = 'http://localhost:5000/'
@@ -305,10 +305,13 @@ function HomeJobPostDetail() {
                                 <span className={cx('span-title')}>Phúc lợi</span>
                                 <p>{jobPosts.benefit}</p>
                             </div>
-                            <div className={cx('benefit')}>
-                                <span className={cx('span-title')}>Giới thiệu công ty</span>
-                                <p>{company.introduce}</p>
-                            </div>
+                            {company && (
+                                <div className={cx('benefit')}>
+                                    <span className={cx('span-title')}>Giới thiệu công ty</span>
+                                    <p>{company.introduce}</p>
+                                </div>
+                            )}
+
 
                         </div>
                     </div>
