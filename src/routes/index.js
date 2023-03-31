@@ -1,6 +1,5 @@
 
 import Home from './../Home/Home';
-import Search from '../Pages/Search/Search';
 import HeaderOnly from '../Component/Layout/HeaderOnly';
 import Profile from '../Profile/Profile';
 import HomeAdmin from '../HomeAdmin/HomeAdmin';
@@ -54,7 +53,6 @@ const publicRouters = [
     // {path: '/home',component: HomeLogin,layout:HeaderLogin},
     {path: '/settings',component: AccountSettings,layout: null},
     {path: '/createcv',component: CreateCV,layout: null},
-    {path: '/search',component: Search},
     {path: '/profile',component: Profile},
     {path: '/login',component: Login,layout: null},
     {path: '/auth/forgot-password/',component: ForgotPW,layout: null},
