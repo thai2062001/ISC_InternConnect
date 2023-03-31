@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss'
-import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch, FaHeart } from 'react-icons/fa';
+import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
 import ReactPaginate from 'react-paginate';
@@ -17,7 +17,7 @@ function Home() {
   const [jobpostSearch, setJobPostSearch] = useState([])
   const [jobpostFilter, setJobPostFilter] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(20);
+  const [postsPerPage, setPostsPerPage] = useState(15);
   const [listmajor, setListMajor] = useState([])
   const [originalJobPosts, setOriginalJobPosts] = useState([]);
   const [selectedMajor, setSelectedMajor] = useState('');
@@ -125,7 +125,7 @@ function Home() {
   const handleFilter = (e) => {
     const selectedMajor = e.target.value;
     setSelectedMajor(selectedMajor);
-
+  
     if (selectedMajor === 'Tất cả') { // Kiểm tra nếu giá trị được chọn là 'Tất cả'
       setListJobPosts(jobpostFilter); // Set lại danh sách jobpost ban đầu
     } else if (selectedMajor !== '') {
@@ -146,84 +146,81 @@ function Home() {
       </Helmet>
       <div className={cx('container')}>
         <div className={cx('search')}>
-          <div className={cx('banner-div')}>
-            <div className={cx('input-wrapper')}>
-              <div className={cx('input-group')}>
-                <FaSearch className={cx('search-icon')} />
-                <input
-                  id="job-search"
-                  className={cx('input-search')}
-                  placeholder="Nhập từ khóa, công việc"
-                />
-              </div>
-              <div className={cx('input-group')}>
-                <FaLocationArrow className={cx('search-icon')} />
-                <input
-                  id="location-search"
-                  className={cx('input-search')}
-                  placeholder="Nhập thành phố"
-                />
-              </div>
-              <button className={cx('search-button')} onClick={handleSearch}>
-                <FaSearch className={cx('search-icon')} />
-                Tìm kiếm
-              </button>
-              <ToastContainer />
+          <div className={cx('search-banner')}>
+            <div className={cx('banner-wrapper')}>
+              <img src='https://dxwd4tssreb4w.cloudfront.net/images/common/background-cover/careerlink_engineering_office.jpg' className={cx('banner-img')} />
             </div>
+            <div className={cx('banner-wrapper-search')}>
+              <h1 id='title'>Tìm việc nhanh chóng, dễ dàng</h1>
+              <div className={cx('banner-div')}>
+                <div className={cx('input-1')}>
+                  <FaSearch className={cx('seach-icon')} />
+                  <input id='job-search' className={cx('input-search-job')} placeholder='Nhập từ khóa,Công việc' />
+                </div>
+                <div className={cx('input-2')}>
+                  <FaLocationArrow className={cx('seach-icon')} />
+                  <input id='location-search' className={cx('input-search-location')} placeholder='Nhập thành phố' />
+                </div>
 
+                <div className={cx('search-button')}>
+                  <FaSearch className={cx('seach-icon-button')} />
+                  <button onClick={handleSearch}>Tìm kiếm</button>
+                  <ToastContainer />
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
-
-      <div className={cx('select-wrapper')}>
-        <select className={cx('select')} onChange={handleFilter}>
-          <option value="">Tất cả</option>
-          {listmajor.map((major) => (
-            <option key={major._id} value={major.namemajor}>
-              {major.namemajor}
-            </option>
-          ))}
-        </select>
-      </div>
-
-
       <div className={cx('wrapper_jobpost')}>
         <div className={cx('jobpost')}>
-          <ul className={cx('jobpost-preview')}>
-            {currentPosts.splice(0, 20).map((jobPost, index) => (
-              <div onClick={() => handleDetail(jobPost._id)} className={cx('jobpost-description')} key={index}>
-                <div className={cx('logo')}>
-                  <img src={jobPost.logo} />
-                </div>
-                <div className={cx('jobpost_detail')}>
-                  <h2 >{jobPost.title}</h2>
-                  <div className={cx('wrapper_content')}>
-                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
-                    <span className={cx('detail_span', 'company')}>  {jobPost.namecompany}</span>
+          <div className={cx('jobpost-title')}>
+            <div >
+              <select onChange={handleFilter}>
+                <option value="">Tất cả</option>
+                {listmajor.map((major) => (
+                  <option key={major._id} value={major.namemajor}>
+                    {major.namemajor}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <span className={cx('span-title')}>Thực tập hấp dẫn</span>
+            <ul className={cx('jobpost-preview')}>
+              {currentPosts.splice(0, 15).map((jobPost, index) => (
+                <div onClick={() => handleDetail(jobPost._id)} className={cx('jobpost-description')} key={index}>
+                  <div className={cx('logo')}>
+                    <img src={jobPost.logo} />
                   </div>
-                  <div className={cx('wrapper_content')}>
-                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/officel/30/null/place-marker--v1.png" />
-                    <span className={cx('detail_span', 'location')}>{jobPost.location}</span>
+                  <div className={cx('jobpost_detail')}>
+                    <h2 >{jobPost.title}</h2>
+                    <div className={cx('wrapper_content')}>
+                      <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
+                      <span className={cx('detail_span', 'company')}>  {jobPost.namecompany}</span>
+                    </div>
+                    <div className={cx('wrapper_content')}>
+                      <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/officel/30/null/place-marker--v1.png" />
+                      <span className={cx('detail_span', 'location')}>{jobPost.location}</span>
+                    </div>
+                    <div className={cx('wrapper_content')}>
+                      <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
+                      <span className={cx('detail_span', 'salary')}>{jobPost.salary}</span>
+                    </div>
                   </div>
-                  <div className={cx('wrapper_content')}>
-                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
-                    <span className={cx('detail_span', 'salary')}>{jobPost.salary}</span>
+                  <div style={{ marginTop: '120px', padding: '10px' }}>
+                    <span className={cx('major-span')}>{jobPost.major}</span>
                   </div>
-                  {/* <span style={{display:'block'}} className={cx('major-span')}>{jobPost.major}</span> */}
                 </div>
-                <div className={cx('action-div')} style={{ marginTop: '80px', padding: '10px' }}>
-                  <button className={cx('apply_button')}>Ứng tuyển ngay</button>
-                </div>
-              </div>
-            ))}
-          </ul>
+              ))}
+            </ul>
 
+          </div>
           <div className={cx('banner_right')}>
             <img src='https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2F500x600_122601.png&w=1920&q=75' />
             <div>
               <img className={cx('img-2')} src='https://img.timviec.com.vn/2021/06/dang-tin-tuyen-dung-14.jpg' />
             </div>
-
           </div>
 
           {/* Hiển thị nút phân trang */}
@@ -241,9 +238,6 @@ function Home() {
         </div>
 
       </div>
-      <button id="scroll-to-top-btn" className={cx('scroll-to-top-btn')} aria-label="Scroll to top">
-        <FaArrowRight className={cx('scroll-icon')} />
-      </button>
 
 
       <div className={cx('wrapper')}>
