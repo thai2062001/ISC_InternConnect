@@ -36,10 +36,16 @@ import SchoolUpdate from '../SchoolManager/schoolUpdate/schoolUpdate';
 import TermOfServices from '../TermofServices/termofservice';
 import Company from '../Home/Company/company';
 import DetailCompany from '../Home/DetailCompany/detailCompany';
+import Sidebar from '../Sidebar';
 //public routers
 
 
 const publicRouters = [
+
+
+    {path: '/sidebar',component: Sidebar,layout:null},
+
+
     {path: '/',component: Home,layout:HeaderOnly},
     {path: '/:id',component: HomeJobPostDetail,layout:HeaderOnly},
 

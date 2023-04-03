@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import styles from './majorAdmin.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
+import { FaUser } from "react-icons/fa";
 import MaterialTable from "material-table";
 import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
 import { ToastContainer, toast } from 'react-toastify';
@@ -20,17 +21,18 @@ function MajorAdmin() {
 
   const [name, setName] = useState('')
   const [accounts, setAccount] = useState([])
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedIds, setSelectedIds] = useState([]);
   const columns = [
-    {
-      title: "Major", field: "namemajor", validate: rowData => {
+      {title: "Major", field: "namemajor", validate: rowData => {
         if (rowData.namemajor === undefined || rowData.namemajor === "") {
           return "Required"
         } else if (rowData.namemajor.length < 3) {
           return "Name should contains atleast 3 chars "
         }
         return true
-      }
-    },
+      }}
+    
   ]
 
   useEffect(() => {
@@ -86,13 +88,39 @@ function MajorAdmin() {
     })
     doc.save('Major.pdf')
   }
+  function handleDeleteSelected(ids) {
+
+    fetch(`http://localhost:5000/admin/posts/major/${ids.join(',')}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => {
+        if (response.ok) {
+          setTimeout(() => {
+          toast.success("Xóa major thành công!")
+          window.location.reload()
+        }, 2000);
+        } else {
+          toast.error("Xóa major không thành công!")
+        }
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+ // đặt thời gian chờ là 2 giây
+}
+
+
   return (
     <div className="App">
       <div className={cx('wrapper')}>
         <h1 align="center">Trang quản lý Major</h1>
         <div className={cx('user_log')}>
-          <h2 className={cx('name_set')}>{name}</h2>
+          <h2 className={cx('name_set')}> <FaUser/> {name}</h2>
         </div>
+        <ToastContainer style={{zIndex:'999'}}/>
       </div>
 
       <div className={cx('table-wrapper')}>
@@ -111,11 +139,12 @@ function MajorAdmin() {
               <TablePagination {...props} />
             </>
           }}
+          onSelectionChange={(rows) => {
+            // Update selectedIds state when user selects or deselects a row
+            setSelectedIds(rows.map((row) => row._id));
+          }}
           actions={[
-            {
-              icon: () => <button />,
 
-            },
             {
               icon: () => <img style={{ width: '25px', height: '25px' }} src="https://img.icons8.com/color/48/null/ms-excel.png" />,// you can pass icon too
               tooltip: "Export to Excel",
@@ -127,6 +156,11 @@ function MajorAdmin() {
               tooltip: "Export to Pdf",
               onClick: () => downloadPdf(),
               isFreeAction: true
+            },
+            {
+              tooltip: 'Remove All Selected Users',
+              icon: 'delete',
+              onClick: ()=> handleDeleteSelected(selectedIds)
             }
           ]}
           editable={{
@@ -223,6 +257,7 @@ function MajorAdmin() {
 
 
           }}
+          onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
           options={{
             actionsColumnIndex: -1,
             headerStyle: {
@@ -232,7 +267,20 @@ function MajorAdmin() {
             columnsButton:true,
             addRowPosition: "first",
             filtering: true,
+            sorting: true,
             lookupFilter: true,
+            pageSize: 10, // set default page size
+            pageSizeOptions: [5, 10, 20], 
+            grouping:true,
+            selection: true,
+            selectionProps: rowData => ({
+              disabled: rowData.role === 'Admin',
+              color: 'primary'
+            }),
+            rowStyle: rowData => ({
+              backgroundColor: (selectedRow === rowData.tableData.id) ? '#EEE' : '#FFF'
+            }),
+            exportButton: true
           }}
         />
       </div>

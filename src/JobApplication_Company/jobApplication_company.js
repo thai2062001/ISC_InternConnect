@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import { Mail as MailIcon } from '@material-ui/icons';
-import { FaDownload, FaTimes } from 'react-icons/fa';
+import { FaDownload, FaTimes,FaUser } from 'react-icons/fa';
 import SendingMail from "./SendingMail/SendingMail";
 import Popup from "reactjs-popup";
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,6 +27,9 @@ function JobApplication() {
   const [selectedEmail, setSelectedEmail] = useState('')
   const [selectedId, setSelectedId] = useState('')
   const [statusText, setStatus] = useState('')
+
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedIds, setSelectedIds] = useState([]);
 
   const [emailSending, setEmailSending] = useState('')
   const [idSending, setIdSending] = useState('')
@@ -118,11 +121,10 @@ function JobApplication() {
   const formatted_date = dateFormat.format('DD/MM/YYYY');
   
   const columns = [
-    { title: "ID", field: "_id" },
     { title: "Title", field: "title" },
     { title: "Name", field: "name" },
     { title: "Email", field: "email" },
-    { title: "School", field: "nameschool" },
+    { title: "School", field: "nameschool", defaultGroupOrder:1 },
     { title: "Major", field: "major" },
     { title: "Date", field: "date" },
     { title: "Company", field: "namecompany" },
@@ -214,11 +216,10 @@ function JobApplication() {
   return (
     <div className="App">
       <div className={cx('wrapper')}>
-        <h1 align="center">Trang quản lý Company JobApplication</h1>
+        <h1 align="center">Trang quản lý Hồ sơ xin việc</h1>
         <div className={cx('user_log')}>
           <ToastContainer />
-          <h2 className={cx('name_set')}>{name}</h2>
-          <button onClick={handleCreate} className={cx('button-action')}>JobPost</button>
+          <h2 className={cx('name_set')}> <FaUser/> {name}</h2>
         </div>
       </div>
       <Popup open={showPopup} onClose={handleClose}>
@@ -255,15 +256,15 @@ function JobApplication() {
               icon: () => <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                style={{ width: 100 }}
+                style={{ width: 110 ,fontSize:'15px'}}
                 value={school}
                 onChange={(e) => setSchool(e.target.value)}
               >
-                <MenuItem value={'all'}><em>School</em></MenuItem>
-                <MenuItem value={'UEF'}>UEF</MenuItem>
-                <MenuItem value={'Hutech'}>Hutech</MenuItem>
-                <MenuItem value={'FPT'}>FPT</MenuItem>
-                <MenuItem value={'Văn Lăng'}>Văn Lăng</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>School</em></MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'UEF'}>UEF</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Hutech'}>Hutech</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'FPT'}>FPT</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Văn Lăng'}>Văn Lăng</MenuItem>
 
               </Select>,
               tooltip: "Filter Verify",
@@ -274,16 +275,16 @@ function JobApplication() {
               icon: () => <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                style={{ width: 100 }}
+                style={{ width: 110 ,fontSize:'15px'}}
                 value={major}
                 onChange={(e) => setMajor(e.target.value)}
               >
-                <MenuItem value={'all'}><em>Major</em></MenuItem>
-                <MenuItem value={'Công nghệ thông tin'}>Công nghệ thông tin</MenuItem>
-                <MenuItem value={'Quản trị kinh doanh'}>Quản trị kinh doanh</MenuItem>
-                <MenuItem value={'Kế toán'}>Kế toán</MenuItem>
-                <MenuItem value={'cntt'}>cntt</MenuItem>
-                <MenuItem value={'Du lịch lữ hành'}>Du lịch lữ hành</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Major</em></MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Công nghệ thông tin'}>Công nghệ thông tin</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Quản trị kinh doanh'}>Quản trị kinh doanh</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Kế toán'}>Kế toán</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'cntt'}>cntt</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Du lịch lữ hành'}>Du lịch lữ hành</MenuItem>
 
 
               </Select>,
@@ -294,14 +295,14 @@ function JobApplication() {
               icon: () => <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                style={{ width: 100 }}
+                style={{ width: 110 ,fontSize:'15px'}}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
               >
-                <MenuItem value={'all'}><em>Year</em></MenuItem>
-                <MenuItem value={'2021'}>2021</MenuItem>
-                <MenuItem value={'2022'}>2022</MenuItem>
-                <MenuItem value={'2023'}>2023</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Year</em></MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'2021'}>2021</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'2022'}>2022</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'2023'}>2023</MenuItem>
 
               </Select>,
               tooltip: "Filter Verify",
@@ -311,14 +312,14 @@ function JobApplication() {
               icon: () => <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                style={{ width: 100 }}
+                style={{ width: 110 ,fontSize:'15px'}}
                 value={statusFitter}
                 onChange={(e) => setStatusFitter(e.target.value)}
               >
-                <MenuItem value={'all'}><em>Status</em></MenuItem>
-                <MenuItem value={'Đang chờ xác nhận'}>Đang chờ xác nhận</MenuItem>
-                <MenuItem value={'Đã từ chối'}>Đã từ chối</MenuItem>
-                <MenuItem value={'Đã xác nhận qua Email'}>Đã xác nhận qua Email</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Status</em></MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Đang chờ xác nhận'}>Đang chờ xác nhận</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Đã từ chối'}>Đã từ chối</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Đã xác nhận qua Email'}>Đã xác nhận qua Email</MenuItem>
 
               </Select>,
               tooltip: "Filter Verify",
@@ -342,9 +343,16 @@ function JobApplication() {
               onClick: () => downloadPdf(),
               isFreeAction: true
             },
+            {
+              icon: 'add' ,
+              tooltip: 'Add Jobpost',
+              onClick: () => handleCreate(),
+              isFreeAction: true
+              
+          },
 
           ]}
-
+          onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
           options={{
             actionsColumnIndex: -1,
             headerStyle: {

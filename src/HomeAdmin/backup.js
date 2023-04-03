@@ -2,7 +2,6 @@ import classNames from "classnames/bind";
 import styles from './HomeAdmin.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
-import { FaUser } from "react-icons/fa";
 import MaterialTable from "material-table";
 import Is_valid_password from "./CheckPassword";
 import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
@@ -22,11 +21,12 @@ function HomeAdmin() {
   const [accounts, setAccount] = useState([])
   const [filteredAccounts, setFilteredAccounts] = useState([]);
   const [role, setRole] = useState('all')
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [selectedIds, setSelectedIds] = useState([]);
 
 
   const columns = [
+    {
+      title: "ID", field: "_id",
+    },
     {
       title: "Name", field: "username",
     },
@@ -51,7 +51,6 @@ function HomeAdmin() {
       title: "Role",
       field: "role",
       lookup: { Admin: "Admin", Company: "Company", School: "School", Student: "Student" },
-      defaultGroupOrder:1
     },
 
   ]
@@ -102,8 +101,7 @@ function HomeAdmin() {
           const index = updatedRows.findIndex(row => row.id === oldData.id);
           updatedRows[index] = { ...newData, id: oldData.id };
           setAccount(updatedRows);
-           window.location.reload();
-          setFilteredAccounts(updatedRows)
+          window.location.reload();
           toast.success('Account updated successfully!', {
             position: "top-center",
             autoClose: 5000,
@@ -160,41 +158,16 @@ function HomeAdmin() {
     doc.save('table.pdf')
   }
 
-  function handleDeleteSelected(ids) {
-    //http://localhost:5000/admin/posts/account/642559a2443d4e532fde640b,642643ad9a87b5af871a61ac
-    fetch(`http://localhost:5000/admin/posts/account/${ids.join(',')}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(response => {
-        if (response.ok) {
-          setTimeout(() => {
-          toast.success("Xóa Account thành công!")
-          window.location.reload()
-        }, 1000);
-        } else {
-          toast.error("Xóa Account không thành công!")
-        }
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-      });
- // đặt thời gian chờ là 2 giây
-}
-
-  
-  
 
   return (
     <div className="App">
       <div className={cx('wrapper')}>
         <h1 align="center">Trang quản lý Admin</h1>
         <div className={cx('user_log')}>
-          <h2 className={cx('name_set')}> <FaUser/> {name}</h2>
+          <h2 className={cx('name_set')}>{name}</h2>
         </div>
-     
+      </div>
+
       <div className={cx('table-wrapper')}>
         <MaterialTable className={cx('table')}
           title="Account Data"
@@ -210,24 +183,20 @@ function HomeAdmin() {
               <TablePagination {...props} />
             </>
           }}
-          onSelectionChange={(rows) => {
-            // Update selectedIds state when user selects or deselects a row
-            setSelectedIds(rows.map((row) => row._id));
-          }}
           actions={[
             {
               icon: () => <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                style={{ width: 110 ,fontSize:'15px'}}
+                style={{ width: 100 }}
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
               >
-                <MenuItem  style={{fontSize:'15px'}}  value={'all'}><em>Role</em></MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'Admin'}>Admin</MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'Company'}>Company</MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'School'}>School</MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'Student'}>Student</MenuItem>
+                <MenuItem value={'all'}><em>Role</em></MenuItem>
+                <MenuItem value={'Admin'}>Admin</MenuItem>
+                <MenuItem value={'Company'}>Company</MenuItem>
+                <MenuItem value={'School'}>School</MenuItem>
+                <MenuItem value={'Student'}>Student</MenuItem>
               </Select>,
               tooltip: "Filter Role",
               isFreeAction: true
@@ -243,11 +212,6 @@ function HomeAdmin() {
               tooltip: "Export to Pdf",
               onClick: () => downloadPdf(),
               isFreeAction: true
-            },
-            {
-              tooltip: 'Remove All Selected Users',
-              icon: 'delete',
-              onClick: ()=> handleDeleteSelected(selectedIds)
             }
           ]}
 
@@ -317,7 +281,6 @@ function HomeAdmin() {
             }),
             onRowUpdate: ((newData, oldData) => handleRowUpdate(newData, oldData))
           }}
-          onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
           options={{
             actionsColumnIndex: -1,
             headerStyle: {
@@ -327,25 +290,12 @@ function HomeAdmin() {
             columnsButton:true,
             addRowPosition: "first",
             filtering: true,
-            sorting: true,
             lookupFilter: true,
-            pageSize: 10, // set default page size
-            pageSizeOptions: [5, 10, 20], 
-            grouping:true,
-            selection: true,
-            selectionProps: rowData => ({
-              disabled: rowData.role === 'Admin',
-              color: 'primary'
-            }),
-            rowStyle: rowData => ({
-              backgroundColor: (selectedRow === rowData.tableData.id) ? '#EEE' : '#FFF'
-            }),
-            exportButton: true
           }}
         />
         <ToastContainer />
       </div>
-      </div>
+
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/icon?family=Material+Icons"

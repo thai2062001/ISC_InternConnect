@@ -3,20 +3,21 @@ import classNames from "classnames/bind";
 import styles from './Slidebar.module.scss'
 const cx = classNames.bind(styles)
 
-function Slidebar() {
+function Sidebar() {
 
   function handleLogOutUser() {
     localStorage.removeItem('user-save');
-    window.location.href = '/admin/adminlogin'
+    window.location.href = 'login'
 }
   return (
-    <div className={cx('slidebar')}>
+ 
 
 <div className={cx('sidebar')}>
     <div className={cx('logo-details')}>
         <i className={cx('bx bx-menu')} id="btn" ></i>
     </div>
     <ul className={cx('nav-list')}>
+
       <li>
         <a href="/homeadmin">
           <i className={cx('bx bx-user')}></i>
@@ -74,11 +75,12 @@ function Slidebar() {
 
      
     </ul>
-  </div>
-
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>
   </div>
+
+   
+ 
   );
 }
 
-export default Slidebar;
+export default Sidebar;

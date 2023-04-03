@@ -18,6 +18,7 @@ function CompanyAdmin() {
     const [accounts, setAccount] = useState([])
     const [filteredAccounts, setFilteredAccounts] = useState([]);
     const [location, setLocation] = useState('all')
+    const [selectedRow, setSelectedRow] = useState(null);
 
     const columns = [
          { title: "ID", field: "_id" },
@@ -147,15 +148,15 @@ function CompanyAdmin() {
                           icon: () => <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            style={{ width: 100 }}
+                            style={{ width: 110 ,fontSize:'15px'}}
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
                           >
-                            <MenuItem value={'all'}><em>All</em></MenuItem>
-                            <MenuItem value={'HCM'}>HCM</MenuItem>
-                            <MenuItem value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
-                            <MenuItem value={'Hà Nội'}>Hà Nội</MenuItem>
-                            <MenuItem value={'Hải Phòng'}>Hải Phòng</MenuItem>
+                            <MenuItem style={{fontSize:'15px'}} value={'all'}><em>All</em></MenuItem>
+                            <MenuItem style={{fontSize:'15px'}} value={'HCM'}>HCM</MenuItem>
+                            <MenuItem style={{fontSize:'15px'}} value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
+                            <MenuItem style={{fontSize:'15px'}} value={'Hà Nội'}>Hà Nội</MenuItem>
+                            <MenuItem style={{fontSize:'15px'}} value={'Hải Phòng'}>Hải Phòng</MenuItem>
                           </Select>,
                           tooltip: "Filter Location",
                           isFreeAction: true
@@ -171,6 +172,11 @@ function CompanyAdmin() {
                             tooltip: "Export to Pdf",
                             onClick: () => downloadPdf(),
                             isFreeAction: true
+                          },            
+                          {
+                            tooltip: 'Remove All Selected Users',
+                            icon: 'delete',
+                            onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
                           }
                       ]}
                     editable={{
@@ -263,18 +269,32 @@ function CompanyAdmin() {
                                     console.error(error);
                                     reject(error);
                                 });
+                                
                         }),
+                        
                     }}
+                    onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
                     options={{
                         actionsColumnIndex: -1,
                         headerStyle: {
                           fontSize: '18px',
                           width: '200px',
                         },
+                        sorting: true,
                         columnsButton:true,
                         addRowPosition: "first",
                         filtering: true,
                         lookupFilter: true,
+                        pageSize: 10, // set default page size
+                        pageSizeOptions: [5, 10, 20], 
+                        grouping:true,
+                        selection: true,
+                        rowStyle: rowData => ({
+                            backgroundColor: (selectedRow === rowData.tableData.id) ? '#EEE' : '#FFF'
+                          }),
+
+
+
                       }}
                 />
             </div>

@@ -17,7 +17,7 @@ function Home() {
   const [jobpostSearch, setJobPostSearch] = useState([])
   const [jobpostFilter, setJobPostFilter] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(20);
+  const [postsPerPage, setPostsPerPage] = useState(18);
   const [listmajor, setListMajor] = useState([])
   const [originalJobPosts, setOriginalJobPosts] = useState([]);
   const [selectedMajor, setSelectedMajor] = useState('');
@@ -156,14 +156,14 @@ function Home() {
                   placeholder="Nhập từ khóa, công việc"
                 />
               </div>
-              <div className={cx('input-group')}>
+              <div className={cx('input-group','city-search')}>
                 <FaLocationArrow className={cx('search-icon')} />
                 <input
                   id="location-search"
                   className={cx('input-search')}
                   placeholder="Nhập thành phố"
                 />
-              </div>
+              </div >
               <button className={cx('search-button')} onClick={handleSearch}>
                 <FaSearch className={cx('search-icon')} />
                 Tìm kiếm
@@ -185,7 +185,6 @@ function Home() {
           ))}
         </select>
       </div>
-
 
       <div className={cx('wrapper_jobpost')}>
         <div className={cx('jobpost')}>

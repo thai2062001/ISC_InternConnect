@@ -3,6 +3,7 @@ import styles from './allJobPost.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
+import { FaUser } from "react-icons/fa";
 import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,7 +18,7 @@ const cx = classNames.bind(styles)
 function AllJobPost() {
   const [name, setName] = useState('')
   const [accounts, setAccount] = useState([])
-
+  const [selectedRow, setSelectedRow] = useState(null);
   const [filteredAccounts, setFilteredAccounts] = useState([]);
   const [company, setCompany] = useState('all')
   const [location, setLocation] = useState('all')
@@ -41,7 +42,7 @@ function AllJobPost() {
 
   const columns = [
     { title: "Title", field: "title" },
-    { title: "Company", field: "namecompany" },
+    { title: "Company", field: "namecompany" ,defaultGroupOrder:1},
     { title: "Location", field: "location" },
     { title: "Date", field: 'expdate' },
     { title: "Salary", field: 'salary' },
@@ -112,7 +113,7 @@ function AllJobPost() {
       <div className={cx('wrapper')}>
         <h1 align="center">Trang quản lý JobPosts</h1>
         <div className={cx('user_log')}>
-          <h2 className={cx('name_set')}>{name}</h2>
+        <h2 className={cx('name_set')}> <FaUser /> {name}</h2>
         </div>
       </div>
       <div className={cx('table-wrapper')}>
@@ -141,16 +142,16 @@ function AllJobPost() {
               icon: () => <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                style={{ width: 100 }}
+                style={{ width: 100 ,fontSize:'15px' }}
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
               >
-                <MenuItem value={'all'}><em>Company</em></MenuItem>
-                <MenuItem value={'aitech'}>aitech</MenuItem>
-                <MenuItem value={'FPT'}>FPT</MenuItem>
-                <MenuItem value={'TMA'}>TMA</MenuItem>
-                <MenuItem value={'Viettel'}>Viettel</MenuItem>
-                <MenuItem value={'Fujinet'}>Fujinet</MenuItem>
+                <MenuItem  style={{fontSize:'15px'}}  value={'all'}><em>Company</em></MenuItem>
+                <MenuItem  style={{fontSize:'15px'}} value={'aitech'}>aitech</MenuItem>
+                <MenuItem  style={{fontSize:'15px'}} value={'FPT'}>FPT</MenuItem>
+                <MenuItem  style={{fontSize:'15px'}} value={'TMA'}>TMA</MenuItem>
+                <MenuItem  style={{fontSize:'15px'}} value={'Viettel'}>Viettel</MenuItem>
+                <MenuItem  style={{fontSize:'15px'}} value={'Fujinet'}>Fujinet</MenuItem>
               </Select>,
               tooltip: "Filter Role",
               isFreeAction: true
@@ -159,15 +160,15 @@ function AllJobPost() {
               icon: () => <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                style={{ width: 100 }}
+                style={{ width: 100 ,fontSize:'15px' }}
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
               >
-                <MenuItem value={'all'}><em>Location</em></MenuItem>
-                <MenuItem value={'HCM'}>HCM</MenuItem>
-                <MenuItem value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
-                <MenuItem value={'Hà Nội'}>Hà Nội</MenuItem>
-                <MenuItem value={'Hải Phòng'}>Hải Phòng</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Location</em></MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'HCM'}>HCM</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Hà Nội'}>Hà Nội</MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'Hải Phòng'}>Hải Phòng</MenuItem>
               </Select>,
               tooltip: "Filter Location",
               isFreeAction: true
@@ -192,6 +193,7 @@ function AllJobPost() {
             },
       
           ]}
+          onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
           options={{
             actionsColumnIndex: -1,
             headerStyle: {
@@ -202,6 +204,13 @@ function AllJobPost() {
             addRowPosition: "first",
             filtering: true,
             lookupFilter: true,
+            pageSize: 10, // set default page size
+            pageSizeOptions: [5, 10, 20],
+            grouping: true,
+            selection: true,
+            rowStyle: rowData => ({
+                backgroundColor: (selectedRow === rowData.tableData.id) ? '#EEE' : '#FFF'
+            }),
           }}
         />
       </div>
