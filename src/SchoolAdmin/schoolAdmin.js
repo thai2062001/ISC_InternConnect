@@ -3,10 +3,12 @@ import styles from './SchoolAdmin.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
+import { FaUser } from "react-icons/fa";
 import axios, { Axios } from 'axios';
 import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CircularProgress } from '@material-ui/core';
 import * as XLSX from 'xlsx';
 import PrintIcon from '@material-ui/icons/Print'
 import jsPDF from 'jspdf'
@@ -20,6 +22,8 @@ function SchoolAdmin() {
     const [accounts, setAccount] = useState([])
     const [filteredAccounts, setFilteredAccounts] = useState([]);
     const [location, setLocation] = useState('all')
+    const [selectedIds, setSelectedIds] = useState([]);
+    const [selectedRow, setSelectedRow] = useState(null);
 
     const columns = [
         {
@@ -33,7 +37,7 @@ function SchoolAdmin() {
             }
         },
         {
-            title: "Location", field: "location",
+            title: "Location", field: "location",defaultGroupOrder:1
         },
         { title: "Email School", field: "emailschool" },
         { title: "Phone Number", field: 'phoneschool' },
@@ -66,16 +70,16 @@ function SchoolAdmin() {
     }
     useEffect(() => {
         if (location === 'all') {
-          setFilteredAccounts(accounts);
+            setFilteredAccounts(accounts);
         } else {
-          setFilteredAccounts(accounts.filter(dt => dt.location === location));
+            setFilteredAccounts(accounts.filter(dt => dt.location === location));
         }
-      }, [location, accounts]);
-    
-      const downloadExcel = () => {
+    }, [location, accounts]);
+
+    const downloadExcel = () => {
         const newData = filteredAccounts.map(row => {
-          delete row.tableData
-          return row
+            delete row.tableData
+            return row
         })
         const workSheet = XLSX.utils.json_to_sheet(newData)
         const workBook = XLSX.utils.book_new()
@@ -86,24 +90,52 @@ function SchoolAdmin() {
         XLSX.write(workBook, { bookType: "xlsx", type: "binary" })
         //Download
         XLSX.writeFile(workBook, "SchoolAdmin.xlsx")
-      }
-      const downloadPdf = () => {
+    }
+    const downloadPdf = () => {
         const doc = new jsPDF()
         doc.text("School Admin Details", 20, 10)
         doc.autoTable({
-          theme: "grid",
-          columns: columns.map(col => ({ ...col, dataKey: col.field })),
-          body: filteredAccounts
+            theme: "grid",
+            columns: columns.map(col => ({ ...col, dataKey: col.field })),
+            body: filteredAccounts
         })
         doc.save('SchoolAdmin.pdf')
-      }
+    }
+
+
+    function handleDeleteSelected(ids) {
+        //http://localhost:5000/admin/posts/school/6414325bbe0bee2e19c13f96,64142f23be0bee2e19c13f62
+        fetch(`http://localhost:5000/admin/posts/school/${ids.join(',')}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    setTimeout(() => {
+                        toast.success("Xóa School thành công!")
+                        window.location.reload()
+                    }, 2000);
+                } else {
+                    toast.error("Xóa School không thành công!")
+                }
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+        // đặt thời gian chờ là 2 giây
+    }
+
+
 
     return (
         <div className="App">
             <div className={cx('wrapper')}>
                 <h1 align="center">Trang quản lý School</h1>
                 <div className={cx('user_log')}>
-                    <h2 className={cx('name_set')}>{name}</h2>
+                <h2 className={cx('name_set')}> <FaUser/> {name}</h2>
+                    <ToastContainer/>
                 </div>
             </div>
             <div className={cx('table-wrapper')}>
@@ -111,48 +143,57 @@ function SchoolAdmin() {
                     title="School Data"
                     data={filteredAccounts}
                     columns={columns}
+                    onSelectionChange={(rows) => {
+                        // Update selectedIds state when user selects or deselects a row
+                        setSelectedIds(rows.map((row) => row._id));
+                    }}
                     components={{
                         Pagination: (props) => <>
-            
-                          <Grid container style={{ padding: 15 }}>
-                            <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
-                            <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
-                          </Grid>
-                          <Divider />
-                          <TablePagination {...props} />
+
+                            <Grid container style={{ padding: 15 }}>
+                                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
+                                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+                            </Grid>
+                            <Divider />
+                            <TablePagination {...props} />
                         </>
-                      }}
+                    }}
                     actions={[
                         {
-                          icon: () => <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            style={{ width: 100 }}
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                          >
-                            <MenuItem value={'all'}><em>Location</em></MenuItem>
-                            <MenuItem value={'HCM'}>HCM</MenuItem>
-                            <MenuItem value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
-                            <MenuItem value={'Hà Nội'}>Hà Nội</MenuItem>
-                            <MenuItem value={'Hải Phòng'}>Hải Phòng</MenuItem>
-                          </Select>,
-                          tooltip: "Filter Location",
-                          isFreeAction: true
+                            icon: () => <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                style={{ width: 110 ,fontSize:'15px'}}
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
+                            >
+                                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Location</em></MenuItem>
+                                <MenuItem style={{fontSize:'15px'}} value={'HCM'}>HCM</MenuItem>
+                                <MenuItem style={{fontSize:'15px'}} value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
+                                <MenuItem style={{fontSize:'15px'}} value={'Hà Nội'}>Hà Nội</MenuItem>
+                                <MenuItem style={{fontSize:'15px'}} value={'Hải Phòng'}>Hải Phòng</MenuItem>
+                            </Select>,
+                            tooltip: "Filter Location",
+                            isFreeAction: true
                         },
                         {
-                            icon: () => <img style={{width:'25px',height:'25px'}} src="https://img.icons8.com/color/48/null/ms-excel.png"/>,// you can pass icon too
+                            icon: () => <img style={{ width: '25px', height: '25px' }} src="https://img.icons8.com/color/48/null/ms-excel.png" />,// you can pass icon too
                             tooltip: "Export to Excel",
                             onClick: () => downloadExcel(),
                             isFreeAction: true
-                          },
-                          {
-                            icon: () =><img style={{width:'25px',height:'25px'}} src="https://img.icons8.com/color/48/null/pdf-2--v1.png"/>,// you can pass icon too
+                        },
+                        {
+                            icon: () => <img style={{ width: '25px', height: '25px' }} src="https://img.icons8.com/color/48/null/pdf-2--v1.png" />,// you can pass icon too
                             tooltip: "Export to Pdf",
                             onClick: () => downloadPdf(),
                             isFreeAction: true
-                          }
-                      ]}
+                        },
+                        {
+                            tooltip: 'Remove All Selected Users',
+                            icon: 'delete',
+                            onClick: () => handleDeleteSelected(selectedIds)
+                        }
+                    ]}
                     editable={{
                         isDeleteHidden: (row) => row.role === 'Student' || row.role === 'School' || row.role === 'Company',
                         isDeleteHidden: (row) => row.role == 'Admin' && row.email === emailUser,
@@ -169,7 +210,7 @@ function SchoolAdmin() {
                                 .then(response => {
                                     if (response.ok) {
                                         return response.json();
-                                    } 
+                                    }
                                 })
                                 .then(data => {
                                     const updatedRows = [...accounts, { id: data.id, ...newRow }]
@@ -242,23 +283,29 @@ function SchoolAdmin() {
                                     reject(error);
                                 });
                         }),
-   
-
 
 
                     }}
+                    onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
                     options={{
                         actionsColumnIndex: -1, addRowPosition: "first",
                         headerStyle: {
                             fontSize: '18px',
                             width: '200px',
-                          },
-                          columnsButton:true,
-                          filtering: true,
-                          lookupFilter: true,
-                    
+                        },
+                        columnsButton: true,
+                        filtering: true,
+                        lookupFilter: true,
+                        pageSize: 5, // set default page size
+                        pageSizeOptions: [5, 10, 15],
+                        grouping: true,
+                        selection: true,
+                        rowStyle: rowData => ({
+                            backgroundColor: (selectedRow === rowData.tableData.id) ? '#EEE' : '#FFF'
+                        }),
+                        exportButton: true
                     }}
-
+                
                 />
             </div>
 

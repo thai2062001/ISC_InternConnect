@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import { IconButton } from '@material-ui/core';
+import { FaUser,FaPlus } from "react-icons/fa";
 import { Add as AddIcon, Edit as EditIcon,Mail as MailIcon  } from '@material-ui/icons';
 import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
 import { ToastContainer, toast } from 'react-toastify';
@@ -22,6 +23,11 @@ function CompanyManager() {
     const [filteredAccounts, setFilteredAccounts] = useState([]);
     const [expdate, setDate] = useState('all')
     const [location, setLocation] = useState('all')
+    const [selectedRow, setSelectedRow] = useState(null);
+    const [selectedIds, setSelectedIds] = useState([]);
+
+
+
     const [defaultFilters, setDefaultFilters] = useState({
         expdate: 'all',
         location: 'all'
@@ -50,7 +56,7 @@ function CompanyManager() {
     const columns = [
         { title: "title", field: "title" },
         { title: "expdate", field: "expdate" },
-        { title: "location", field: "location" },
+        { title: "location", field: "location" ,defaultGroupOrder:1},
         { title: "major", field: "major" },
         { title: "salary", field: "salary" },
         {
@@ -137,15 +143,39 @@ function CompanyManager() {
         doc.save('CompanyManagerData.pdf')
       }
 
-      console.log(name);
+      function handleDeleteSelected(ids) {
+        //http://localhost:5000/admin/posts/company/642559a2443d4e532fde640b,642643ad9a87b5af871a61ac
+        fetch(`http://localhost:5000/company/posts/${ids.join(',')}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        })
+          .then(response => {
+            if (response.ok) {
+              setTimeout(() => {
+              toast.success("Xóa Jobpost thành công!")
+            
+              window.location.reload()
+            }, 1000);
+            } else {
+              toast.error("Xóa Jobpost không thành công!")
+            }
+          })
+          .catch(error => {
+            toast.error('There was an error!', error);
+
+          })
+     // đặt thời gian chờ là 2 giây
+    }
     return (
             <div className="App">
                 <div className={cx('wrapper')}>
                     <h1 align="center">Trang quản lý Company Jobpost</h1>
+                    
                     <div className={cx('user_log')}>
-                        <h2 className={cx('name_set')}>{name}</h2>
-                        <button onClick={handleCreate} className={cx('button-action')}>JobPost</button>
-                        
+                    <h2 className={cx('name_set')}> <FaUser /> {name}</h2>
+                        <ToastContainer/>
                     </div>
                 </div>
 
@@ -165,20 +195,24 @@ function CompanyManager() {
                               <TablePagination {...props} />
                             </>
                           }}
+                          onSelectionChange={(rows) => {
+                            // Update selectedIds state when user selects or deselects a row
+                            setSelectedIds(rows.map((row) => row._id));
+                          }}
                         actions={[
                             {
                                 icon: () => <Select
                                   labelId="demo-simple-select-label"
                                   id="demo-simple-select"
-                                  style={{ width: 100 }}
+                                  style={{ width: 110 ,fontSize:'15px'}}
                                   value={location}
                                   onChange={(e) => setLocation(e.target.value)}
                                 >
-                                  <MenuItem value={'all'}><em>Location</em></MenuItem>
-                                  <MenuItem value={'HCM'}>HCM</MenuItem>
-                                  <MenuItem value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
-                                  <MenuItem value={'Hà Nội'}>Hà Nội</MenuItem>
-                                  <MenuItem value={'Hải Phòng'}>Hải Phòng</MenuItem>
+                                  <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Location</em></MenuItem>
+                                  <MenuItem style={{fontSize:'15px'}} value={'HCM'}>HCM</MenuItem>
+                                  <MenuItem style={{fontSize:'15px'}} value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
+                                  <MenuItem style={{fontSize:'15px'}} value={'Hà Nội'}>Hà Nội</MenuItem>
+                                  <MenuItem style={{fontSize:'15px'}} value={'Hải Phòng'}>Hải Phòng</MenuItem>
                                 </Select>,
                                 tooltip: "Filter Location",
                                 isFreeAction: true
@@ -201,7 +235,18 @@ function CompanyManager() {
                                 onClick: () => downloadPdf(),
                                 isFreeAction: true
                               },
-
+                              {
+                                icon: 'add' ,
+                                tooltip: 'Add Jobpost',
+                                onClick: () => handleCreate(),
+                                isFreeAction: true
+                                
+                            },
+                              {
+                                tooltip: 'Remove All Selected Users',
+                                icon: 'delete',
+                                onClick: () => handleDeleteSelected(selectedIds)
+                            },
                         ]}
                         editable={{
                             onRowDelete: selectedRow => new Promise((resolve, reject) => {
@@ -233,6 +278,7 @@ function CompanyManager() {
                             }),
 
                         }}
+                        onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
                         options={{
                             actionsColumnIndex: -1,
                             headerStyle: {
@@ -243,6 +289,13 @@ function CompanyManager() {
                             addRowPosition: "first",
                             filtering: true,
                             lookupFilter: true,
+                            pageSize: 10, // set default page size
+                            pageSizeOptions: [5, 10, 20],
+                            grouping: true,
+                            selection: true,
+                            rowStyle: rowData => ({
+                                backgroundColor: (selectedRow === rowData.tableData.id) ? '#EEE' : '#FFF'
+                            }),
                           }}
                     />
                 </div>

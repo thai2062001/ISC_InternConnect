@@ -35,15 +35,16 @@ function Slidebar() {
       <li>
        <a href="/companyadmin/companyinfo">
          <i className={cx('bx bxs-school')} ></i>
-         <span className={cx('links_name')}>Company Introduce</span>
+         <span className={cx('links_name')}>Profile</span>
        </a>
-       <span className={cx('tooltip')}>Company Introduce</span>
+       <span className={cx('tooltip')}>Profile</span>
      </li>
 
      <li className={cx('profile')}>
      <a href="/admin/adminlogin" onClick={handleLogOutUser}>
      <div className={cx('profile-details')}></div>
          <i className={cx('bx bx-log-out')} id="log_out" ></i>
+         <span className={cx('links_name')}>Logout</span>
      </a>
      <span className={cx('tooltip')}>Logout</span>
      </li>
