@@ -13,6 +13,7 @@ function Footer() {
 
     
     return (
+      <div className={cx('page-wrapper')}>
         <footer className={cx('footer')}>
           <div className={cx('footer__content')}>
             <div className={cx( 'footer__logo')}>
@@ -35,6 +36,7 @@ function Footer() {
             <p>&copy; 2023 Company. All rights reserved.</p>
           </div>
         </footer>
+        </div>
       );
 }
 

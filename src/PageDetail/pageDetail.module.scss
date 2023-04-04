@@ -41,6 +41,13 @@
     align-items: center;
   }
   
+
+
+  .wrapper-date-form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   
   .label {
     font-size: 1.2rem;
@@ -69,9 +76,10 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100%;
+    width: 250px;
     margin-top: 10px;
   }
+ 
   
   .wrapper-des {
     margin-top: 30px;
@@ -81,6 +89,9 @@
   
   .wrapper-gen {
     margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
   .input-res {

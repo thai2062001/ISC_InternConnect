@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import classNames from "classnames/bind";
-import styles from './SlidebarCompanyAdmin.module.scss'
+import styles from './SlidebarCompanyAdmin.module.scss';
 
 const cx = classNames.bind(styles)
 
@@ -14,6 +14,7 @@ function Slidebar() {
 <div className={cx('sidebar')}>
     <div className={cx('logo-details')}>
         <i className={cx('bx bx-menu')} id="btn" ></i>
+       
     </div>
     <ul className={cx('nav-list')}>
     <li>
@@ -40,7 +41,7 @@ function Slidebar() {
        <span className={cx('tooltip')}>Profile</span>
      </li>
 
-     <li className={cx('profile')}>
+     <li >
      <a href="/admin/adminlogin" onClick={handleLogOutUser}>
      <div className={cx('profile-details')}></div>
          <i className={cx('bx bx-log-out')} id="log_out" ></i>
@@ -50,6 +51,7 @@ function Slidebar() {
      </li>
 
     </ul>
+
   </div>
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>

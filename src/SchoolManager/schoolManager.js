@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import styles from './schoolManager.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
+import { FaUser } from "react-icons/fa";
 import MaterialTable from "material-table";
 import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
 import { ToastContainer, toast } from 'react-toastify';
@@ -26,6 +27,9 @@ function SchoolManager() {
   const [gender, setGender] = useState('all')
   const [verify, setVerify] = useState('all')
   const [major, setMajor] = useState('all')
+  const [selectedRow, setSelectedRow] = useState(null);
+
+
   const [defaultFilters, setDefaultFilters] = useState({
     year: 'all',
     address: 'all',
@@ -153,7 +157,7 @@ function SchoolManager() {
         <div className={cx('wrapper')}>
           <h1 align="center">Trang quản lý Admin</h1>
           <div className={cx('user_log')}>
-            <h2 className={cx('name_set')}>{name}</h2>
+          <h2 className={cx('name_set')}> <FaUser/> {name}</h2>
           </div>
         </div>
 
@@ -178,16 +182,16 @@ function SchoolManager() {
                 icon: () => <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  style={{ width: 100 }}
+                  style={{ width: 110 ,fontSize:'15px'}}
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
                 >
-                  <MenuItem value={'all'}><em>All</em></MenuItem>
-                  <MenuItem value={'2017'}>2017</MenuItem>
-                  <MenuItem value={'2018'}>2018</MenuItem>
-                  <MenuItem value={'2019'}>2019</MenuItem>
-                  <MenuItem value={'2020'}>2020</MenuItem>
-                  <MenuItem value={'2021'}>2021</MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Year</em></MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'2017'}>2017</MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'2018'}>2018</MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'2019'}>2019</MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'2020'}>2020</MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'2021'}>2021</MenuItem>
                 </Select>,
                 tooltip: "Filter Year",
                 isFreeAction: true
@@ -196,16 +200,16 @@ function SchoolManager() {
                 icon: () => <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  style={{ width: 100 }}
+                  style={{ width: 110 ,fontSize:'15px'}}
                   value={address}
                   onChange={(e) => setAdress(e.target.value)}
                 >
-                  <MenuItem value={'all'}><em>All</em></MenuItem>
-                  <MenuItem value={'HCM'}>HCM</MenuItem>
-                  <MenuItem value={'Hà Nội'}>Hà Nội</MenuItem>
-                  <MenuItem value={'Hải Phòng'}>Hải Phòng</MenuItem>
-                  <MenuItem value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
-                  <MenuItem value={'Huế'}>Huế</MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Location</em></MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'HCM'}>HCM</MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'Hà Nội'}>Hà Nội</MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'Hải Phòng'}>Hải Phòng</MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
+                  <MenuItem style={{fontSize:'15px'}} value={'Huế'}>Huế</MenuItem>
                 </Select>,
                 tooltip: "Filter Address",
                 isFreeAction: true
@@ -215,14 +219,14 @@ function SchoolManager() {
                 icon: () => <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  style={{ width: 100 }}
+                  style={{ width: 110 ,fontSize:'15px'}}
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
                 >
-                  <MenuItem value={'all'}><em>All</em></MenuItem>
-                  <MenuItem value={'Nam'}>Nam</MenuItem>
-                  <MenuItem value={'Nữ'}>Nữ</MenuItem>
-                  <MenuItem value={'Khác'}>Khác</MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={'all'}><em>Gender</em></MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={'Nam'}>Nam</MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={'Nữ'}>Nữ</MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={'Khác'}>Khác</MenuItem>
                 </Select>,
                 tooltip: "Filter Gender",
                 isFreeAction: true
@@ -231,16 +235,16 @@ function SchoolManager() {
                 icon: () => <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  style={{ width: 100 }}
+                  style={{ width: 110 ,fontSize:'15px'}}
                   value={major}
                   onChange={(e) => setMajor(e.target.value)}
                 >
-                  <MenuItem value={'all'}><em>All</em></MenuItem>
-                  <MenuItem value={'Công nghệ thông tin'}>Công nghệ thông tin</MenuItem>
-                  <MenuItem value={'Kế toán'}>Kế toán</MenuItem>
-                  <MenuItem value={'Quản trị kinh doanh'}>Quản trị kinh doanh</MenuItem>
-                  <MenuItem value={'Quản trị khách sạn'}>Quản trị khách sạn</MenuItem>
-                  <MenuItem value={'Du lịch lữ hành'}>Du lịch lữ hành</MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={'all'}><em>Major</em></MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={'Công nghệ thông tin'}>Công nghệ thông tin</MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={'Kế toán'}>Kế toán</MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={'Quản trị kinh doanh'}>Quản trị kinh doanh</MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={'Quản trị khách sạn'}>Quản trị khách sạn</MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={'Du lịch lữ hành'}>Du lịch lữ hành</MenuItem>
                 </Select>,
                 tooltip: "Filter Major",
                 isFreeAction: true
@@ -249,13 +253,13 @@ function SchoolManager() {
                 icon: () => <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  style={{ width: 100 }}
+                  style={{ width: 110 ,fontSize:'15px'}}
                   value={verify}
                   onChange={(e) => setVerify(e.target.value)}
                 >
-                  <MenuItem value={'all'}><em>All</em></MenuItem>
-                  <MenuItem value={true}>True</MenuItem>
-                  <MenuItem value={false}>False</MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={'all'}><em>Verify</em></MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={true}>True</MenuItem>
+                  <MenuItem  style={{fontSize:'15px'}} value={false}>False</MenuItem>
                 </Select>,
                 tooltip: "Filter Verify",
                 isFreeAction: true
@@ -313,6 +317,7 @@ function SchoolManager() {
               }),
 
             }}
+            onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
             options={{
               actionsColumnIndex: -1, addRowPosition: "first",
               headerStyle: {
@@ -324,7 +329,16 @@ function SchoolManager() {
               addRowPosition: "first",
               filtering: true,
               lookupFilter: true,
-            }}
+              pageSize: 5, // set default page size
+              pageSizeOptions: [5, 10, 15],
+              grouping: true,
+              selection: true,
+              rowStyle: rowData => ({
+                  backgroundColor: (selectedRow === rowData.tableData.id) ? '#EEE' : '#FFF'
+              }),
+              exportButton: true
+          }}
+            
           />
         </div>
         <link

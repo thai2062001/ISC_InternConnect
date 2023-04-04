@@ -95,6 +95,7 @@ function PageDetail() {
           document.getElementById('salary').readOnly = true;
           document.getElementById('location').readOnly = true;
           document.getElementById('gender').disabled = true;
+          document.getElementById('wokingformInput').disabled = true;
           document.getElementById('required').readOnly = true;
           document.getElementById('benefit').readOnly = true;
           document.getElementById('responsibility').readOnly = true;
@@ -107,6 +108,7 @@ function PageDetail() {
           document.getElementById('salary').readOnly = false;
           document.getElementById('location').readOnly = false;
           document.getElementById('gender').disabled = false;
+          document.getElementById('wokingformInput').disabled = false;
           document.getElementById('required').readOnly = false;
           document.getElementById('benefit').readOnly = false;
           document.getElementById('responsibility').readOnly = false;
@@ -127,6 +129,7 @@ function PageDetail() {
           document.getElementById('salary').readOnly = false;
           document.getElementById('location').readOnly = false;
           document.getElementById('gender').readOnly = false;
+          document.getElementById('wokingformInput').readOnly = false;
           document.getElementById('required').readOnly = false;
           document.getElementById('benefit').readOnly = false;
           document.getElementById('responsibility').readOnly = false;
@@ -142,6 +145,7 @@ function PageDetail() {
     const salary = document.getElementById("salary").value;
     const location = document.getElementById("location").value;
     const gender = document.getElementById("gender").value;
+    const workingform = document.getElementById("wokingformInput").value;
     const benefit = document.getElementById("benefit").value;
     const responsibility = document.getElementById("responsibility").value;
     const required = document.getElementById("required").value;
@@ -161,6 +165,7 @@ function PageDetail() {
         salary: salary,
         gender: gender,
         location: location,
+        workingform:workingform,
         required: required,
         benefit: benefit,
         responsibility: responsibility,
@@ -179,7 +184,7 @@ function PageDetail() {
             draggable: true,
             progress: undefined,
             theme: "light",
-        });
+          });
         } else {
           // Thông báo lỗi nếu không thành công
         }
@@ -192,12 +197,14 @@ function PageDetail() {
 
   return (
     <div className={cx('wrapper')} >
-      <h1 >Detais_page</h1>
       <div className={cx('form-detail')}>
         <div className={cx('container')}>
           <div className={cx('logo-info')}>
             <img src={accounts.logo} alt="Lỗi" />
           </div>
+
+        </div>
+        <div className={cx('wrapper-date-form')}>
           <div className={cx('input-img')}>
             <label style={{ marginRight: '10px' }}>Date</label>
             <DatePicker className={cx('datepicker_info')}
@@ -211,6 +218,13 @@ function PageDetail() {
               dateFormat="dd/MM/yyyy"
               placeholderText="Chọn ngày hết hạn"
             />
+          </div>
+          <div >
+            <label className={cx('label-des')} for="workingform">Hình thức</label>
+            <select disabled id="wokingformInput" name="workingform"> onChange={(e) => setAccount({ ...accounts, workingform: e.target.value })}
+              <option value="Bán thời gian">Bán thời gian</option>
+              <option value="Toàn thời gian">Toàn thời gian</option>
+            </select>
           </div>
         </div>
         <div className={cx('title_wrap')}>
@@ -236,17 +250,17 @@ function PageDetail() {
         <div className={cx('wrapper-gen')}>
           <div >
             <label className={cx('label-des')} for="gender">Giới tính</label>
-            <select disabled value={accounts.gender}  className={cx('input-des')}id="gender" name="gender" onChange={(e) => setAccount({ ...accounts, gender: e.target.value })}>
+            <select disabled value={accounts.gender} className={cx('input-des')} id="gender" name="gender" onChange={(e) => setAccount({ ...accounts, gender: e.target.value })}>
               <option value="Nam">Nam</option>
               <option value="Nữ">Nữ</option>
               <option value="Không yêu cầu">Không yêu cầu</option>
             </select>
           </div>
-          <ToastContainer style={{width:'400px'}}/>
+          <ToastContainer style={{ width: '400px' }} />
 
           <div >
             <label className={cx('label-des')}>Ngành nghề</label>
-            <select disabled id="majorInput" className={cx('input-des')} value={accounts.major} onChange={(e) => setAccount({ ...accounts, major: e.target.value })} >
+            <select disabled id="majorInput" className={cx('input-des','input_major')} value={accounts.major} onChange={(e) => setAccount({ ...accounts, major: e.target.value })} >
               <option value="">Chọn ngành nghề</option>
               {listmajor.map(major => (
                 <option key={major._id} value={major.namemajor}>{major.namemajor}</option>
@@ -260,7 +274,7 @@ function PageDetail() {
           <textarea id="benefit" readOnly className={cx('input-res')} value={accounts.benefit} onChange={(event) => setAccount({ ...accounts, benefit: event.target.value })} />
         </div>
         <div className={cx('wrapper-ip')}>
-          <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
+          <label className={cx('label-des')} for="input-field">Mô tả công việc </label>
           <textarea id="responsibility" readOnly className={cx('input-res')} value={accounts.responsibility} onChange={(event) => setAccount({ ...accounts, responsibility: event.target.value })} />
         </div>
         <div className={cx('wrapper-ip')}>

@@ -7,7 +7,8 @@ import ReactPaginate from 'react-paginate';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';
-
+import moment from 'moment';
+import Select from 'react-select'
 
 
 const cx = classNames.bind(styles)
@@ -17,16 +18,36 @@ function Home() {
   const [jobpostSearch, setJobPostSearch] = useState([])
   const [jobpostFilter, setJobPostFilter] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(18);
+  const [postsPerPage, setPostsPerPage] = useState(10);
   const [listmajor, setListMajor] = useState([])
   const [originalJobPosts, setOriginalJobPosts] = useState([]);
-  const [selectedMajor, setSelectedMajor] = useState('');
+  const [selectedValues, setSelectedValues] = useState([]);
+  const [selectedValueCities, setSelectedValueCities] = useState([]);
+  const [cities, setCities] = useState([]);
 
+
+
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('https://api.mysupership.vn/v1/partner/areas/province');
+      const data = await response.json();
+      setCities(data);
+
+    }
+    fetchData();
+  }, []);
+  // const citiesArray = Object.values(cities);
+  // const dataCity = citiesArray[1].result
+  // const options1 = dataCity.map(item => ({ label: item.name, value: item.code }));
+
+  console.log(cities);
   const pageCount = Math.ceil(listJobPosts.length / postsPerPage);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = listJobPosts.slice(indexOfFirstPost, indexOfLastPost);
+
 
   const handlePageClick = (data) => {
     const selectedPage = data.selected + 1;
@@ -77,34 +98,76 @@ function Home() {
     }
     fetchData();
   }, []);
-
-
   const handleSearch = () => {
     const inputJob = document.getElementById('job-search').value.toLowerCase();
-    const inputLocation = document.getElementById('location-search').value.toLowerCase();
 
-    if (!inputJob && !inputLocation) {
-      setListJobPosts(jobpostSearch);
+    if (!inputJob && !selectedValueCities.length && !selectedValues.length) {
+      setListJobPosts(originalJobPosts);
       return;
     }
-    const filteredPosts = jobpostSearch.filter((post) => {
+
+    const filteredPosts = originalJobPosts.filter((post) => {
       const jobTitle = post.title.toLowerCase();
-      const location = post.location.toLowerCase();
+      const jobMajor = post.major;
+      const jobCity = post.location;
+      console.log(jobCity);
+      const matchMajor = selectedValues.length ? selectedValues.some((major) => jobMajor && jobMajor.includes(major)) : true;
 
-      if (inputJob && inputLocation) {
+      if (inputJob && matchMajor) {
         return (
-          jobTitle.includes(inputJob.toLowerCase()) &&
-          location.includes(inputLocation.toLowerCase())
+          jobTitle.includes(inputJob.toLowerCase())
         );
-      } else if (inputJob) {
+      } else if (inputJob && matchMajor) {
         return jobTitle.includes(inputJob.toLowerCase());
-      } else if (inputLocation) {
-        return location.includes(inputLocation.toLowerCase());
       }
-    });
+      else if (matchMajor) {
+        return true;
+      }
 
+      return false;
+    });
     setListJobPosts(filteredPosts);
+
   };
+
+
+
+  // const handleSearch = () => {
+  //   const inputJob = document.getElementById('job-search').value.toLowerCase();
+  //   const inputLocation = document.getElementById('location-search').value.toLowerCase();
+  //   if (!inputJob && !inputLocation && !selectedValues.length) {
+  //     setListJobPosts(originalJobPosts);
+  //     return;
+  //   }
+
+  //   const filteredPosts = originalJobPosts.filter((post) => {
+  //     const jobTitle = post.title.toLowerCase();
+  //     const location = post.location.toLowerCase();
+  //     const jobMajor = post.major;
+
+  //     const matchMajor = selectedValues.length ? selectedValues.some((major) => jobMajor && jobMajor.includes(major)) : true;
+
+  //     if (inputJob && inputLocation && matchMajor) {
+  //       return (
+  //         jobTitle.includes(inputJob.toLowerCase()) &&
+  //         location.includes(inputLocation.toLowerCase())
+  //       );
+  //     } else if (inputJob && matchMajor) {
+  //       return jobTitle.includes(inputJob.toLowerCase());
+  //     } else if (inputLocation && matchMajor) {
+  //       return location.includes(inputLocation.toLowerCase());
+  //     } else if (matchMajor) {
+  //       return true;
+  //     }
+
+  //     return false;
+  //   });
+  //   setListJobPosts(filteredPosts);
+
+  // };
+
+  const JobPostCount = listJobPosts.length;
+
 
 
   const HandleNext = () => {
@@ -121,78 +184,101 @@ function Home() {
     window.location.href = `/${id}`
   }
 
+  function formatDate(dateString) {
+    const date = moment(dateString);
+    const formattedDate = date.format('DD/MM/YYYY');
+    return formattedDate;
+  }
 
-  const handleFilter = (e) => {
-    const selectedMajor = e.target.value;
-    setSelectedMajor(selectedMajor);
-
-    if (selectedMajor === 'Tất cả') { // Kiểm tra nếu giá trị được chọn là 'Tất cả'
-      setListJobPosts(jobpostFilter); // Set lại danh sách jobpost ban đầu
-    } else if (selectedMajor !== '') {
-      const filteredPosts = jobpostFilter.filter((post) => { // Sử dụng allJobPosts thay vì listJobPosts để filter
-        const jobmajor = post.major
-        return jobmajor && jobmajor.includes(selectedMajor);
-      });
-      setListJobPosts(filteredPosts);
-    } else {
-      setListJobPosts(jobpostFilter); // Nếu không có giá trị được chọn, set lại danh sách jobpost ban đầu
-    }
+  const handleSelectChange = (selectedOptions) => {
+    setSelectedValues(selectedOptions.map(option => option.label));
   };
+  const handleChangeCity = (selectedOptions) => {
+    setSelectedValueCities(selectedOptions.map(option => option.label));
+  };
+
+
+  const optionsForm = [
+    { value: 'Hình thức', label: 'Hình thức' },
+    { value: 'Bán thời gian', label: 'Bán thời gian' },
+    { value: 'Toàn thời gian', label: 'Toàn thời gian' },
+  ]
+  const optionsGender = [
+    { value: 'Giới tính', label: 'Giới tính' },
+    { value: 'Nam', label: 'Nam' },
+    { value: 'Nữ', label: 'Nữ' },
+  ]
+
+
+  //   const data = citiesArray[1].data; // Lấy mảng dữ liệu từ phần tử thứ hai của response
+  // const names = data.map(item => item.name); // Trích xuất cột 'name' từ mỗi phần tử trong mảng dữ liệu
 
   return (
     <div className={cx('container_full')}>
       <Helmet>
         <title>Trang chủ</title>
       </Helmet>
-      <div className={cx('container')}>
-        <div className={cx('search')}>
-          <div className={cx('banner-div')}>
-            <div className={cx('input-wrapper')}>
-              <div className={cx('input-group')}>
-                <FaSearch className={cx('search-icon')} />
-                <input
-                  id="job-search"
-                  className={cx('input-search')}
-                  placeholder="Nhập từ khóa, công việc"
-                />
-              </div>
-              <div className={cx('input-group','city-search')}>
-                <FaLocationArrow className={cx('search-icon')} />
-                <input
-                  id="location-search"
-                  className={cx('input-search')}
-                  placeholder="Nhập thành phố"
-                />
-              </div >
-              <button className={cx('search-button')} onClick={handleSearch}>
-                <FaSearch className={cx('search-icon')} />
-                Tìm kiếm
-              </button>
-              <ToastContainer />
-            </div>
-
+      <section className={cx('container')}>
+        <div className={cx('input-wrapper')}>
+          <div className={cx('input-group', 'job_search')}>
+            <input
+              id="job-search"
+              className={cx('input-search')}
+              placeholder="Nhập từ khóa, công việc"
+            />
           </div>
+          <div className={cx('input-group', 'select-wrapper')}>
+            <Select className={cx('select')} placeholder='Tất cả ngành nghề'
+              styles={{ width: '280px' }}
+              isMulti
+              options={listmajor.map(major => ({ label: major.namemajor, value: major.namemajor }))}
+              onChange={handleSelectChange}
+            />
+          </div>
+          {/* <div className={cx('input-group', 'select-wrapper')}>
+            <Select className={cx('select')}
+              styles={{ width: '280px' }}
+              isMulti
+              options={options1}
+              onChange={handleChangeCity}
+            />
+          </div> */}
+          <button className={cx('search-button')} onClick={handleSearch}>
+            <FaSearch className={cx('search-icon')} />
+          </button>
         </div>
-      </div>
+        <div className={cx('filter_wrapper_wrapper')}>
+          <div className={cx('select-wrapper_filter')}>
+            <Select className={cx('select_filter')} placeholder='Hình thức'
+             
+              options={optionsForm}
+              clearable={false}
+            />
+          </div>
+          <div className={cx('select-wrapper_filter')}>
+            <Select className={cx('select_filter')} placeholder='Giới tính'
+              options={optionsGender}
+            />
+          </div>
+          
+        </div>
+      </section>
 
-      <div className={cx('select-wrapper')}>
-        <select className={cx('select')} onChange={handleFilter}>
-          <option value="">Tất cả</option>
-          {listmajor.map((major) => (
-            <option key={major._id} value={major.namemajor}>
-              {major.namemajor}
-            </option>
-          ))}
-        </select>
-      </div>
+
 
       <div className={cx('wrapper_jobpost')}>
+        <div className={cx('title_count')} style={{ marginTop: '80px' }} >
+          <h2> {JobPostCount} việc làm thực tập </h2>
+        </div>
         <div className={cx('jobpost')}>
           <ul className={cx('jobpost-preview')}>
             {currentPosts.splice(0, 20).map((jobPost, index) => (
               <div onClick={() => handleDetail(jobPost._id)} className={cx('jobpost-description')} key={index}>
                 <div className={cx('logo')}>
-                  <img src={jobPost.logo} />
+                  <div className={cx('wrapper-logo')}>
+                    <img src={jobPost.logo} />
+                  </div>
+                  <ToastContainer />
                 </div>
                 <div className={cx('jobpost_detail')}>
                   <h2 >{jobPost.title}</h2>
@@ -211,6 +297,10 @@ function Home() {
                   {/* <span style={{display:'block'}} className={cx('major-span')}>{jobPost.major}</span> */}
                 </div>
                 <div className={cx('action-div')} style={{ marginTop: '80px', padding: '10px' }}>
+                  <div className={cx('wrapper_date')}>
+                    <img src="https://img.icons8.com/ios/50/null/calendar-26.png" />
+                    <span>{formatDate(listJobPosts.DateSubmitted)}</span>
+                  </div>
                   <button className={cx('apply_button')}>Ứng tuyển ngay</button>
                 </div>
               </div>
@@ -219,25 +309,26 @@ function Home() {
 
           <div className={cx('banner_right')}>
             <img src='https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Flogo%2F500x600_122601.png&w=1920&q=75' />
-            <div>
-              <img className={cx('img-2')} src='https://img.timviec.com.vn/2021/06/dang-tin-tuyen-dung-14.jpg' />
-            </div>
+
+            <img className={cx('img-2')} src='https://img.timviec.com.vn/2021/06/dang-tin-tuyen-dung-14.jpg' />
+
 
           </div>
 
-          {/* Hiển thị nút phân trang */}
-          <ReactPaginate
-            previousLabel={'Trang trước'}
-            nextLabel={'Trang sau'}
-            breakLabel={'...'}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageClick}
-            containerClassName={cx('pagination')}
-            activeClassName={'active'}
-          />
+
         </div>
+        {/* Hiển thị nút phân trang */}
+        <ReactPaginate
+          previousLabel={'Trang trước'}
+          nextLabel={'Trang sau'}
+          breakLabel={'...'}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={cx('pagination')}
+          activeClassName={'active'}
+        />
 
       </div>
       <button id="scroll-to-top-btn" className={cx('scroll-to-top-btn')} aria-label="Scroll to top">
@@ -245,7 +336,8 @@ function Home() {
       </button>
 
 
-      <div className={cx('wrapper')}>
+
+      {/* <div className={cx('wrapper')}>
         <h1>Các công ty nổi bật</h1>
         <div id='slide' className={cx('banner')}>
           <div id='item' className={cx('item', 'Viettel')}  >
@@ -323,9 +415,9 @@ function Home() {
             <FaAngleDoubleRight />
           </button>
         </div>
-      </div>
+      </div> */}
 
-    </div>
+    </div >
   );
 
 }

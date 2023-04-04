@@ -66,6 +66,7 @@ function JobPostCreate() {
             const formData = new FormData();
             formData.append('namecompany', document.getElementById('companyNameInput').value);
             formData.append('title', document.getElementById('jobTitleInput').value);
+            formData.append('workingform', document.getElementById('wokingformInput').value);
             formData.append('location', document.getElementById('locationInput').value);
             formData.append('salary', document.getElementById('salaryInput').value);
             formData.append('gender', document.getElementById('genderInput').value);
@@ -105,6 +106,9 @@ function JobPostCreate() {
                         />
                         <h3>{accounts.namecompany}</h3>
                     </div>
+
+                </div>
+                <div className={cx('wrapper-date-form')}>
                     <div className={cx('input-img')}>
                         <label className={cx('label')} style={{ marginRight: '10px' }}>Date</label>
                         <DatePicker
@@ -115,66 +119,77 @@ function JobPostCreate() {
                             className={cx('datepicker')}
                         />
                     </div>
-                </div>
-                <div className={cx('title_wrap')}>
-                    <label className={cx('label-des')}>Tên công ty</label>
-                    <input id="companyNameInput" disabled value={name} className={cx('input-title')} />
-                </div>
+                    <div >
+                        <label className={cx('label-des')} for="workingform">Hình thức</label>
+                        <select id="wokingformInput" name="workingform">
+                            <option value="Bán thời gian">Bán thời gian</option>
+                            <option value="Toàn thời gian">Toàn thời gian</option>
 
-                <div className={cx('title_wrap')}>
-                    <label className={cx('label-des')}>Tiêu đề</label>
-                    <input id="jobTitleInput" className={cx('input-title')} />
-                </div>
-
-                <div className={cx('wrapper-des')}>
-                    <div >
-                        <label className={cx('label-des')}>Địa chỉ</label>
-                        <input id="locationInput" className={cx('input-des')} />
-                    </div>
-                    <div >
-                        <label className={cx('label-des')}>Trợ cấp</label>
-                        <input id="salaryInput" className={cx('input-des')} />
-                    </div>
-                </div>
-                <div className={cx('wrapper-gen')}>
-                    <div >
-                        <label className={cx('label-des')} for="gender">Giới tính</label>
-                        <select id="genderInput" name="gender">
-                            <option value="Nam">Nam</option>
-                            <option value="Nữ">Nữ</option>
-                            <option value="Khác">Khác</option>
-                            <option value="Không yêu cầu">Không yêu cầu</option>
                         </select>
                     </div>
 
-                    <div >
-                        <label className={cx('label-des')}>Ngành nghề</label>
-                        <select id="majorInput" className={cx('input-des')} value={selectedMajor} onChange={e => setSelectedMajor(e.target.value)}>
-                            <option value="">Chọn ngành nghề</option>
-                            {listmajor.map(major => (
-                                <option key={major._id} value={major.namemajor}>{major.namemajor}</option>
-                            ))}
-                        </select>
-                    </div>
-                
-                </div>
-                <div className={cx('wrapper-ip')}>
-                    <label className={cx('label-des')} for="input-field">Phúc lợi thực tập</label>
-                    <textarea id="benefitInput" className={cx('input-res')} />
-                </div>
-                <div className={cx('wrapper-ip')}>
-                    <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
-                    <textarea id="ResponInput" className={cx('input-res')} />
-                </div>
-                <div className={cx('wrapper-ip')}>
-                    <label className={cx('label-des')} for="input-field">Yêu cầu</label>
-                    <textarea id="requiredInput" type="text" className={cx('input-res')} />
-                </div>
-                <div className={cx('button-action-div')}>
-                    <button className={cx('button-action')} onClick={createJobPost}>Đăng bài</button>
+
                 </div>
             </div>
+            <div className={cx('title_wrap')}>
+                <label className={cx('label-des')}>Tên công ty</label>
+                <input id="companyNameInput" disabled value={name} className={cx('input-title')} />
+            </div>
+
+            <div className={cx('title_wrap')}>
+                <label className={cx('label-des')}>Tiêu đề</label>
+                <input id="jobTitleInput" className={cx('input-title')} />
+            </div>
+
+            <div className={cx('wrapper-des')}>
+                <div >
+                    <label className={cx('label-des')}>Địa chỉ</label>
+                    <input id="locationInput" className={cx('input-des')} />
+                </div>
+                <div >
+                    <label className={cx('label-des')}>Trợ cấp</label>
+                    <input id="salaryInput" className={cx('input-des')} />
+                </div>
+            </div>
+            <div className={cx('wrapper-gen')}>
+                <div >
+                    <label className={cx('label-des')} for="gender">Giới tính</label>
+                    <select id="genderInput" name="gender">
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                        <option value="Khác">Khác</option>
+                        <option value="Không yêu cầu">Không yêu cầu</option>
+                    </select>
+                </div>
+
+                <div >
+                    <label className={cx('label-des')}>Ngành nghề</label>
+                    <select id="majorInput" className={cx('input-des')} value={selectedMajor} onChange={e => setSelectedMajor(e.target.value)}>
+                        <option value="">Chọn ngành nghề</option>
+                        {listmajor.map(major => (
+                            <option key={major._id} value={major.namemajor}>{major.namemajor}</option>
+                        ))}
+                    </select>
+                </div>
+
+            </div>
+            <div className={cx('wrapper-ip')}>
+                <label className={cx('label-des')} for="input-field">Phúc lợi thực tập</label>
+                <textarea id="benefitInput" className={cx('input-res')} />
+            </div>
+            <div className={cx('wrapper-ip')}>
+                <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
+                <textarea id="ResponInput" className={cx('input-res')} />
+            </div>
+            <div className={cx('wrapper-ip')}>
+                <label className={cx('label-des')} for="input-field">Yêu cầu</label>
+                <textarea id="requiredInput" type="text" className={cx('input-res')} />
+            </div>
+            <div className={cx('button-action-div')}>
+                <button className={cx('button-action')} onClick={createJobPost}>Đăng bài</button>
+            </div>
         </div>
+
     );
 }
 

@@ -54,11 +54,13 @@ function CompanyManager() {
 
 
     const columns = [
-        { title: "title", field: "title" },
-        { title: "expdate", field: "expdate" },
-        { title: "location", field: "location" ,defaultGroupOrder:1},
-        { title: "major", field: "major" },
-        { title: "salary", field: "salary" },
+        { title: "Tiêu đề", field: "title" },
+        { title: "Ngày đăng bài", field: "DateSubmitted" },
+        { title: "Ngày hết hạn", field: "expdate" },
+        { title: "Thành phố", field: "location" ,defaultGroupOrder:1},
+        { title: "Nghề nghiệp", field: "major" },
+        { title: "Trợ cấp", field: "salary" },
+        { title: "Hình thức", field: "workingform" },
         {
             title: 'Details',
             render: rowData => {
