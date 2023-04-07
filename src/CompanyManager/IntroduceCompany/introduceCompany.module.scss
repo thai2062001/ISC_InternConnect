@@ -28,8 +28,10 @@
   .textarea {
     display: block;
     width: 100%;
+    outline: none;
     padding: 10px;
     border: 1px solid #ccc;
+    outline: none;
     border-radius: 5px;
     font-size: 16px;
     line-height: 1.5;
@@ -89,7 +91,9 @@
     background-color: #4CAF50; /* màu nền */
     color: white; /* màu chữ */
     border: none; /* không viền */
+    border-radius: 30px;
     padding: 10px 20px; /* độ lớn của nút */
+    max-height: 50px;
     text-align: center; /* căn giữa nội dung */
     text-decoration: none; /* không gạch chân */
     display: inline-block; /* hiển thị dạng block */
@@ -97,11 +101,15 @@
     margin: 10px; /* khoảng cách với các phần tử khác */
     cursor: pointer; /* biến con trỏ chuột thành hình tay */
   }
+    .upload_button:hover{
+      background-color: #388f3b;
+    }
   
   .logo-input{
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
+    max-height: 50px;
     color: #ffffff;
     background-color: #5b6ea7;
     border-radius: 4px;

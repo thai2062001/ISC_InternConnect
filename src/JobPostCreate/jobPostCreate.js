@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import Select from 'react-select'
 
 const cx = classNames.bind(styles)
 function JobPostCreate() {
@@ -15,8 +15,45 @@ function JobPostCreate() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [listmajor, setListMajor] = useState([])
     const [selectedMajor, setSelectedMajor] = useState('');
+    const [cities, setCities] = useState([]);
+    const [selectedValueCities, setSelectedValueCities] = useState('');
+    const [companyLogo, setCompanyLogo] = useState()
 
 
+
+    useEffect(() => {
+        const apiLogoCompany = 'http://localhost:5000/company/profile'
+        const fetchData = async () => {
+            const result = await fetch(apiLogoCompany, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${company_token}`
+                },
+            });
+            result.json().then(json => {
+                setCompanyLogo(json.profile[0].logo);
+            });
+        };
+        fetchData();
+    }, []);
+
+
+    const cityapi = 'http://localhost:5000/company/listareas'
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await fetch(cityapi, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            result.json().then(json => {
+                setCities(json);
+            });
+        };
+        fetchData();
+    }, []);
     const apiUrl = 'http://localhost:5000/company/listmajor'
     const company_token = localStorage.getItem('user-save');
     useEffect(() => {
@@ -64,18 +101,35 @@ function JobPostCreate() {
     const createJobPost = async () => {
         try {
             const formData = new FormData();
-            formData.append('namecompany', document.getElementById('companyNameInput').value);
-            formData.append('title', document.getElementById('jobTitleInput').value);
-            formData.append('workingform', document.getElementById('wokingformInput').value);
-            formData.append('location', document.getElementById('locationInput').value);
-            formData.append('salary', document.getElementById('salaryInput').value);
-            formData.append('gender', document.getElementById('genderInput').value);
-            formData.append('benefit', document.getElementById('benefitInput').value);
-            formData.append('required', document.getElementById('requiredInput').value);
-            formData.append('responsibility', document.getElementById('ResponInput').value);
-            formData.append('expdate', selectedDate);
-            formData.append('major', selectedMajor);
-            formData.append('logo', logo);
+            if(companyLogo){
+                formData.append('namecompany', document.getElementById('companyNameInput').value);
+                formData.append('title', document.getElementById('jobTitleInput').value);
+                formData.append('workingform', document.getElementById('wokingformInput').value);
+                formData.append('location', document.getElementById('locationInput').value);
+                formData.append('salary', document.getElementById('salaryInput').value);
+                formData.append('gender', document.getElementById('genderInput').value);
+                formData.append('benefit', document.getElementById('benefitInput').value);
+                formData.append('required', document.getElementById('requiredInput').value);
+                formData.append('responsibility', document.getElementById('ResponInput').value);
+                formData.append('expdate', selectedDate);
+                formData.append('major', selectedMajor);
+                formData.append('place', selectedValueCities);
+                formData.append('logo', companyLogo);
+            }else{
+                formData.append('namecompany', document.getElementById('companyNameInput').value);
+                formData.append('title', document.getElementById('jobTitleInput').value);
+                formData.append('workingform', document.getElementById('wokingformInput').value);
+                formData.append('location', document.getElementById('locationInput').value);
+                formData.append('salary', document.getElementById('salaryInput').value);
+                formData.append('gender', document.getElementById('genderInput').value);
+                formData.append('benefit', document.getElementById('benefitInput').value);
+                formData.append('required', document.getElementById('requiredInput').value);
+                formData.append('responsibility', document.getElementById('ResponInput').value);
+                formData.append('expdate', selectedDate);
+                formData.append('major', selectedMajor);
+                formData.append('place', selectedValueCities);
+                formData.append('logo', logo);
+            }
             const response = await fetch('http://localhost:5000/company/create', {
                 method: 'POST',
                 body: formData,
@@ -94,16 +148,26 @@ function JobPostCreate() {
         }
     };
 
+    const handleChangeCity = (selectedOptions) => {
+        setSelectedValueCities(selectedOptions.value);
+    };
+
     return (
         <div className={cx('wrapper')} >
-            <h1 >Create a Jobpost</h1>
+            <h1 >Tạo bài đăng mới</h1>
             <div className={cx('form-detail')}>
                 <div className={cx('container')}>
                     <div className={cx('logo-info')}>
-                        {logo && <img src={logo.preview} alt="Logo preview" />}
-                        <input className={cx('logo-input')} type="file"
-                            onChange={handlePreviewLogo}
-                        />
+                        {companyLogo ? (<img src={companyLogo} alt="Logo preview" />) : (
+                            <div>
+                                {logo && <img src={logo.preview} alt="Logo preview" />}
+                                <input className={cx('logo-input')} type="file" onChange={handlePreviewLogo} />
+                            </div>
+
+                        )}
+                        {/*  */}
+
+
                         <h3>{accounts.namecompany}</h3>
                     </div>
 
@@ -119,9 +183,9 @@ function JobPostCreate() {
                             className={cx('datepicker')}
                         />
                     </div>
-                    <div >
+                    <div className={cx('working_form-wrapper')} >
                         <label className={cx('label-des')} for="workingform">Hình thức</label>
-                        <select id="wokingformInput" name="workingform">
+                        <select id="wokingformInput" name="workingform"> classNames={cx('workingForm')}
                             <option value="Bán thời gian">Bán thời gian</option>
                             <option value="Toàn thời gian">Toàn thời gian</option>
 
@@ -142,29 +206,46 @@ function JobPostCreate() {
             </div>
 
             <div className={cx('wrapper-des')}>
-                <div >
-                    <label className={cx('label-des')}>Địa chỉ</label>
-                    <input id="locationInput" className={cx('input-des')} />
+                <div className={cx('select-wrapper')}>
+                    <label className={cx('label-place')}>Khu vực</label>
+                    <Select className={cx('select')}
+                        placeholder='Chọn thành phố'
+                        options={cities.map(city => ({ label: city.name, value: city.name }))}
+                        onChange={handleChangeCity}
+                    />
                 </div>
-                <div >
-                    <label className={cx('label-des')}>Trợ cấp</label>
-                    <input id="salaryInput" className={cx('input-des')} />
+                <div className={cx('gender-wrapper')}>
+                    <label className={cx('label-des')} for="gender">Trợ cấp</label>
+                    <select id="salaryInput" name="gender" className={cx('gender-input')}>
+                        <option value="0-3Tr VND">0-2Tr VND</option>
+                        <option value="1Tr-3Tr VND">1Tr-3Tr VND</option>
+                        <option value="2Tr-4Tr VND">2Tr-4Tr VND</option>
+                        <option value="4Tr-6Tr VND">4Tr-6Tr VND</option>
+                        <option value="6Tr-10Tr VND">6Tr-10Tr VND</option>
+                        <option value="Thương lượng">Thương lượng</option>
+                        <option value="Cạnh tranh">Cạnh tranh</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <div className={cx('detail-location')}>
+                    <label className={cx('label-des')}>Địa chỉ chi tiết</label>
+                    <input id="locationInput" className={cx('input-location')} />
                 </div>
             </div>
             <div className={cx('wrapper-gen')}>
-                <div >
+                <div className={cx('gender-wrapper')}>
                     <label className={cx('label-des')} for="gender">Giới tính</label>
-                    <select id="genderInput" name="gender">
+                    <select id="genderInput" name="gender" className={cx('gender-input')}>
                         <option value="Nam">Nam</option>
                         <option value="Nữ">Nữ</option>
-                        <option value="Khác">Khác</option>
                         <option value="Không yêu cầu">Không yêu cầu</option>
                     </select>
                 </div>
 
-                <div >
+                <div className={cx('major-wrapper')}>
                     <label className={cx('label-des')}>Ngành nghề</label>
-                    <select id="majorInput" className={cx('input-des')} value={selectedMajor} onChange={e => setSelectedMajor(e.target.value)}>
+                    <select id="majorInput" className={cx('major-input')} value={selectedMajor} onChange={e => setSelectedMajor(e.target.value)}>
                         <option value="">Chọn ngành nghề</option>
                         {listmajor.map(major => (
                             <option key={major._id} value={major.namemajor}>{major.namemajor}</option>
@@ -178,7 +259,7 @@ function JobPostCreate() {
                 <textarea id="benefitInput" className={cx('input-res')} />
             </div>
             <div className={cx('wrapper-ip')}>
-                <label className={cx('label-des')} for="input-field">Trách nhiệm </label>
+                <label className={cx('label-des')} for="input-field">Mô tả công việc </label>
                 <textarea id="ResponInput" className={cx('input-res')} />
             </div>
             <div className={cx('wrapper-ip')}>

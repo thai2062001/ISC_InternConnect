@@ -3,6 +3,7 @@ import styles from "./statusCV.module.scss";
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch, FaHeart, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import jwt_decode from "jwt-decode";
 import moment from 'moment';
 import ReactPaginate from 'react-paginate';
@@ -12,7 +13,7 @@ const cx = classNames.bind(styles);
 function StatusCV() {
     const [jobApplication, setJobApplication] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
-    const applicationsPerPage = 5;
+    const applicationsPerPage = 4;
     const pagesVisited = pageNumber * applicationsPerPage;
 
     useEffect(() => {
@@ -48,24 +49,42 @@ function StatusCV() {
     const formatted_date = moment(date_string).format('DD/MM/YYYY');
 
 
-    const handleJobpost = (id)=>{
+    const handleJobpost = (id) => {
         window.location.href = `${id}`
     }
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
+                <h2>Quản lý trạng thái hồ sơ</h2>
                 <ul className={cx('jobapp')}>
                     {jobApplication.slice(pagesVisited, pagesVisited + applicationsPerPage).map((jobApp, index) => {
                         return (
-                            <div onClick={()=>handleJobpost(jobApp.id_post)} className={cx('jobapp_container')} key={index}>
+                            <div onClick={() => handleJobpost(jobApp.id_post)} className={cx('jobapp_container')} key={index}>
                                 <div className={cx('logo')}>
-                                    <img src={jobApp.logo}/>
+                                    <div className={cx('wrapper-logo')}>
+                                        <img src={jobApp.logo} />
+                                    </div>
                                 </div>
                                 <div className={cx('jobapp_detail')}>
-                                    <span className={cx('jobapp_span','title_span')}>{jobApp.title}</span>
-                                    <span className={cx('jobapp_span','company_span')}>{jobApp.namecompany}</span>
-                                    <span className={cx('jobapp_span','date_span')}>{formatted_date}</span>
-                                    <span className={cx('jobapp_span','status_span')}>{jobApp.status}</span>
+                                    <div className={cx('title-div')}>
+                                    <span className={cx('jobapp_span', 'title_span')}>{jobApp.title}</span>
+                                    </div>
+                    
+                                    <div className={cx('jobpost-icon')}>
+                                        <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
+                                        <span className={cx('jobapp_span', 'company_span')}> {jobApp.namecompany}</span>
+                                    </div>
+                                    <div className={cx('jobpost-icon')}>
+                                    <img src="https://img.icons8.com/ios/50/null/calendar-26.png" />
+                                        <span className={cx('jobapp_span', 'date_span')}>Ngày nộp: {formatted_date} </span>
+                                    </div>
+                                    <div className={cx('jobpost-icon')}>
+                                        <span className={cx('jobapp_span', )}>Trạng thái: </span>
+                                        <span className={cx('jobapp_span', 'status_span')}> {jobApp.status}</span>
+                                    </div>
+
+
+
                                 </div>
                             </div>
                         );
@@ -87,7 +106,7 @@ function StatusCV() {
                     />
                 </div>
 
-                
+
             </div>
         </div>
     );

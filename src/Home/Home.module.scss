@@ -1,6 +1,6 @@
 .container_full{
   width: 100%;
-  height: 300vh;
+  height: 100%;
   
 }
 
@@ -60,7 +60,8 @@
   .input-search {
     width: 300px;
     padding: 10px;
-    height: 40px;
+    height: 38px;
+    box-sizing: border-box;
     border-radius: 3px;
     font-size: 14px;
     outline: none;
@@ -117,13 +118,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80%;
+    width: 100%;
     border: none;
     height: 40px;
-  }
-  .select-wrapper_filter{
-    margin-left: 10px;
-    
+    color: #F2F2F2;
   }
 
   .select_filter {
@@ -132,14 +130,11 @@
     font-size: 13px;
     color: #333;
     cursor: pointer;
-    border-radius: 0px !important;
-
-    
   }
   
   .select_filter option {
     background-color: #fff;
-    color: #333;
+    color: #F2F2F2;
     font-size: 13px;
     cursor: pointer;
   }
@@ -170,6 +165,22 @@
     width: 22px;
     margin-right: 3px;
     height: 22px;
+  }
+
+  .clear-Filter{
+    width: 200px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+  .span-clear{
+    font-size: 15px;
+
+    color: #000000;
+    cursor: pointer;
+  }
+  .span-clear:hover{
+    color: #2662a2;
   }
 
 
@@ -226,14 +237,22 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    box-sizing: border-box;
     width: 70%;
     margin:20px 60px 60px 60px;
-    // border: 1px solid black;
 
+}
+.paginate-wrapper{
+  position: absolute;
+  bottom: 38px;
+  left: 38%;
+  transform: translateX(-50%);
+  /* rest of your styles */
 }
 .jobpost-preview p{
     color: red;
   font-size: 12px;
+  box-sizing: border-box;
   padding: 10px;
   margin: 10px;
 }
@@ -247,6 +266,7 @@
 .jobpost{
     width: 100%;
     height: 2000px;
+    position: relative;
     display: flex;
 }
 
@@ -375,6 +395,8 @@
 
 .wrapper_jobpost{
     width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 100px;
 }
 
@@ -395,7 +417,6 @@
     display: flex;
     flex-wrap: wrap;
     width: 1200px;
-
     justify-content: center;
     align-items: center;
     list-style: none;
@@ -407,12 +428,18 @@
   
   .pagination li {
     margin: 5px;
+
   }
   
   .pagination a {
     color: black;
+    display: flex;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
     padding: 5px 10px;
-    font-size: 18px;
+    font-size: 15px;
     text-decoration: none;
     border: 1px solid #ddd;
     transition: background-color .3s;
