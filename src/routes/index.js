@@ -37,6 +37,7 @@ import TermOfServices from '../TermofServices/termofservice';
 import Company from '../Home/Company/company';
 import DetailCompany from '../Home/DetailCompany/detailCompany';
 import Sidebar from '../Sidebar';
+import ReportAdmin from '../HomeAdmin/ReportAdmin/reportAdmin';
 //public routers
 
 
@@ -73,6 +74,7 @@ const publicRouters = [
     {path: '/homeadmin/companyAdmin',component:CompanyAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/jobpost',component:AllJobPost ,layout: SlidebarOnly},
     {path: '/homeadmin/skill',component:SkillAdmin ,layout: SlidebarOnly},
+    {path: '/homeadmin/report',component:ReportAdmin ,layout: SlidebarOnly},
     {path: '/schooladmin',component:SchoolManager ,layout: SlidebarSchool },
     {path: '/schooladmin/updateinfo',component:SchoolUpdate ,layout: SlidebarSchool },
     {path: '/companyadmin',component:CompanyManager ,layout: SlidebarCompany },

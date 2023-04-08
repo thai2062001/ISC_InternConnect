@@ -35,11 +35,32 @@
     margin-left: 20px;
   }
   
-  .input-img {
-    margin-top: 30px;
+
+  .wrapper-date-form{
     display: flex;
+    justify-content: space-between;
     align-items: center;
   }
+  .input-img {
+    width: 350px;
+    max-width: 350px;
+    align-items: center;
+  }
+  .datepicker{
+    width: 100%;
+    padding: 10px;
+    height: 40px;
+  }
+
+.working_form-wrapper{
+  width: 350px;
+}
+.working_form-wrapper select{
+  width: 100% !important;
+}
+
+
+  
   
   .label {
     font-size: 1.2rem;
@@ -49,6 +70,7 @@
   
   .input-title {
     font-size: 1.5rem;
+    outline: none;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -57,6 +79,12 @@
   }
   
   .label-des {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 10px;
+    display: block;
+  }
+  .label-place{
     font-size: 1.2rem;
     font-weight: bold;
     margin-right: 10px;
@@ -67,24 +95,30 @@
     font-size: 1.2rem;
     padding: 10px;
     border: 1px solid #ccc;
+    outline: none;
     border-radius: 5px;
-    width: 100%;
+    width: 350px;
     margin-top: 10px;
   }
   
   .wrapper-des {
-    margin-top: 30px;
+    margin-top: 15px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
   }
   
   .wrapper-gen {
     margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
   .input-res {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     padding: 10px;
+    outline: none;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
@@ -126,4 +160,77 @@
   
   .button-action:hover {
     background-color: #0066b2;
+  }
+
+
+  .select-wrapper{
+    width: 350px;
+    height: 60px;
+  }
+  select {
+    width: 350px;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  
+  select option {
+    background-color: #fff;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  select:hover {
+    border: 1px solid #333;
+  }
+  
+  select:focus {
+    outline: none;
+    border: 1px solid #333;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .filter_wrapper {
+      flex-wrap: wrap;
+    }
+  
+    select {
+      width: 100%;
+      margin: 10px 0;
+    }
+  }
+
+
+  .detail-location{
+    width: 100%;
+  }
+
+  .input-location{
+    width: 100%;
+    font-size: 1.5rem;
+    padding: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+
+  .wrapper-gen .gender-wrapper{
+    width: 350px;
+  }
+  .wrapper-gen .gender-wrapper .gender-input{
+    width: 100%;
+  }
+
+  .wrapper-gen .major-wrapper{
+    width: 350px;
+  }
+  
+  .wrapper-gen .major-wrapper .major-input{
+    width: 100%;
   }

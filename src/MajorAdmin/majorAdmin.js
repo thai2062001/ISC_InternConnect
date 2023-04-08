@@ -24,7 +24,7 @@ function MajorAdmin() {
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedIds, setSelectedIds] = useState([]);
   const columns = [
-      {title: "Major", field: "namemajor", validate: rowData => {
+      {title: "Nghề nghiệp", field: "namemajor", validate: rowData => {
         if (rowData.namemajor === undefined || rowData.namemajor === "") {
           return "Required"
         } else if (rowData.namemajor.length < 3) {

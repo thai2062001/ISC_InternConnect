@@ -27,7 +27,7 @@ function SchoolAdmin() {
 
     const columns = [
         {
-            title: "Name School", field: "nameschool", validate: rowData => {
+            title: "Trường", field: "nameschool", validate: rowData => {
                 if (rowData.nameschool === undefined || rowData.nameschool === "") {
                     return "Required"
                 } else if (rowData.nameschool.length < 3) {
@@ -37,11 +37,11 @@ function SchoolAdmin() {
             }
         },
         {
-            title: "Location", field: "location",defaultGroupOrder:1
+            title: "Địa điểm", field: "location",defaultGroupOrder:1
         },
-        { title: "Email School", field: "emailschool" },
-        { title: "Phone Number", field: 'phoneschool' },
-        { title: 'websiteschool', field: 'websiteschool' },
+        { title: "Email", field: "emailschool" },
+        { title: "Điện thoại", field: 'phoneschool' },
+        { title: 'Website', field: 'websiteschool' },
     ]
     useEffect(() => {
         const localstore = localStorage.getItem('user-save')
@@ -108,7 +108,8 @@ function SchoolAdmin() {
         fetch(`http://localhost:5000/admin/posts/school/${ids.join(',')}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
         })
             .then(response => {

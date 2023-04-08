@@ -10,17 +10,23 @@ import Popup from "reactjs-popup";
 import ApplyCV from "./ApplyCV/ApplyCV";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import ReportPopup from "./ReportPopup/reportPopup";
 
 const cx = classNames.bind(styles)
 function HomeJobPostDetail() {
 
     const [showPopup, setShowPopup] = useState(false)
+    const [showPopupReport, setShowPopupReport] = useState(false)
     const [jobPosts, setJobPost] = useState({})
     const [recommentPosts, setRecommentPosts] = useState([])
     const [student, setStudent] = useState({})
     const [company, setCompany] = useState({})
     const [hasUserData, setHasUserData] = useState(!!localStorage.getItem('user'));
+    const [data, setData] = useState({});
+
+
+
+
 
     const navigate = useNavigate();
     const { id } = useParams();
@@ -31,6 +37,21 @@ function HomeJobPostDetail() {
     const decodeEmail = jobpost_token ? jwt_decode(jobpost_token) : null;
     const emailUser = decodeEmail ? decodeEmail.email : null;
     const Username = decodeEmail ? decodeEmail.username : null;
+
+
+
+    useEffect(() => {
+        const API_KEY = 'AIzaSyDaOulQACiJzBfqumbsqg_-vKha8fCnL-s'
+        if (jobPosts) {
+            const address = jobPosts.location
+            fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`)
+                .then(response => response.json())
+                .then(data => setData(data))
+                .catch(error => console.error(error));
+        }
+    }, []);
+
+
 
 
     useEffect(() => {
@@ -58,6 +79,27 @@ function HomeJobPostDetail() {
         setHasUserData(!!localStorage.getItem('user'));
     }, []);
 
+    useEffect(() => {
+        const companyApi = 'http://localhost:5000/listcompany'
+        const fetchData = async () => {
+            const result = await fetch(companyApi, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jobpost_token}`
+                },
+            })
+            result.json().then(json => {
+                const company = json.find(item => item.namecompany === CompanyName);
+                if (company) {
+                    setCompany(company);
+                } else {
+                    console.error('Không tồn tại công ty có tên này');
+                }
+            })
+        }
+        fetchData();
+    }, []);
 
     useEffect(() => {
         const jobpostApi = 'http://localhost:5000/'
@@ -106,33 +148,11 @@ function HomeJobPostDetail() {
         fetchData();
     }, [CompanyName]);
 
-    useEffect(() => {
-
-        const companyApi = 'http://localhost:5000/listcompany'
-        const fetchData = async () => {
-            const result = await fetch(companyApi, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${jobpost_token}`
-                },
-            })
-            result.json().then(json => {
-                const company = json.find(item => item.namecompany === CompanyName);
-                if (company) {
-                    setCompany(company);
-                } else {
-                    console.error('Không tồn tại công ty có tên này');
-                }
-            })
-        }
-        fetchData();
-    }, []);
 
 
     const handleApply = () => {
         if (!hasUserData) {
-            toast.info('Please login before applying', {
+            toast.info('Cần đăng nhập trước khi nộp CV', {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -146,216 +166,381 @@ function HomeJobPostDetail() {
             setShowPopup(true);
         }
     };
-
-    const handleFavorite = () => {
-        const access_token = localStorage.getItem('user');
-        const decodeEmail = jwt_decode(access_token);
-        const urlDelete = `http://localhost:5000/details/delete-fa/${favorite}`;
-
-        const isIdInFavorite = (id) => {
-            if (student.favorite.includes(id)) {
-                return true;
-            }
-            return false;
-        }
-
-        if (isIdInFavorite(favorite)) {
-            // Remove the ID from the favorite array if it exists
-            const index = student.favorite.indexOf(favorite);
-            if (index > -1) {
-                student.favorite.splice(index, 1);
-            }
-            // Update the server
-            fetch(urlDelete, {
-                method: "PUT",
-                headers: {
-                    "Authorization": "Bearer " + access_token,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ favorite: student.favorite })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    toast.success('Removed from favorites!', {
-                        position: "top-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+    const handleReport = () => {
+        if (!hasUserData) {
+            toast.info('Cần đăng nhập trước khi báo xấu', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         } else {
-            const urlAdd = `http://localhost:5000/details/${favorite}`;
-            // Add the ID to the favorite array
-            student.favorite.push(favorite);
-            // Update the server
-            fetch(urlAdd, {
-                method: "PUT",
-                headers: {
-                    "Authorization": "Bearer " + access_token,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ favorite: student.favorite })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    toast.success('Added to favorites!', {
-                        position: "top-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+            const companyApi = 'http://localhost:5000/listcompany'
+            const fetchData = async () => {
+                const result = await fetch(companyApi, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${jobpost_token}`
+                    },
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                result.json().then(json => {
+                    const company = json.find(item => item.namecompany === CompanyName);
+                    if (company) {
+                        setCompany(company);
+                        setShowPopupReport(true);
+                    } else {
+                        console.error('Không tồn tại công ty có tên này');
+                    }
+                })
+            }
+            fetchData();
+
         }
     }
+
+    const handleFavorite = () => {
+        if (!hasUserData) {
+            toast.info('Cần đăng nhập trước khi yêu thích', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+        else {
+            const access_token = localStorage.getItem('user');
+            const decodeEmail = jwt_decode(access_token);
+            const urlDelete = `http://localhost:5000/details/delete-fa/${favorite}`;
+
+            const isIdInFavorite = (id) => {
+                if (student.favorite.includes(id)) {
+                    return true;
+                }
+                return false;
+            }
+
+            if (isIdInFavorite(favorite)) {
+                // Remove the ID from the favorite array if it exists
+                const index = student.favorite.indexOf(favorite);
+                if (index > -1) {
+                    student.favorite.splice(index, 1);
+                }
+                // Update the server
+                fetch(urlDelete, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": "Bearer " + access_token,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ favorite: student.favorite })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        toast.success('Xóa khỏi yêu thích!', {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                const urlAdd = `http://localhost:5000/details/${favorite}`;
+                // Add the ID to the favorite array
+                student.favorite.push(favorite);
+                // Update the server
+                fetch(urlAdd, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": "Bearer " + access_token,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ favorite: student.favorite })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        toast.success('Thêm vào yêu thích!', {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        }
+    }
+
     const handleRecommentPost = (id) => {
         const path = `/${id}`
         navigate(path)
         window.location.href = path
     }
 
-    const date_string = jobPosts.expdate;
-    const date = moment(date_string);
-    const formatted_date = date.format('DD/MM/YYYY');
+
+    const handleContent = () => {
+        var div1 = document.getElementById("content-jobpost");
+        var div2 = document.getElementById("companyabout");
+
+        if (div1.style.display === "none") {
+            div1.style.display = "block";
+            div2.style.display = "none";
+        } else {
+            div1.style.display = "none";
+            div2.style.display = "block";
+        }
+    };
+
+
+
+
+    function formatDate(dateString) {
+        const date = moment(dateString);
+        const formattedDate = date.format('DD/MM/YYYY');
+        return formattedDate;
+    }
+
+
     return (
         <div className={cx('Jobpost-wapper')}>
+            <div className={cx('banner')}>
+                <img src="https://res.cloudinary.com/dg4ifdrn5/image/upload/v1680854951/bannerfix_u56bdz.jpg" />
+            </div>
             <div className={cx('jobpost-detail')}>
-                <div className={cx('banner')}>
-                    <img src="https://dxwd4tssreb4w.cloudfront.net/web/images/default_banner_2.svg" />
-                </div>
                 <div className={cx('jobpost-decription')}>
                     <div className={cx('jobpost-logo')}>
                         <img src={jobPosts.logo} />
                         <div className={cx('company-title')}>
-                            <div><h1>{jobPosts.title}</h1></div>
-                            <div><span className={cx('namecompany_span')}>{jobPosts.namecompany}</span></div>
+                            <div className={cx('info-title')}>
+                                <div><h1>{jobPosts.title}</h1></div>
+                                <div><span className={cx('namecompany_span')}>{jobPosts.namecompany}</span></div>
+                            </div>
+                            <div className={cx('apply_button')}>
+                                <button className={cx('action_button')} onClick={handleApply}>Nộp đơn ngay</button>
+                                {jobPosts && student && localStorage.getItem('user') && (
+                                    <Popup open={showPopup} onClose={() => setShowPopup(false)}>
+                                        <ApplyCV
+                                            expdate={jobPosts.expdate}
+                                            id_post={jobPosts._id}
+                                            username={Username}
+                                            major={student.major}
+                                            logo={jobPosts.logo}
+                                            title={jobPosts.title}
+                                            email={decodeEmail.email}
+                                            company={jobPosts.namecompany}
+                                            school={student.school}
+                                            onClose={() => setShowPopup(false)}
+                                        />
+                                    </Popup>
+                                )}
+                                {jobPosts && company && student && localStorage.getItem('user') && (
+                                    <Popup open={showPopupReport} onClose={() => setShowPopupReport(false)}>
+                                        <ReportPopup
+                                            title={jobPosts.title}
+                                            email={decodeEmail.email}
+                                            companyEmail={company &&company.emailcompany}
+                                            onClose={() => setShowPopupReport(false)}
+                                        />
+                                    </Popup>
+                                )}
+                                <div className={cx('icon_wrapper-like-report')}>
+                                    <span onClick={handleFavorite}  title="Yêu thích">
+                                        <img className={cx('like_icon')} src="https://img.icons8.com/material-outlined/24/null/hearts.png" />
+                                    </span>
+                                    <span onClick={handleReport} title="Báo xấu">
+                                        <img className={cx('flag_icon')} src="https://img.icons8.com/dotty/80/null/flag.png" />
+                                    </span>
+                                </div>
+
+                            </div>
 
                         </div>
                     </div>
 
-                    <div className={cx('jobpost-location-salary-exdate')}>
-                        <div className={cx('jobpost-location')}>
-                            <FaLocationArrow className={cx('icon-d1', 'location_icon')} />
-                            {jobPosts.location}
+                    <div className={cx('div-nav-des')}>
+                        <span id="detail" onClick={handleContent}>Chi tiết</span>
+                        <span id="about" onClick={handleContent}>Về công ty</span>
+                    </div>
+
+                    <div id="content-jobpost" className={cx('jobpost-location-salary-exdate')}>
+                        <div className={cx('info-wrapper')}>
+                            <div className={cx('maps')}>
+                                <label className={cx('title-info')}> Địa điểm</label>
+                                <span className={cx('info')}>{jobPosts.place}</span>
+                            </div>
+                            <div className={cx('info-content')}>
+                                <div className={cx('content-wrapper')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <img src="https://img.icons8.com/external-photo3ideastudio-lineal-photo3ideastudio/64/null/external-calendars-winter-photo3ideastudio-lineal-photo3ideastudio.png" />
+                                    </div>
+
+                                    <div className={cx('container')}>
+                                        <label className={cx('title-label')}>Ngày cập nhật</label>
+                                        <span className={cx('info')}>{formatDate(jobPosts.DateSubmitted)}</span>
+                                    </div>
+                                </div>
+                                <div className={cx('content-wrapper')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <img src="https://img.icons8.com/ios-glyphs/30/null/lawyer.png" />
+                                    </div>
+                                    <div className={cx('container')}>
+                                        <label className={cx('title-label')}>Ngành nghề</label>
+                                        <span className={cx('info')}>{jobPosts.major}</span>
+                                    </div>
+
+                                </div>
+                                <div className={cx('content-wrapper')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <img src="https://img.icons8.com/fluency-systems-filled/48/null/business.png" />
+                                    </div>
+                                    <div className={cx('container')}>
+                                        <label className={cx('title-label')}>Hình thức</label>
+                                        <span className={cx('info')}>{jobPosts.workingform}</span>
+                                    </div>
+
+                                </div>
+                                <div className={cx('content-wrapper')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <img src="https://img.icons8.com/material-rounded/24/null/us-dollar.png" />
+                                    </div>
+                                    <div className={cx('container')}>
+                                        <label className={cx('title-label')}>Trợ cấp</label>
+                                        <span className={cx('info')}>{jobPosts.salary}</span>
+                                    </div>
+
+                                </div>
+                                <div className={cx('content-wrapper')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <img src="https://img.icons8.com/material-outlined/24/null/wall-clock.png" />
+                                    </div>
+                                    <div className={cx('container')}>
+                                        <label className={cx('title-label')}>Cấp bậc</label>
+                                        <span className={cx('info')}>Sinh viên/ Thực tập sinh</span>
+                                    </div>
+
+                                </div>
+                                <div className={cx('content-wrapper')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <img src="https://img.icons8.com/external-solid-design-circle/64/null/external-Todo-List-shopping-ande-commerce-solid-design-circle.png" />
+                                    </div>
+                                    <div className={cx('container')}>
+                                        <label className={cx('title-label')}>Hết hạn nộp</label>
+                                        <span className={cx('info')}>{formatDate(jobPosts.expdate)}</span>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
                         </div>
 
-                        <div className={cx('jobpost-salary')}>
-                            <FaMoneyBillAlt className={cx('icon-d1')} />
-                            {jobPosts.salary}
-                        </div>
-                        <div className={cx('jobpost-exdate')}>
-                            <FaCalendarDay className={cx('icon-d1')} />
-                            {formatted_date}
-                        </div>
-                        {jobPosts && student && localStorage.getItem('user') && (
-                            <Popup open={showPopup} onClose={() => setShowPopup(false)}>
-                                <ApplyCV
-                                    expdate={jobPosts.expdate}
-                                    id_post={jobPosts._id}
-                                    username={Username}
-                                    major={student.major}
-                                    logo={jobPosts.logo}
-                                    title={jobPosts.title}
-                                    email={decodeEmail.email}
-                                    company={jobPosts.namecompany}
-                                    school={student.school}
-                                    onClose={() => setShowPopup(false)}
-                                />
-                            </Popup>
-                        )}
 
-                        <div className={cx('apply_button')}>
-                            <button className={cx('action_button')} onClick={handleApply}>Nộp đơn ngay</button>
-                            <ToastContainer />
-                            <button onClick={handleFavorite} className={cx('like_button')}><FaHeart style={{ marginTop: '7px' }} /></button>
-                        </div>
 
-                        <div className={cx('div-nav-des')}>
-                            <span>Yêu cầu</span>
-                            <span>Trách nhiệm </span>
-                            <span>Kỹ năng</span>
-                            <span>Về công ty</span>
-                        </div>
                         <div className={cx('content')}>
-
+                            <div className={cx('benefit')}>
+                                {jobPosts.benefit &&
+                                    (
+                                        <div>
+                                            <span className={cx('span-title')}>Phúc lợi</span>
+                                            <p>{jobPosts.benefit}</p>
+                                        </div>
+                                    )}
+                            </div>
+                            <div className={cx('responsibility')}>
+                                <span className={cx('span-title')}>Mô tả công việc</span>
+                                <p>{jobPosts.responsibility}</p>
+                            </div>
                             <div className={cx('required')}>
                                 <span className={cx('span-title')}>Yêu cầu</span>
                                 <p>{jobPosts.required}</p>
                             </div>
 
-                            <div className={cx('responsibility')}>
-                                <span className={cx('span-title')}>Trách nhiệm</span>
-                                <p>{jobPosts.responsibility}</p>
-                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="companyabout" className={cx('company_about')}>
+                        {company && (
                             <div className={cx('benefit')}>
-                                <span className={cx('span-title')}>Phúc lợi</span>
-                                <p>{jobPosts.benefit}</p>
-                            </div>
-                            {company && (
-                                <div className={cx('benefit')}>
+                                <div className={cx('introduce_company')}>
                                     <span className={cx('span-title')}>Giới thiệu công ty</span>
                                     <p>{company.introduce}</p>
                                 </div>
-                            )}
+                                <div>
 
-
-                        </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <div>
 
                     </div>
                 </div>
 
-            </div>
-            <div className={cx('jobpost-recomment')}>
-                <h2 style={{ fontSize: '30px', marginLeft: '10px', fontWeight: '500' }}>Gợi ý việc làm</h2>
-                <ul>
-                    {recommentPosts.slice(0, 8).map((recommentPost) => {
-                        return (
-                            <div key={recommentPost._id} onClick={() => handleRecommentPost(recommentPost._id)} className={cx('recommentPost')}>
-                                <div className={cx('jobpost')}>
-                                    <div className={cx('logo_recomment')}>
-                                        <img src={recommentPost.logo} />
-                                    </div>
-                                    <div className={cx('detail_post')}>
-                                        <h2 className={cx('jobpost-title')}>{recommentPost.title}</h2>
-                                        <div className={cx('jobpost-meta')}>
-                                            <div className={cx('info_content')}>
-                                                <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
-                                                <span className={cx('jobpost_company')}>{recommentPost.namecompany}</span>
+                <div className={cx('jobpost-recomment')}>
+                    <ToastContainer />
+                    <h2 style={{ color: '#00133f', fontSize: '25px', marginLeft: '10px', marginTop: '45px', fontWeight: '500' }}>Các công việc tương tự</h2>
+                    <ul>
+                        {recommentPosts.slice(0, 8).map((recommentPost) => {
+                            return (
+                                <div key={recommentPost._id} onClick={() => handleRecommentPost(recommentPost._id)} className={cx('recommentPost')}>
+                                    <div className={cx('jobpost')}>
+                                        <div className={cx('logo_recomment')}>
+                                            <div className={cx('wrapper-logo-recomment')}>
+                                                <img src={recommentPost.logo} />
                                             </div>
-                                            <div className={cx('info_content')}>
-                                                <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/officel/30/null/place-marker--v1.png" />
-                                                <span className={cx('jobpost_location')}>{recommentPost.location}</span>
-                                            </div>
-                                            <div className={cx('info_content')}>
-                                                <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
-                                                <span className={cx('jobpost_salary')}>{recommentPost.salary}</span>
-                                            </div>
-
-
                                         </div>
-                                    </div>
+                                        <div className={cx('detail_post')}>
+                                            <h2 className={cx('jobpost-title')}>{recommentPost.title}</h2>
+                                            <div className={cx('jobpost-meta')}>
+                                                <div className={cx('info_content')}>
+                                                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
+                                                    <span className={cx('jobpost_company')}>{recommentPost.namecompany}</span>
+                                                </div>
+                                                <div className={cx('info_content')}>
+                                                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/officel/30/null/place-marker--v1.png" />
+                                                    <span className={cx('jobpost_location')}>{recommentPost.location}</span>
+                                                </div>
+                                                <div className={cx('info_content')}>
+                                                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
+                                                    <span className={cx('jobpost_salary')}>{recommentPost.salary}</span>
+                                                </div>
 
+
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    })}
-                </ul>
+                            )
+                        })}
+                    </ul>
+                </div>
             </div>
+
 
         </div>
     );

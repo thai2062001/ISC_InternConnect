@@ -20,47 +20,54 @@ function Slidebar() {
       <li>
         <a href="/homeadmin">
           <i className={cx('bx bx-user')}></i>
-          <span className={cx('links_name')}>Account</span>
+          <span className={cx('links_name')}>Quản lý tài khoản</span>
         </a>
-         <span className={cx('tooltip')}>Account</span>
+         <span className={cx('tooltip')}>Quản lý tài khoản</span>
       </li>
       <li>
        <a href="/homeadmin/schoolAdmin">
         
          <i className={cx('bx bxs-school')} ></i>
-         <span className={cx('links_name')}>School</span>
+         <span className={cx('links_name')}>Quản lý trường</span>
        </a>
-       <span className={cx('tooltip')}>School</span>
+       <span className={cx('tooltip')}>Quản lý trường</span>
      </li>
      <li>
        <a href="/homeadmin/majorAdmin">
          <i className={cx('bx bx-math')} ></i>
-         <span className={cx('links_name')}>Major</span>
+         <span className={cx('links_name')}>Quản lý nghề nghiệp</span>
        </a>
-       <span className={cx('tooltip')}>Major</span>
+       <span className={cx('tooltip')}>Quản lý nghề nghiệp</span>
      </li>
 
      <li>
        <a href="/homeadmin/companyAdmin">
          <i className='bx bx-building-house' ></i>
-         <span className={cx('links_name')}>Company</span>
+         <span className={cx('links_name')}>Quản lý công ty</span>
        </a>
-       <span className={cx('tooltip')}>Company</span>
+       <span className={cx('tooltip')}>Quản lý công ty</span>
      </li>
     
      <li>
        <a href="/homeadmin/jobpost">
          <i className='bx bx-list-ul' ></i>
-         <span className={cx('links_name')}>Job Post</span>
+         <span className={cx('links_name')}>Quản lý bài đăng</span>
        </a>
-       <span className={cx('tooltip')}>Job Post</span>
+       <span className={cx('tooltip')}>Quản lý bài đăng</span>
      </li>
      <li>
        <a href="/homeadmin/skill">
          <i className='bx bx-list-ul' ></i>
-         <span className={cx('links_name')}>Skill</span>
+         <span className={cx('links_name')}>Quản lý kỹ năng</span>
        </a>
-       <span className={cx('tooltip')}>Skill</span>
+       <span className={cx('tooltip')}>Quản lý kỹ năng</span>
+     </li>
+     <li>
+       <a href="/homeadmin/report">
+       <i className='bx bx-list-ul' ></i>
+         <span className={cx('links_name')}>Quản lý báo cáo </span>
+       </a>
+       <span className={cx('tooltip')}>Quản lý báo cáo</span>
      </li>
 
      <li className={cx('profile')}>
