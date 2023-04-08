@@ -122,11 +122,6 @@ function HomeAdmin() {
         console.error(error);
       });
   };
-  // Ham logout ve trang homelogin
-  function handleLogOutUser() {
-    localStorage.removeItem('user-save');
-    window.location.href = '/login'
-  }
 
   // dung de luu lai xem tai khoan nao da login
 

@@ -10,12 +10,13 @@ import Popup from "reactjs-popup";
 import ApplyCV from "./ApplyCV/ApplyCV";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import ReportPopup from "./ReportPopup/reportPopup";
 
 const cx = classNames.bind(styles)
 function HomeJobPostDetail() {
 
     const [showPopup, setShowPopup] = useState(false)
+    const [showPopupReport, setShowPopupReport] = useState(false)
     const [jobPosts, setJobPost] = useState({})
     const [recommentPosts, setRecommentPosts] = useState([])
     const [student, setStudent] = useState({})
@@ -78,6 +79,27 @@ function HomeJobPostDetail() {
         setHasUserData(!!localStorage.getItem('user'));
     }, []);
 
+    useEffect(() => {
+        const companyApi = 'http://localhost:5000/listcompany'
+        const fetchData = async () => {
+            const result = await fetch(companyApi, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jobpost_token}`
+                },
+            })
+            result.json().then(json => {
+                const company = json.find(item => item.namecompany === CompanyName);
+                if (company) {
+                    setCompany(company);
+                } else {
+                    console.error('Không tồn tại công ty có tên này');
+                }
+            })
+        }
+        fetchData();
+    }, []);
 
     useEffect(() => {
         const jobpostApi = 'http://localhost:5000/'
@@ -126,28 +148,6 @@ function HomeJobPostDetail() {
         fetchData();
     }, [CompanyName]);
 
-    useEffect(() => {
-
-        const companyApi = 'http://localhost:5000/listcompany'
-        const fetchData = async () => {
-            const result = await fetch(companyApi, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${jobpost_token}`
-                },
-            })
-            result.json().then(json => {
-                const company = json.find(item => item.namecompany === CompanyName);
-                if (company) {
-                    setCompany(company);
-                } else {
-                    console.error('Không tồn tại công ty có tên này');
-                }
-            })
-        }
-        fetchData();
-    }, []);
 
 
     const handleApply = () => {
@@ -166,6 +166,42 @@ function HomeJobPostDetail() {
             setShowPopup(true);
         }
     };
+    const handleReport = () => {
+        if (!hasUserData) {
+            toast.info('Cần đăng nhập trước khi báo xấu', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        } else {
+            const companyApi = 'http://localhost:5000/listcompany'
+            const fetchData = async () => {
+                const result = await fetch(companyApi, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${jobpost_token}`
+                    },
+                })
+                result.json().then(json => {
+                    const company = json.find(item => item.namecompany === CompanyName);
+                    if (company) {
+                        setCompany(company);
+                        setShowPopupReport(true);
+                    } else {
+                        console.error('Không tồn tại công ty có tên này');
+                    }
+                })
+            }
+            fetchData();
+
+        }
+    }
 
     const handleFavorite = () => {
         if (!hasUserData) {
@@ -209,7 +245,7 @@ function HomeJobPostDetail() {
                 })
                     .then(response => response.json())
                     .then(data => {
-                        toast.success('Removed from favorites!', {
+                        toast.success('Xóa khỏi yêu thích!', {
                             position: "top-center",
                             autoClose: 5000,
                             hideProgressBar: false,
@@ -238,7 +274,7 @@ function HomeJobPostDetail() {
                 })
                     .then(response => response.json())
                     .then(data => {
-                        toast.success('Added to favorites!', {
+                        toast.success('Thêm vào yêu thích!', {
                             position: "top-center",
                             autoClose: 5000,
                             hideProgressBar: false,
@@ -254,13 +290,15 @@ function HomeJobPostDetail() {
                     });
             }
         }
-
     }
+
     const handleRecommentPost = (id) => {
         const path = `/${id}`
         navigate(path)
         window.location.href = path
     }
+
+
     const handleContent = () => {
         var div1 = document.getElementById("content-jobpost");
         var div2 = document.getElementById("companyabout");
@@ -316,7 +354,25 @@ function HomeJobPostDetail() {
                                         />
                                     </Popup>
                                 )}
-                                <button onClick={handleFavorite} className={cx('like_button')}><FaHeart style={{ marginTop: '7px' }} /></button>
+                                {jobPosts && company && student && localStorage.getItem('user') && (
+                                    <Popup open={showPopupReport} onClose={() => setShowPopupReport(false)}>
+                                        <ReportPopup
+                                            title={jobPosts.title}
+                                            email={decodeEmail.email}
+                                            companyEmail={company &&company.emailcompany}
+                                            onClose={() => setShowPopupReport(false)}
+                                        />
+                                    </Popup>
+                                )}
+                                <div className={cx('icon_wrapper-like-report')}>
+                                    <span onClick={handleFavorite}  title="Yêu thích">
+                                        <img className={cx('like_icon')} src="https://img.icons8.com/material-outlined/24/null/hearts.png" />
+                                    </span>
+                                    <span onClick={handleReport} title="Báo xấu">
+                                        <img className={cx('flag_icon')} src="https://img.icons8.com/dotty/80/null/flag.png" />
+                                    </span>
+                                </div>
+
                             </div>
 
                         </div>
@@ -446,7 +502,7 @@ function HomeJobPostDetail() {
 
                 <div className={cx('jobpost-recomment')}>
                     <ToastContainer />
-                    <h2 style={{color:'#00133f', fontSize: '25px', marginLeft: '10px', marginTop: '45px', fontWeight: '500' }}>Các công việc tương tự</h2>
+                    <h2 style={{ color: '#00133f', fontSize: '25px', marginLeft: '10px', marginTop: '45px', fontWeight: '500' }}>Các công việc tương tự</h2>
                     <ul>
                         {recommentPosts.slice(0, 8).map((recommentPost) => {
                             return (
@@ -454,7 +510,7 @@ function HomeJobPostDetail() {
                                     <div className={cx('jobpost')}>
                                         <div className={cx('logo_recomment')}>
                                             <div className={cx('wrapper-logo-recomment')}>
-                                            <img src={recommentPost.logo} />
+                                                <img src={recommentPost.logo} />
                                             </div>
                                         </div>
                                         <div className={cx('detail_post')}>
