@@ -22,6 +22,9 @@ function AllJobPost() {
   const [filteredAccounts, setFilteredAccounts] = useState([]);
   const [company, setCompany] = useState('all')
   const [location, setLocation] = useState('all')
+  const [selectedIds, setSelectedIds] = useState([]);
+
+  
   const [defaultFilters, setDefaultFilters] = useState({
     company: 'all',
     location: 'all'
@@ -108,6 +111,34 @@ function AllJobPost() {
     })
     doc.save('AllJobPost.pdf')
   }
+
+  function handleDeleteSelected(ids) {
+    //http://localhost:5000/admin/posts/account/642559a2443d4e532fde640b,642643ad9a87b5af871a61ac
+    fetch(`http://localhost:5000/admin/posts/account/${ids.join(',')}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    })
+      .then(response => {
+        if (response.ok) {
+          setTimeout(() => {
+          toast.success("Xóa bài đăng thành công!")
+          window.location.reload()
+        }, 1000);
+
+        } else {
+          toast.error("Xóa bài đăng không thành công!")
+        }
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+ // đặt thời gian chờ là 2 giây
+}
+
+
   return (
     <div className="App">
       <div className={cx('wrapper')}>
@@ -131,6 +162,10 @@ function AllJobPost() {
               <Divider />
               <TablePagination {...props} />
             </>
+          }}
+          onSelectionChange={(rows) => {
+            // Update selectedIds state when user selects or deselects a row
+            setSelectedIds(rows.map((row) => row._id));
           }}
           actions={[
             {
@@ -191,6 +226,11 @@ function AllJobPost() {
               onClick: () => downloadPdf(),
               isFreeAction: true
             },
+            {
+              tooltip: 'Remove All Selected Users',
+              icon: 'delete',
+              onClick: ()=> handleDeleteSelected(selectedIds)
+            }
       
           ]}
           onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}

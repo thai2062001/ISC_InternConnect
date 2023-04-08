@@ -18,7 +18,7 @@ function ReportPopup(props) {
         setTitle(props.title)
     }, []);
     useEffect(() => {
-        const localstore = localStorage.getItem('user-save')
+        const localstore = localStorage.getItem('user')
         const decodeUser = jwt_decode(localstore);
         console.log(decodeUser.email);
     }, [])
@@ -36,31 +36,46 @@ function ReportPopup(props) {
     }
     async function handleSubmit(event) {
         event.preventDefault();
+        const token_student = localStorage.getItem('user')
         const apiReport = 'http://localhost:5000/report';
         try {
             const response = await fetch(apiReport, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                'Authorization': `Bearer ${token_student}`,
+
                 body: JSON.stringify({ email, emailcom, title, content })
             });
-    
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-    
+
             const result = await response.json();
+            toast.success('Báo cáo thành công!');
             return result;
+
         } catch (error) {
             console.error('Error:', error);
             throw new Error('There was a problem submitting the report');
         }
+
     }
-    
+    const handleOnClose = () => {
+        if (props.onClose) {
+            props.onClose();
+        }
+    };
+
 
     return (
         <div className={cx('wrapper-popup-report')}>
             <h2>Report bài đăng</h2>
-            <form onSubmit={(event) => handleSubmit( event)}>
+            <span className={cx("close")} onClick={handleOnClose}>
+                &times;
+            </span>
+            <ToastContainer />
+            <form onSubmit={(event) => handleSubmit(event)}>
                 <div className={cx('form-group')}>
                     <label className={cx('label-content')} htmlFor="email">Email của bạn</label>
                     <input type="email" id="email" name="email" className={cx('form-control')} value={email} onChange={handleEmailChange} required />

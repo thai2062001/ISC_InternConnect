@@ -28,7 +28,7 @@ function HomeAdmin() {
 
   const columns = [
     {
-      title: "Name", field: "username",
+      title: "Tài khoản", field: "username",
     },
     {
       title: "Email", field: "email", validate: rowData => {
@@ -41,17 +41,17 @@ function HomeAdmin() {
       }
     },
     {
-      title: "Password", field: "password"
+      title: "Mật khẩu", field: "password"
     },
     {
-      title: "Phone", field: "phonenumber"
+      title: "Số điện thoại", field: "phonenumber"
     },
 
     {
-      title: "Role",
+      title: "Quyền",
       field: "role",
       lookup: { Admin: "Admin", Company: "Company", School: "School", Student: "Student" },
-      defaultGroupOrder:1
+      defaultGroupOrder:0
     },
 
   ]
@@ -160,17 +160,18 @@ function HomeAdmin() {
     fetch(`http://localhost:5000/admin/posts/account/${ids.join(',')}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
     })
       .then(response => {
         if (response.ok) {
           setTimeout(() => {
-          toast.success("Xóa Account thành công!")
+          toast.success("Xóa tài khoản thành công!")
           window.location.reload()
         }, 1000);
         } else {
-          toast.error("Xóa Account không thành công!")
+          toast.error("Xóa tài khoản không thành công!")
         }
       })
       .catch(error => {
