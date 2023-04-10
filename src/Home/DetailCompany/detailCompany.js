@@ -13,16 +13,23 @@ import 'react-toastify/dist/ReactToastify.css';
 const cx = classNames.bind(styles)
 function DetailCompany() {
 
-    const [company, setCompany] = useState({})
     const [jobPosts, setJobPost] = useState({})
     const [recommentPosts, setRecommentPosts] = useState([])
+    const [student, setStudent] = useState({})
+    const [company, setCompany] = useState({})
+    const [hasUserData, setHasUserData] = useState(!!localStorage.getItem('user'));
+    const [data, setData] = useState({});
 
-    const { id } = useParams();
+
     const navigate = useNavigate();
+    const { id } = useParams();
     const url = new URL(window.location.href);
     const idDetail = url.pathname.split('/').pop();
+    const favorite = url.pathname.split('/').pop();
     const jobpost_token = localStorage.getItem('user');
-
+    const decodeEmail = jobpost_token ? jwt_decode(jobpost_token) : null;
+    const emailUser = decodeEmail ? decodeEmail.email : null;
+    const Username = decodeEmail ? decodeEmail.username : null;
 
     useEffect(() => {
 
@@ -41,8 +48,55 @@ function DetailCompany() {
         }
         fetchData();
     }, []);
-    const CompanyName = company.namecompany
+    useEffect(() => {
 
+        if (!emailUser) {
+            return; // Không có người dùng đăng nhập
+        }
+        const studentApi = `http://localhost:5000/profile?email=${emailUser}`;
+        const fetchData = async () => {
+            const result = await fetch(studentApi, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jobpost_token}`
+                },
+            });
+            result.json().then(json => {
+                setStudent(json.profile);
+            });
+        };
+        fetchData();
+    }, [emailUser]);
+
+    useEffect(() => {
+        setHasUserData(!!localStorage.getItem('user'));
+    }, []);
+
+    useEffect(() => {
+        const jobpostApi = 'http://localhost:5000/'
+        const fetchData = async () => {
+            const result = await fetch(jobpostApi, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jobpost_token}`
+                },
+            })
+            result.json().then(json => {
+                const jobpost = json.find(item => item._id === idDetail);
+                if (jobpost) {
+                    setJobPost(jobpost);
+                } else {
+                    console.error('Không tồn tại bài đăng có id này');
+                }
+            })
+        }
+        fetchData();
+    }, []);
+
+
+    const CompanyName = company.namecompany
     //recomment jobpost
     useEffect(() => {
         const jobpostApi = 'http://localhost:5000/'
@@ -55,7 +109,6 @@ function DetailCompany() {
                 },
             })
             result.json().then(json => {
-                console.log(json);
                 const jobPostsOfCompany = json.filter(item => item.namecompany === CompanyName)
                 if (jobPostsOfCompany.length > 0) {
                     setRecommentPosts(jobPostsOfCompany);
@@ -67,8 +120,7 @@ function DetailCompany() {
         fetchData();
     }, [CompanyName]);
     
-console.log('recomment',recommentPosts);
-
+   
     const handleRecommentPost = (id) => {
         const path = `/${id}`
         navigate(path)
@@ -77,87 +129,124 @@ console.log('recomment',recommentPosts);
 
     return (
         <div className={cx('Jobpost-wapper')}>
+            <div className={cx('banner')}>
+                <img src="https://res.cloudinary.com/dg4ifdrn5/image/upload/v1681028747/bannerCompany_dmo0hw.jpg" />
+            </div>
             <div className={cx('jobpost-detail')}>
-                <div className={cx('banner')}>
-                    <img src="https://dxwd4tssreb4w.cloudfront.net/web/images/default_banner_2.svg" />
-                </div>
                 <div className={cx('jobpost-decription')}>
                     <div className={cx('jobpost-logo')}>
                         <img src={company.logo} />
                         <div className={cx('company-title')}>
-                            <div><h1>{company.namecompany}</h1></div>
-                            <div><span className={cx('namecompany_span')}>{company.phonecompany}</span></div>
+                            <div className={cx('info-title')}>
+                                <div><h1>{company.namecompany}</h1></div>
+                                <div><span className={cx('namecompany_span')}>{company.slogan}</span></div>
+                            </div>
                         </div>
                     </div>
-                    <div className={cx('jobpost-location-salary-exdate')}>
-                        <div className={cx('jobpost-location')}>
-                            <FaLocationArrow className={cx('icon-d1', 'location_icon')} />
-                            {company.emailcompany}
-                        </div>
 
-                        <div className={cx('jobpost-salary')}>
-                            <FaMoneyBillAlt className={cx('icon-d1')} />
-                            {company.websitecompany}
-                        </div>
-                        <ToastContainer />
-                        <div className={cx('div-nav-des')}>
-                            <span>Slogan</span>
-                            <span>Giới thiệu </span>
-                        </div>
-                        <div className={cx('content')}>
+                    <div className={cx('div-nav-des')}>
+                        <span id="detail" >Chi tiết</span>
+                        <span id="about" >Về công ty</span>
+                    </div>
 
-                            <div className={cx('required')}>
-                                <span className={cx('span-title')}>Yêu cầu</span>
-                                <p>{company.slogan}</p>
+                    <div id="content-jobpost" className={cx('jobpost-location-salary-exdate')}>
+                        <div className={cx('info-wrapper')}>
+                            <div className={cx('maps')}>
+                                <label className={cx('title-info')}> Địa điểm</label>
+                                <span className={cx('info')}>{company.location}</span>
                             </div>
+                            <div className={cx('info-content')}>
+                                <div className={cx('content-wrapper')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <img src="https://img.icons8.com/external-photo3ideastudio-lineal-photo3ideastudio/64/null/external-calendars-winter-photo3ideastudio-lineal-photo3ideastudio.png" />
+                                    </div>
+
+                                    <div className={cx('container')}>
+                                        <label className={cx('title-label')}>Email</label>
+                                        <span className={cx('info')}>{company.emailcompany}</span>
+                                    </div>
+                                </div>
+                                <div className={cx('content-wrapper')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <img src="https://img.icons8.com/ios-glyphs/30/null/lawyer.png" />
+                                    </div>
+                                    <div className={cx('container')}>
+                                        <label className={cx('title-label')}>Số điện thoại</label>
+                                        <span className={cx('info')}>{company.phonecompany}</span>
+                                    </div>
+
+                                </div>
+                                <div className={cx('content-wrapper')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <img src="https://img.icons8.com/fluency-systems-filled/48/null/business.png" />
+                                    </div>
+                                    <div className={cx('container')}>
+                                        <label className={cx('title-label')}>Website Công ty</label>
+                                        <span className={cx('info')}>{company.websitecompany}</span>
+                                    </div>
+
+                                </div>
+                        
+                            </div>
+
+                        </div>
+
+
+
+                        <div className={cx('content')}>
                             <div className={cx('responsibility')}>
-                                <span className={cx('span-title')}>Trách nhiệm</span>
+                                <span className={cx('span-title')}>Giới thiệu công ty</span>
                                 <p>{company.introduce}</p>
                             </div>
                         </div>
                     </div>
+
                     <div>
 
                     </div>
                 </div>
-                
 
-            </div>
-            <div className={cx('jobpost-recomment')}>
-                <h2 style={{ fontSize: '30px', marginLeft: '10px', fontWeight: '500' }}>Gợi ý việc làm</h2>
-                <ul>
-                    {recommentPosts.slice(0, 8).map((recommentPost) => {
-                        return (
-                            <div key={recommentPost._id} onClick={() => handleRecommentPost(recommentPost._id)} className={cx('recommentPost')}>
-                                <div className={cx('jobpost')}>
-                                    <div className={cx('logo_recomment')}>
-                                        <img src={recommentPost.logo} />
-                                    </div>
-                                    <div className={cx('detail_post')}>
-                                        <h2 className={cx('jobpost-title')}>{recommentPost.title}</h2>
-                                        <div className={cx('jobpost-meta')}>
-                                            <div className={cx('info_content')}>
-                                                <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
-                                                <span className={cx('jobpost_company')}>{recommentPost.namecompany}</span>
-                                            </div>
-                                            <div className={cx('info_content')}>
-                                                <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/officel/30/null/place-marker--v1.png" />
-                                                <span className={cx('jobpost_location')}>{recommentPost.location}</span>
-                                            </div>
-                                            <div className={cx('info_content')}>
-                                                <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
-                                                <span className={cx('jobpost_salary')}>{recommentPost.salary}</span>
+                <div className={cx('jobpost-recomment')}>
+                    <ToastContainer />
+                    <h2 style={{ color: '#00133f', fontSize: '25px', marginLeft: '10px', marginTop: '45px', fontWeight: '500' }}>Các công việc tương tự</h2>
+                    <ul>
+                        {recommentPosts.slice(0, 8).map((recommentPost) => {
+                            return (
+                                <div key={recommentPost._id} onClick={() => handleRecommentPost(recommentPost._id)} className={cx('recommentPost')}>
+                                    <div className={cx('jobpost')}>
+                                        <div className={cx('logo_recomment')}>
+                                            <div className={cx('wrapper-logo-recomment')}>
+                                                <img src={recommentPost.logo} />
                                             </div>
                                         </div>
-                                    </div>
+                                        <div className={cx('detail_post')}>
+                                            <h2 className={cx('jobpost-title')}>{recommentPost.title}</h2>
+                                            <div className={cx('jobpost-meta')}>
+                                                <div className={cx('info_content')}>
+                                                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
+                                                    <span className={cx('jobpost_company')}>{recommentPost.namecompany}</span>
+                                                </div>
+                                                <div className={cx('info_content')}>
+                                                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/officel/30/null/place-marker--v1.png" />
+                                                    <span className={cx('jobpost_location')}>{recommentPost.location}</span>
+                                                </div>
+                                                <div className={cx('info_content')}>
+                                                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
+                                                    <span className={cx('jobpost_salary')}>{recommentPost.salary}</span>
+                                                </div>
 
+
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    })}
-                </ul>
+                            )
+                        })}
+                    </ul>
+                </div>
             </div>
- 
+
 
         </div>
     );

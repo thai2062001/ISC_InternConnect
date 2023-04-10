@@ -32,30 +32,30 @@ function ApplyCV(props) {
   const handleApply = (event) => {
     event.preventDefault()
     const cvFile = cvInputRef.current.files[0];
-        const formData = new FormData();
-        formData.append("date", date);
-        formData.append("email", email);
-        formData.append("title", title);
-        formData.append("name", name);
-        formData.append("logo", logo);
-        formData.append("major", major);
-        formData.append("nameschool", nameschool);
-        formData.append("namecompany", namecompany);
-        formData.append("id_post", ID);
-        formData.append("cv", cvFile);
-    
-        fetch("http://localhost:5000/create", {
-          method: "POST",
-          body: formData,
-        })
-          .then((response) => response.json())
-          .then((data) => {  
-            toast.success('Ứng tuyển thành công!');
-            handleOnClose(); // đóng popup sau khi thực hiện xong
-          })
-          .catch((error) => {
-            // xử lý lỗi
-          });
+    const formData = new FormData();
+    formData.append("date", date);
+    formData.append("email", email);
+    formData.append("title", title);
+    formData.append("name", name);
+    formData.append("logo", logo);
+    formData.append("major", major);
+    formData.append("nameschool", nameschool);
+    formData.append("namecompany", namecompany);
+    formData.append("id_post", ID);
+    formData.append("cv", cvFile);
+
+    fetch("http://localhost:5000/create", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        toast.success('Ứng tuyển thành công!');
+        handleOnClose(); // đóng popup sau khi thực hiện xong
+      })
+      .catch((error) => {
+        // xử lý lỗi
+      });
   };
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -88,11 +88,14 @@ function ApplyCV(props) {
           />
 
           <label htmlFor="CV">Hồ sơ xin việc *</label>
-          <input type="file" name="CV" id="CV" ref={cvInputRef} />
+          <div className={cx('file-type')}>
+            <img src="https://icons.veryicon.com/png/o/education-technology/edit-job-operator/extract-2.png"/> 
+            <input className={cx('choose-file')} type="file" name="CV" id="CV" ref={cvInputRef} />
+          </div>
           <button type="submit" >
             Gửi
           </button>
-          <ToastContainer/>
+          <ToastContainer />
         </form>
       </div>
     </div>

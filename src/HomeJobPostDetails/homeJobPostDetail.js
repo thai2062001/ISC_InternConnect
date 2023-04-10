@@ -11,6 +11,7 @@ import ApplyCV from "./ApplyCV/ApplyCV";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReportPopup from "./ReportPopup/reportPopup";
+import { Helmet } from 'react-helmet';
 
 const cx = classNames.bind(styles)
 function HomeJobPostDetail() {
@@ -229,7 +230,6 @@ function HomeJobPostDetail() {
             }
 
             if (isIdInFavorite(favorite)) {
-                // Remove the ID from the favorite array if it exists
                 const index = student.favorite.indexOf(favorite);
                 if (index > -1) {
                     student.favorite.splice(index, 1);
@@ -261,9 +261,7 @@ function HomeJobPostDetail() {
                     });
             } else {
                 const urlAdd = `http://localhost:5000/details/${favorite}`;
-                // Add the ID to the favorite array
                 student.favorite.push(favorite);
-                // Update the server
                 fetch(urlAdd, {
                     method: "PUT",
                     headers: {
@@ -297,6 +295,37 @@ function HomeJobPostDetail() {
         navigate(path)
         window.location.href = path
     }
+    const handleCompany = (companyLink) => {
+        // const path = `/listcompany/${id}`
+        // navigate(path)
+        // window.location.href = path
+
+        const companyApi = 'http://localhost:5000/listcompany'
+        const fetchData = async () => {
+            const result = await fetch(companyApi, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jobpost_token}`
+                },
+            })
+            result.json().then(json => {
+                const company = json.find(item => item.namecompany === companyLink);
+                if (company) {
+                    console.log(company._id);
+                    const path = `/listcompany/${company._id}`
+                    navigate(path)
+                    window.location.href = path
+                } else {
+                    console.error('Không tồn tại công ty có tên này');
+                }
+            })
+        }
+        fetchData();
+
+    }
+
+
 
 
     const handleContent = () => {
@@ -312,18 +341,16 @@ function HomeJobPostDetail() {
         }
     };
 
-
-
-
     function formatDate(dateString) {
         const date = moment(dateString);
         const formattedDate = date.format('DD/MM/YYYY');
         return formattedDate;
     }
-
-
     return (
         <div className={cx('Jobpost-wapper')}>
+            <Helmet>
+                <title>{jobPosts.title}</title>
+            </Helmet>
             <div className={cx('banner')}>
                 <img src="https://res.cloudinary.com/dg4ifdrn5/image/upload/v1680854951/bannerfix_u56bdz.jpg" />
             </div>
@@ -334,7 +361,7 @@ function HomeJobPostDetail() {
                         <div className={cx('company-title')}>
                             <div className={cx('info-title')}>
                                 <div><h1>{jobPosts.title}</h1></div>
-                                <div><span className={cx('namecompany_span')}>{jobPosts.namecompany}</span></div>
+                                <div onClick={() => handleCompany(jobPosts.namecompany)} ><span className={cx('namecompany_span')}>{jobPosts.namecompany}</span></div>
                             </div>
                             <div className={cx('apply_button')}>
                                 <button className={cx('action_button')} onClick={handleApply}>Nộp đơn ngay</button>
@@ -359,13 +386,13 @@ function HomeJobPostDetail() {
                                         <ReportPopup
                                             title={jobPosts.title}
                                             email={decodeEmail.email}
-                                            companyEmail={company &&company.emailcompany}
+                                            companyEmail={company && company.emailcompany}
                                             onClose={() => setShowPopupReport(false)}
                                         />
                                     </Popup>
                                 )}
                                 <div className={cx('icon_wrapper-like-report')}>
-                                    <span onClick={handleFavorite}  title="Yêu thích">
+                                    <span onClick={handleFavorite} title="Yêu thích">
                                         <img className={cx('like_icon')} src="https://img.icons8.com/material-outlined/24/null/hearts.png" />
                                     </span>
                                     <span onClick={handleReport} title="Báo xấu">
@@ -504,7 +531,7 @@ function HomeJobPostDetail() {
                     <ToastContainer />
                     <h2 style={{ color: '#00133f', fontSize: '25px', marginLeft: '10px', marginTop: '45px', fontWeight: '500' }}>Các công việc tương tự</h2>
                     <ul>
-                        {recommentPosts.slice(0, 8).map((recommentPost) => {
+                        {recommentPosts.slice(0, 5).map((recommentPost) => {
                             return (
                                 <div key={recommentPost._id} onClick={() => handleRecommentPost(recommentPost._id)} className={cx('recommentPost')}>
                                     <div className={cx('jobpost')}>
@@ -538,6 +565,7 @@ function HomeJobPostDetail() {
                             )
                         })}
                     </ul>
+                    <button>Xem thêm</button>
                 </div>
             </div>
 

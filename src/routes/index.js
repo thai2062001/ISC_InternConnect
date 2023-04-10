@@ -20,8 +20,6 @@ import JobApplication from '../JobApplication_Company/jobApplication_company';
 import AllJobPost from '../AllJobPost/allJobPost';
 import Signup from '../SignUp/Signup';
 import AdminLogin from '../AdminLogin/adminLogin';
-import HomeLogin from './../HomeLogin/homeLogin';
-import HeaderLogin from '../Component/Layout/components/Header/HeaderLogin/headerLogin';
 import HomeJobPostDetail from '../HomeJobPostDetails/homeJobPostDetail';
 import Settings from '../Settings/settings';
 import ForgotPW from '../Login/ForgotPW/forgotPW';
@@ -36,18 +34,15 @@ import SchoolUpdate from '../SchoolManager/schoolUpdate/schoolUpdate';
 import TermOfServices from '../TermofServices/termofservice';
 import Company from '../Home/Company/company';
 import DetailCompany from '../Home/DetailCompany/detailCompany';
-import Sidebar from '../Sidebar';
 import ReportAdmin from '../HomeAdmin/ReportAdmin/reportAdmin';
+import HomeDetailsSearch from '../Home/HomeDetailsSearch/homeDetailsSearch';
 //public routers
 
 
 const publicRouters = [
 
-
-    {path: '/sidebar',component: Sidebar,layout:null},
-
-
     {path: '/',component: Home,layout:HeaderOnly},
+    // {path: '/:major',component: HomeDetailsSearch,layout:HeaderOnly},
     {path: '/:id',component: HomeJobPostDetail,layout:HeaderOnly},
 
     {path: '/listcompany',component: Company,layout:HeaderOnly},

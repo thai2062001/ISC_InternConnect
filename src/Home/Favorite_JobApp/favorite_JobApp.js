@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import jwt_decode from "jwt-decode";
 import moment from 'moment';
+
+import { Helmet } from 'react-helmet';
 import ReactPaginate from 'react-paginate';
 
 
@@ -69,33 +71,31 @@ function Favorite_JobApp() {
   }
   return (
     <div className={cx('wrapper')}>
-
       <div className={cx('container')}>
-        <h1 style={{ fontSize: '35px', fontweight: '600', marginTop: '20px', marginBottom: '40px', marginLeft: '40px' }}>Bài đăng yêu thích</h1>
+        <Helmet>
+          <title>Yêu thích</title>
+        </Helmet>
+        <h2>Quản lý yêu thích</h2>
         <ul className={cx('jobapp')}>
-          {listJobPosts.slice(pagesVisited, pagesVisited + applicationsPerPage).map((jobpost, index) => {
+          {listJobPosts.slice(pagesVisited, pagesVisited + applicationsPerPage).map((jobApp, index) => {
             return (
-              <div onClick={() => handleJobpost(jobpost._id)} className={cx('jobapp_container')} key={index}>
+              <div onClick={() => handleJobpost(jobApp._id)} className={cx('jobapp_container')} key={index}>
                 <div className={cx('logo')}>
-                  <img src={jobpost.logo} />
+                  <div className={cx('wrapper-logo')}>
+                    <img src={jobApp.logo} />
+                  </div>
                 </div>
                 <div className={cx('jobapp_detail')}>
-                  <span className={cx('jobapp_span', 'title_span')}>{jobpost.title}</span>
-
-                  <div className={cx('info_content')}>
+                  <div className={cx('title-div')}>
+                    <span className={cx('jobapp_span', 'title_span')}>{jobApp.title}</span>
+                  </div>
+                  <div className={cx('jobpost-icon')}>
                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
-                    <span className={cx('jobapp_span', 'company_span')}>{jobpost.namecompany}</span>
+                    <span className={cx('jobapp_span', 'company_span')}> {jobApp.namecompany}</span>
                   </div>
-
-
-                  <div className={cx('info_content')}>
-                    <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/officel/30/null/place-marker--v1.png" />
-                    <span className={cx('jobapp_span', 'date_span')}>{jobpost.location}</span>
-                  </div>
-
-                  <div className={cx('info_content')}>
+                  <div className={cx('salary-icon')}>
                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
-                    <span className={cx('jobapp_span', 'status_span')}>{jobpost.salary}</span>
+                    <span className={cx('jobapp_span', 'salary_span')}> {jobApp.salary}</span>
                   </div>
 
                 </div>
@@ -118,6 +118,8 @@ function Favorite_JobApp() {
             pageClassName={cx('page')}
           />
         </div>
+
+
       </div>
     </div>
   );

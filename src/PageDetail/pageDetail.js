@@ -155,7 +155,7 @@ function PageDetail() {
           document.getElementById('location').readOnly = false;
           document.getElementById('gender').readOnly = false;
           document.getElementById('wokingformInput').readOnly = false;
-          document.getElementById('placeInput').readOnly = false;
+          document.getElementById('placeInput').disabled = false;
           document.getElementById('required').readOnly = false;
           document.getElementById('benefit').readOnly = false;
           document.getElementById('responsibility').readOnly = false;

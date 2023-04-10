@@ -9,6 +9,7 @@ import StudentName from './StudentName/studentName';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { Helmet } from 'react-helmet';
 
 const cx = classNames.bind(styles)
 function Settings() {
@@ -75,6 +76,9 @@ function Settings() {
   return (
 
     <div className={cx('wrapper')}>
+      <Helmet>
+        <title>Cài đặt </title>
+      </Helmet>
       <h1>Cài đặt</h1>
       <div className={cx('update-info-wrapper')}>
 

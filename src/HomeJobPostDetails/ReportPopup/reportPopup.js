@@ -12,16 +12,17 @@ function ReportPopup(props) {
     const [emailcom, setEmailCom] = useState("");
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
-    useEffect(() => {
-        setEmail(props.email);
-        setEmailCom(props.companyEmail)
-        setTitle(props.title)
-    }, []);
-    useEffect(() => {
+
         const localstore = localStorage.getItem('user')
         const decodeUser = jwt_decode(localstore);
         console.log(decodeUser.email);
-    }, [])
+
+    useEffect(() => {
+        setEmail(decodeUser.email);
+        setEmailCom(props.companyEmail)
+        setTitle(props.title)
+    }, []);
+
 
 
 
@@ -41,10 +42,11 @@ function ReportPopup(props) {
         try {
             const response = await fetch(apiReport, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                'Authorization': `Bearer ${token_student}`,
-
-                body: JSON.stringify({ email, emailcom, title, content })
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token_student}`,
+                },
+                body: JSON.stringify({ email,content, emailcom, title  })
             });
 
             if (!response.ok) {

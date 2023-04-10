@@ -20,6 +20,7 @@
     display: flex;
     width: 30%;
     color: #5d677a;
+    font-size: 25px;
     justify-content: center;
     margin-bottom: 20px;
   }
@@ -94,14 +95,14 @@
   }
   /* Job Title */
   .jobapp_span.title_span {
-    font-size: 2.2rem;
+    font-size: 2rem;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 500;
     color: red;
   }
   .jobapp_span.title_span:hover {
-    font-size: 2.2rem;
-    font-weight: bold;
+    font-size: 2rem;
+    font-weight: 600;
     color: #2662a2;
   }
   
