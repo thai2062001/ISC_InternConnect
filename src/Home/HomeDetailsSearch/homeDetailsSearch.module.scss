@@ -19,7 +19,6 @@
 .container h2{
   display: flex;
   width: 30%;
-  font-size: 25px;
   color: #5d677a;
   justify-content: center;
   margin-bottom: 20px;
@@ -74,7 +73,6 @@
 display: flex;
 margin-top: 5px;
 align-items: center;
-padding: 5px;
 }
 .jobpost-icon img{
   width: 20px;
@@ -96,12 +94,13 @@ padding: 5px;
 }
 /* Job Title */
 .jobapp_span.title_span {
-  font-size: 2.0rem;
+  font-size: 2.2rem;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: bold;
   color: red;
 }
 .jobapp_span.title_span:hover {
+  font-size: 2.2rem;
   font-weight: bold;
   color: #2662a2;
 }
@@ -118,15 +117,6 @@ padding: 5px;
 .jobapp_span.date_span {
   font-size: 1.5rem;
 
-}
-.salary-icon{
-  display: flex;
-  align-items: center;
-  padding: 5px;
-}
-.salary-icon .salary_span{
-  color: #3fbb67;
-  margin-left: 5px;
 }
 
 /* Job Status */

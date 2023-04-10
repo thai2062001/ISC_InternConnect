@@ -33,7 +33,10 @@
     .input-wrapper {
       flex-wrap: wrap;
     }
-    .city-search{
+    .major_select{
+      display: none;
+    }
+    .city_select{
       display: none;
     }
   }
@@ -44,8 +47,12 @@
     .city-search{
       display: none;
     }
-  
-  
+    .major_select{
+      display: none;
+    }
+    .city_select{
+      display: none;
+    }
   }
   
 
@@ -282,7 +289,6 @@
 .jobpost-description{
    justify-content: center;
    align-items: center;
-    cursor: pointer;
     border-radius: 5px;
     border-top: 0.5px solid #e5eaf0;
     border-bottom: 0.5px solid #e5eaf0;

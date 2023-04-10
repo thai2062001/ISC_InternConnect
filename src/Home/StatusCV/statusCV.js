@@ -7,7 +7,7 @@ import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, F
 import jwt_decode from "jwt-decode";
 import moment from 'moment';
 import ReactPaginate from 'react-paginate';
-
+import { Helmet } from 'react-helmet';
 const cx = classNames.bind(styles);
 
 function StatusCV() {
@@ -54,6 +54,9 @@ function StatusCV() {
     }
     return (
         <div className={cx('wrapper')}>
+            <Helmet>
+                <title>Quản lý trạng thái</title>
+            </Helmet>
             <div className={cx('container')}>
                 <h2>Quản lý trạng thái hồ sơ</h2>
                 <ul className={cx('jobapp')}>
@@ -67,24 +70,20 @@ function StatusCV() {
                                 </div>
                                 <div className={cx('jobapp_detail')}>
                                     <div className={cx('title-div')}>
-                                    <span className={cx('jobapp_span', 'title_span')}>{jobApp.title}</span>
+                                        <span className={cx('jobapp_span', 'title_span')}>{jobApp.title}</span>
                                     </div>
-                    
                                     <div className={cx('jobpost-icon')}>
                                         <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
                                         <span className={cx('jobapp_span', 'company_span')}> {jobApp.namecompany}</span>
                                     </div>
                                     <div className={cx('jobpost-icon')}>
-                                    <img src="https://img.icons8.com/ios/50/null/calendar-26.png" />
+                                        <img src="https://img.icons8.com/ios/50/null/calendar-26.png" />
                                         <span className={cx('jobapp_span', 'date_span')}>Ngày nộp: {formatted_date} </span>
                                     </div>
                                     <div className={cx('jobpost-icon')}>
-                                        <span className={cx('jobapp_span', )}>Trạng thái: </span>
+                                        <span className={cx('jobapp_span',)}>Trạng thái: </span>
                                         <span className={cx('jobapp_span', 'status_span')}> {jobApp.status}</span>
                                     </div>
-
-
-
                                 </div>
                             </div>
                         );

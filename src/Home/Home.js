@@ -124,6 +124,9 @@ function Home() {
   const handleDetail = (id) => {
     window.location.href = `/${id}`
   }
+  const handleFilterDetails = (major) => {
+    window.location.href = `/${major}`
+  }
 
   function formatDate(dateString) {
     const date = moment(dateString);
@@ -221,9 +224,6 @@ function Home() {
 
   }
 
-
-
-
   const optionSalary = [
     { value: 'all', label: 'Trợ cấp' },
     { value: '0-2Tr VND', label: '0-2Tr VND' },
@@ -250,6 +250,33 @@ function Home() {
   //   const data = citiesArray[1].data; // Lấy mảng dữ liệu từ phần tử thứ hai của response
   // const names = data.map(item => item.name); // Trích xuất cột 'name' từ mỗi phần tử trong mảng dữ liệu
 
+  const handleCompany = (companyLink) => {
+    // const path = `/listcompany/${id}`
+    // navigate(path)
+    // window.location.href = path
+    const jobpost_token = localStorage.getItem('user');
+    const companyApi = 'http://localhost:5000/listcompany'
+    const fetchData = async () => {
+        const result = await fetch(companyApi, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jobpost_token}`
+            },
+        })
+        result.json().then(json => {
+            const company = json.find(item => item.namecompany === companyLink);
+            if (company) {
+                const path = `/listcompany/${company._id}`
+                window.location.href = path
+            } else {
+                console.error('Không tồn tại công ty có tên này');
+            }
+        })
+    }
+    fetchData();
+
+}
   return (
     <div className={cx('container_full')}>
       <Helmet>
@@ -264,7 +291,7 @@ function Home() {
               placeholder="Nhập từ khóa, công việc"
             />
           </div>
-          <div className={cx('input-group', 'select-wrapper')}>
+          <div className={cx('input-group', 'select-wrapper','major_select')}>
             <Select id='major_id' className={cx('select')} placeholder='Tất cả ngành nghề'
               isMulti
               value={selectedValues}
@@ -273,7 +300,7 @@ function Home() {
               onChange={handleSelectChange}
             />
           </div>
-          <div className={cx('input-group', 'select-wrapper')}>
+          <div className={cx('input-group', 'select-wrapper','city_select')}>
             <Select className={cx('select')}
               placeholder='Chọn thành phố'
               isMulti
@@ -289,7 +316,7 @@ function Home() {
         </div>
         <div className={cx('filter_wrapper_wrapper')}>
           <div className={cx('select-wrapper_filter')}>
-            <Select id='salary' className={cx('select_filter')} placeholder='Trợ cấp'
+            <Select id='salary' className={cx('select_filter','salary')} placeholder='Trợ cấp'
               options={optionSalary}
               value={selectedSalary}
               defaultValue={selectedSalary}
@@ -329,18 +356,18 @@ function Home() {
         <div className={cx('jobpost')}>
           <ul className={cx('jobpost-preview')}>
             {currentPosts.splice(0, 20).map((jobPost, index) => (
-              <div onClick={() => handleDetail(jobPost._id)} className={cx('jobpost-description')} key={index}>
-                <div className={cx('logo')}>
+              <div  className={cx('jobpost-description')} key={index}>
+                <div onClick={() => handleDetail(jobPost._id)} className={cx('logo')}>
                   <div className={cx('wrapper-logo')}>
                     <img src={jobPost.logo} />
                   </div>
                   <ToastContainer />
                 </div>
                 <div className={cx('jobpost_detail')}>
-                  <h2 >{jobPost.title}</h2>
+                  <h2  onClick={() => handleDetail(jobPost._id)} >{jobPost.title}</h2>
                   <div className={cx('wrapper_content')}>
                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
-                    <span className={cx('detail_span', 'company')}>  {jobPost.namecompany}</span>
+                    <span onClick={()=>handleCompany(jobPost.namecompany)} className={cx('detail_span', 'company')}>  {jobPost.namecompany}</span>
                   </div>
                   <div className={cx('wrapper_content')}>
                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/officel/30/null/place-marker--v1.png" />
@@ -350,14 +377,19 @@ function Home() {
                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
                     <span className={cx('detail_span', 'salary')}>{jobPost.salary}</span>
                   </div>
-                  {/* <span style={{display:'block'}} className={cx('major-span')}>{jobPost.major}</span> */}
+                  <button onClick={() => handleDetail(jobPost._id)} className={cx('apply_button')}>Xem chi tiết</button>
+                  {/* <div onClick={()=>handleFilterDetails(jobPost.major)}>
+                  <span style={{display:'block'}} className={cx('major-span')}>{jobPost.major}</span>
+                  </div> */}
                 </div>
                 <div className={cx('action-div')} style={{ marginTop: '80px', padding: '10px' }}>
                   <div className={cx('wrapper_date')}>
-                    <img src="https://img.icons8.com/ios/50/null/calendar-26.png" />
-                    <span>{formatDate(jobPost.DateSubmitted)}</span>
+                    <span> Hình thức: {jobPost.workingform}</span>
                   </div>
-                  <button className={cx('apply_button')}>Ứng tuyển ngay</button>
+                  <div className={cx('wrapper_date')}>
+                    <span> Cập nhật: {formatDate(jobPost.DateSubmitted)}</span>
+                  </div>
+                  
                 </div>
               </div>
             ))}

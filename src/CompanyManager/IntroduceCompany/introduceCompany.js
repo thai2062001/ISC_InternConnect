@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Select from 'react-select'
 
 
 const cx = classNames.bind(styles)
@@ -14,12 +14,15 @@ function IntroduceCompany() {
     const [logo, setLogo] = useState()
     const [companyLogo, setCompanyLogo] = useState()
     const [email, setEmail] = useState('');
+    const [location, setLocation] = useState('');
     const [website, setWebsite] = useState('');
     const [phone, setPhone] = useState('');
     const [introduce, setIntroduce] = useState('');
     const [slogan, setSlogan] = useState('');
 
     const [accounts, setAccount] = useState([])
+    const [cities, setCity] = useState([])
+    const [selectedValueCities, setSelectedValueCities] = useState('');
     const [isEditMode, setIsEditMode] = useState(false);
 
     const company_token = localStorage.getItem('user-save');
@@ -38,11 +41,11 @@ function IntroduceCompany() {
             });
             result.json().then(json => {
                 setAccount(json);
-                console.log(json);
                 setCompanyLogo(json.profile[0].logo);
                 setName(json.profile[0].namecompany);
                 setEmail(json.profile[0].emailcompany);
                 setWebsite(json.profile[0].websitecompany);
+                setLocation(json.profile[0].location);
                 setPhone(json.profile[0].phonecompany);
                 setIntroduce(json.profile[0].introduce);
                 setSlogan(json.profile[0].slogan);
@@ -51,8 +54,30 @@ function IntroduceCompany() {
         fetchData();
     }, []);
 
+    const handleChangeCity = (selectedOptions) => {
+        setLocation(selectedOptions.value);
+    };
+    useEffect(() => {
+        const apiLocation = 'http://localhost:5000/company/listareas'
+        const fetchData = async () => {
+            const result = await fetch(apiLocation, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${company_token}`
+                },
+            });
+            result.json().then(json => {
+                setCity(json);
+            });
+        };
+        fetchData();
+    }, []);
+
     const handleEdit = () => {
+        document.getElementById('placeInput').disabled = true;
         setIsEditMode(true);
+
     };
     useEffect(() => {
         return () => {
@@ -79,12 +104,14 @@ function IntroduceCompany() {
                 emailcompany: email,
                 namecompany: name,
                 phonecompany: phone,
+                location: location,
                 websitecompany: website,
                 introduce: introduce,
                 slogan: slogan
             })
         })
             .then(response => {
+
                 toast.success('Đã cập nhật thông tin công ty!', {
                     position: "top-center",
                     autoClose: 5000,
@@ -95,13 +122,13 @@ function IntroduceCompany() {
                     progress: undefined,
                     theme: "light",
                 });
+                window.location.reload();
             })
             .catch(error => {
                 toast.error('Lỗi khi cập nhật thông tin công ty');
             });
 
     };
-
 
 
     const handleUploadLogo = async () => {
@@ -136,6 +163,7 @@ function IntroduceCompany() {
         }
     };
 
+
     return (
         <div className="App">
             <div className={cx('wrapper')}>
@@ -162,23 +190,28 @@ function IntroduceCompany() {
                             )}
                         </div>
                         <div className={cx('form-group')}>
-                            <label htmlFor="emailcompany" className={cx('label')}>Email Company</label>
+                            <label htmlFor="emailcompany" className={cx('label')}>Email</label>
                             <input readOnly value={email} type="email" className={cx('input')} id="emailcompany" onChange={(e) => setEmail(e.target.value)} />
                         </div>
-                        <div className={cx('form-group')}>
-                            <label htmlFor="namecompany" className={cx('label')}>Name Company</label>
-                            <input readOnly={!isEditMode} value={name} type="text" className={cx('input')} id="namecompany" onChange={(e) => setName(e.target.value)} />
+                        <div className={cx('select-wrapper')}>
+                            <label className={cx('label-place')}>Địa điểm</label>
+                            <select id="placeInput" className={cx('input')} value={location} onChange={(e) => setLocation(e.target.value)} >
+                                <option value="">Chọn Địa điểm</option>
+                                {cities.map(city => (
+                                    <option key={city._id} value={city.name}>{city.name}</option>
+                                ))}
+                            </select>
                         </div>
                         <div className={cx('form-group')}>
-                            <label htmlFor="phonecompany" className={cx('label')}>Phone Company</label>
+                            <label htmlFor="phonecompany" className={cx('label')}>Số điện thoại</label>
                             <input readOnly={!isEditMode} value={phone} type="tel" className={cx('input')} id="phonecompany" onChange={(e) => setPhone(e.target.value)} />
                         </div>
                         <div className={cx('form-group')}>
-                            <label htmlFor="websitecompany" className={cx('label')}>Website Company</label>
+                            <label htmlFor="websitecompany" className={cx('label')}>Website </label>
                             <input readOnly={!isEditMode} value={website} type="url" className={cx('input')} id="websitecompany" onChange={(e) => setWebsite(e.target.value)} />
                         </div>
                         <div className={cx('form-group')}>
-                            <label htmlFor="introduce" className={cx('label')}>Introduce</label>
+                            <label htmlFor="introduce" className={cx('label')}>Lời giới thiệu</label>
                             <textarea readOnly={!isEditMode} value={introduce} className={cx('textarea')} id="introduce" onChange={(e) => setIntroduce(e.target.value)} />
                         </div>
                         <div className={cx('form-group')}>
@@ -187,7 +220,7 @@ function IntroduceCompany() {
                         </div>
                     </div>
                 )}
-                <ToastContainer style={{width:'350px'}}/>
+                <ToastContainer style={{ width: '350px' }} />
                 <div className={cx('btn_action')}>
                     <button
                         onClick={() => setIsEditMode(!isEditMode)}
