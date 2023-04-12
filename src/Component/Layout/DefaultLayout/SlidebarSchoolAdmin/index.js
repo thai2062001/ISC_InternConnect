@@ -22,16 +22,16 @@ function Slidebar() {
       <li>
         <a href="/schooladmin">
           <i className={cx('bx bxs-school')}></i>
-          <span className={cx('links_name')}>Account</span>
+          <span className={cx('links_name')}>Quản lý sinh viên</span>
         </a>
-         <span className={cx('tooltip')}>Account</span>
+         <span className={cx('tooltip')}>Quản lý sinh viên</span>
       </li>
       <li>
        <a href="/schooladmin/updateinfo">
          <i className={cx('bx bxs-school')} ></i>
-         <span className={cx('links_name')}>Infomation</span>
+         <span className={cx('links_name')}>Thiết lập thông tin</span>
        </a>
-       <span className={cx('tooltip')}>Infomation</span>
+       <span className={cx('tooltip')}>Thiết lập thông tin</span>
      </li>
    
 
@@ -39,9 +39,9 @@ function Slidebar() {
      <a href="/admin/adminlogin" onClick={handleLogOutUser}>
      <div className={cx('profile-details')}></div>
          <i className={cx('bx bx-log-out')} id="log_out" ></i>
-         <span className={cx('links_name')}>Logout</span>
+         <span className={cx('links_name')}>Đăng xuất</span>
      </a>
-     <span className={cx('tooltip')}>Logout</span>
+     <span className={cx('tooltip')}>Đăng xuất</span>
      </li>
 
       

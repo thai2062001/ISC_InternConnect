@@ -22,7 +22,6 @@ function SchoolManager() {
   const [accounts, setAccount] = useState([])
 
   const [filteredAccounts, setFilteredAccounts] = useState([]);
-  const [year, setYear] = useState('all')
   const [address, setAdress] = useState('all')
   const [gender, setGender] = useState('all')
   const [verify, setVerify] = useState('all')
@@ -31,7 +30,6 @@ function SchoolManager() {
 
 
   const [defaultFilters, setDefaultFilters] = useState({
-    year: 'all',
     address: 'all',
     gender: 'all',
     verify: 'all',
@@ -41,9 +39,6 @@ function SchoolManager() {
 
   useEffect(() => {
     const filteredAccounts = accounts.filter(account => {
-      if (year !== 'all' && account.academicyear !== year) {
-        return false;
-      }
       if (address !== 'all' && account.address !== address) {
         return false;
       }
@@ -59,28 +54,81 @@ function SchoolManager() {
       return true;
     });
     setFilteredAccounts(filteredAccounts);
-  }, [accounts, year, address, gender, verify, major]);
+  }, [accounts, address, gender, verify, major]);
 
   const resetFilters = () => {
-    setYear(defaultFilters.year);
     setAdress(defaultFilters.address);
     setGender(defaultFilters.gender);
     setVerify(defaultFilters.verify);
     setMajor(defaultFilters.major);
 
   };
+  const validateStudentName = (rowData) => {
+    if (!rowData.studentname) {
+      return "Tên sinh viên không được để trống";
+    }
+    return true;
+  };
+  
+  const validateEmail = (rowData) => {
+    if (!rowData.studentemail) {
+      return "Email không được để trống";
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rowData.studentemail)) {
+      return "Email không hợp lệ";
+    }
+    return true;
+  };
+  
+  const validatePhone = (rowData) => {
+    if (!rowData.studentphone) {
+      return "Điện thoại không được để trống";
+    }
+    if (!/^\d{10}$/.test(rowData.studentphone)) {
+      return "Điện thoại phải có 10 chữ số";
+    }
+    return true;
+  };
+  
+  const validateAddress = (rowData) => {
+    if (!rowData.address) {
+      return "Địa chỉ không được để trống";
+    }
+    return true;
+  };
+  
+  const validateMajor = (rowData) => {
+    if (!rowData.major) {
+      return "Chuyên ngành không được để trống";
+    }
+    return true;
+  };
+  
+  const validateSchool = (rowData) => {
+    if (!rowData.school) {
+      return "Trường không được để trống";
+    }
+    return true;
+  };
+  
+  const validateVerify = (rowData) => {
+    if (rowData.verify === undefined) {
+      return "Xác thực không được để trống";
+    }
+    return true;
+  };
   const columns = [
     { title: "ID", field: "code", },
-    { title: "Name", field: "studentname", },
-    { title: "Email", field: "studentemail", },
-    { title: "Phone", field: "studentphone", },
-    { title: "Year", field: "academicyear", },
-    { title: "Address", field: "address", },
-    { title: "Gender", field: "gender", lookup: { Nam: "Nam", Nữ: "Nữ", Khác: "Khác" }, },
-    { title: "Major", field: "major", },
-    { title: "School", field: "school", },
-    { title: "Verify", field: "verify", },
+    { title: "Tên", field: "studentname",validate:validateStudentName },
+    { title: "Email", field: "studentemail",validate:validateEmail },
+    { title: "Điện thoại", field: "studentphone",validate:validatePhone },
+    { title: "Địa chỉ", field: "address",validate:validateAddress },
+    { title: "Giới tính", field: "gender", lookup: { Nam: "Nam", Nữ: "Nữ", Khác: "Khác" }, validateMajor },
+    { title: "Chuyên ngành", field: "major",validate:validateMajor },
+    { title: "Trường", field: "school", validate:validateSchool},
+    { title: "Xác thực", field: "verify", lookup: { true: "Đã xác thực", false: "Chưa xác thực" }, validate:validateVerify },
   ]
+
 
   useEffect(() => {
     const localstore = localStorage.getItem('user-save')
@@ -110,21 +158,8 @@ function SchoolManager() {
     fetchData();
   }, [name]);
 
-
-  // Ham logout ve trang homelogin
-  function handleLogOutUser() {
-    localStorage.removeItem('user-save');
-    window.location.href = '/login'
-  }
-
-
   const token = localStorage.getItem('user-save');
   const decodeEmail = jwt_decode(token);
-  const emailUser = decodeEmail.email;
-
-
- 
-
   const downloadExcel = () => {
     const newData = filteredAccounts.map(row => {
       delete row.tableData
@@ -155,7 +190,7 @@ function SchoolManager() {
     return (
       <div className="App">
         <div className={cx('wrapper')}>
-          <h1 align="center">Trang quản lý Admin</h1>
+          <h1 align="center">Trang quản lý Trường</h1>
           <div className={cx('user_log')}>
           <h2 className={cx('name_set')}> <FaUser/> {name}</h2>
           </div>
@@ -170,8 +205,8 @@ function SchoolManager() {
               Pagination: (props) => <>
 
                 <Grid container style={{ padding: 15 }}>
-                  <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
-                  <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+                  <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Thống kê</Typography></Grid>
+                  <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Số dòng thỏa yêu cầu : {props.count}</Typography></Grid>
                 </Grid>
                 <Divider />
                 <TablePagination {...props} />
@@ -182,34 +217,16 @@ function SchoolManager() {
                 icon: () => <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  style={{ width: 110 ,fontSize:'15px'}}
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
-                >
-                  <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Year</em></MenuItem>
-                  <MenuItem style={{fontSize:'15px'}} value={'2017'}>2017</MenuItem>
-                  <MenuItem style={{fontSize:'15px'}} value={'2018'}>2018</MenuItem>
-                  <MenuItem style={{fontSize:'15px'}} value={'2019'}>2019</MenuItem>
-                  <MenuItem style={{fontSize:'15px'}} value={'2020'}>2020</MenuItem>
-                  <MenuItem style={{fontSize:'15px'}} value={'2021'}>2021</MenuItem>
-                </Select>,
-                tooltip: "Filter Year",
-                isFreeAction: true
-              }
-              , {
-                icon: () => <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  style={{ width: 110 ,fontSize:'15px'}}
+                  style={{ width: 110 ,fontSize:'14px'}}
                   value={address}
                   onChange={(e) => setAdress(e.target.value)}
                 >
-                  <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Location</em></MenuItem>
-                  <MenuItem style={{fontSize:'15px'}} value={'HCM'}>HCM</MenuItem>
-                  <MenuItem style={{fontSize:'15px'}} value={'Hà Nội'}>Hà Nội</MenuItem>
-                  <MenuItem style={{fontSize:'15px'}} value={'Hải Phòng'}>Hải Phòng</MenuItem>
-                  <MenuItem style={{fontSize:'15px'}} value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
-                  <MenuItem style={{fontSize:'15px'}} value={'Huế'}>Huế</MenuItem>
+                  <MenuItem style={{fontSize:'14px'}} value={'all'}><em>Địa chỉ</em></MenuItem>
+                  <MenuItem style={{fontSize:'14px'}} value={'Hồ Chí Minh'}>Hồ Chí Minh</MenuItem>
+                  <MenuItem style={{fontSize:'14px'}} value={'Hà Nội'}>Hà Nội</MenuItem>
+                  <MenuItem style={{fontSize:'14px'}} value={'Hải Phòng'}>Hải Phòng</MenuItem>
+                  <MenuItem style={{fontSize:'14px'}} value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
+                  <MenuItem style={{fontSize:'14px'}} value={'Huế'}>Huế</MenuItem>
                 </Select>,
                 tooltip: "Filter Address",
                 isFreeAction: true
@@ -219,14 +236,14 @@ function SchoolManager() {
                 icon: () => <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  style={{ width: 110 ,fontSize:'15px'}}
+                  style={{ width: 110 ,fontSize:'14px'}}
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
                 >
-                  <MenuItem  style={{fontSize:'15px'}} value={'all'}><em>Gender</em></MenuItem>
-                  <MenuItem  style={{fontSize:'15px'}} value={'Nam'}>Nam</MenuItem>
-                  <MenuItem  style={{fontSize:'15px'}} value={'Nữ'}>Nữ</MenuItem>
-                  <MenuItem  style={{fontSize:'15px'}} value={'Khác'}>Khác</MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={'all'}><em>Giới tính</em></MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={'Nam'}>Nam</MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={'Nữ'}>Nữ</MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={'Khác'}>Khác</MenuItem>
                 </Select>,
                 tooltip: "Filter Gender",
                 isFreeAction: true
@@ -235,16 +252,16 @@ function SchoolManager() {
                 icon: () => <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  style={{ width: 110 ,fontSize:'15px'}}
+                  style={{ width: 110 ,fontSize:'14px'}}
                   value={major}
                   onChange={(e) => setMajor(e.target.value)}
                 >
-                  <MenuItem  style={{fontSize:'15px'}} value={'all'}><em>Major</em></MenuItem>
-                  <MenuItem  style={{fontSize:'15px'}} value={'Công nghệ thông tin'}>Công nghệ thông tin</MenuItem>
-                  <MenuItem  style={{fontSize:'15px'}} value={'Kế toán'}>Kế toán</MenuItem>
-                  <MenuItem  style={{fontSize:'15px'}} value={'Quản trị kinh doanh'}>Quản trị kinh doanh</MenuItem>
-                  <MenuItem  style={{fontSize:'15px'}} value={'Quản trị khách sạn'}>Quản trị khách sạn</MenuItem>
-                  <MenuItem  style={{fontSize:'15px'}} value={'Du lịch lữ hành'}>Du lịch lữ hành</MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={'all'}><em>Chuyên ngành</em></MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={'Công nghệ thông tin'}>Công nghệ thông tin</MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={'Kế toán'}>Kế toán</MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={'Quản trị kinh doanh'}>Quản trị kinh doanh</MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={'Quản trị khách sạn'}>Quản trị khách sạn</MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={'Du lịch lữ hành'}>Du lịch lữ hành</MenuItem>
                 </Select>,
                 tooltip: "Filter Major",
                 isFreeAction: true
@@ -253,13 +270,13 @@ function SchoolManager() {
                 icon: () => <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  style={{ width: 110 ,fontSize:'15px'}}
+                  style={{ width: 110 ,fontSize:'14px'}}
                   value={verify}
                   onChange={(e) => setVerify(e.target.value)}
                 >
-                  <MenuItem  style={{fontSize:'15px'}} value={'all'}><em>Verify</em></MenuItem>
-                  <MenuItem  style={{fontSize:'15px'}} value={true}>True</MenuItem>
-                  <MenuItem  style={{fontSize:'15px'}} value={false}>False</MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={'all'}><em>Xác thực</em></MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={true}>Đã xác thực</MenuItem>
+                  <MenuItem  style={{fontSize:'14px'}} value={false}>Chưa xác thực</MenuItem>
                 </Select>,
                 tooltip: "Filter Verify",
                 isFreeAction: true

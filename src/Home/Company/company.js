@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './company.module.scss'
-import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch, FaHeart ,FaChevronLeft,FaChevronRight} from 'react-icons/fa';
+import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch, FaHeart, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useEffect, useState, useRef } from 'react';
 import jwt_decode from "jwt-decode";
 import ReactPaginate from 'react-paginate';
@@ -69,9 +69,9 @@ function Company() {
 
   const handlePageClick = (data) => {
     const selectedPage = data.selected + 1;
-      setCurrentPage(selectedPage);
-      window.scrollTo(0, 0);
-  
+    setCurrentPage(selectedPage);
+    window.scrollTo(0, 0);
+
   };
 
 
@@ -113,12 +113,12 @@ function Company() {
 
   const handleSearch = () => {
     const inputJob = document.getElementById('job-search').value.toLowerCase();
-  
+
     if (!inputJob && !selectedValueCities.length) {
       setListCompany(originalJobPosts);
       return;
     }
-  
+
     const filteredPosts = originalJobPosts.filter((post) => {
       const nameCompany = post.namecompany.toLowerCase();
       const jobCity = post.location ? post.location.toLowerCase() : '';
@@ -126,10 +126,10 @@ function Company() {
       const matchCity = selectedValueCities.length
         ? selectedValueCities.some((city) => jobCity.includes(city.value.toLowerCase()))
         : true;
-  
+
       return matchCompany && matchCity;
     });
-  
+
     setListCompany(filteredPosts);
   };
 
@@ -219,7 +219,7 @@ function Company() {
 
       <div className={cx('wrapper_jobpost')}>
         <div className={cx('title_count')} style={{ marginTop: '80px' }} >
-          <h2> {JobPostCount} việc làm thực tập </h2>
+          <h2> {JobPostCount} công ty thực tập </h2>
         </div>
         <div className={cx('jobpost')}>
           <ul className={cx('jobpost-preview')}>
@@ -245,8 +245,12 @@ function Company() {
                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
                     <span className={cx('detail_span', 'salary')}>{company.slogan}</span>
                   </div>
+
                 </div>
                 <div className={cx('action-div')} style={{ marginTop: '80px', padding: '10px' }}>
+                  <div className={cx('wrapper_content')}>
+                    <span className={cx('detail_span', 'salary')}>{company.location}</span>
+                  </div>
                   <button className={cx('apply_button')}>Xem chi tiết</button>
                 </div>
               </div>
@@ -263,7 +267,7 @@ function Company() {
           <div className={cx('paginate-wrapper', 'pagination')}>
             <ReactPaginate
               previousLabel={<FaChevronLeft />}
-              nextLabel={<FaChevronRight/>}
+              nextLabel={<FaChevronRight />}
               breakLabel={'...'}
               pageCount={pageCount}
               marginPagesDisplayed={2}

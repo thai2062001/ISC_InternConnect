@@ -20,28 +20,23 @@ function AllJobPost() {
   const [accounts, setAccount] = useState([])
   const [selectedRow, setSelectedRow] = useState(null);
   const [filteredAccounts, setFilteredAccounts] = useState([]);
-  const [company, setCompany] = useState('all')
   const [location, setLocation] = useState('all')
   const [selectedIds, setSelectedIds] = useState([]);
-
+  const [listcity, setListCity] = useState([]);
   
   const [defaultFilters, setDefaultFilters] = useState({
-    company: 'all',
     location: 'all'
   });
 
   useEffect(() => {
     const filteredAccounts = accounts.filter(account => {
-      if (company !== 'all' && account.namecompany !== company) {
-        return false;
-      }
       if (location !== 'all' && account.location !== location) {
         return false;
       }
       return true;
     });
     setFilteredAccounts(filteredAccounts);
-  }, [accounts, location, company]);
+  }, [accounts, location]);
 
   const columns = [
     { title: "Title", field: "title" },
@@ -66,6 +61,12 @@ function AllJobPost() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const locations = accounts.map((city) => city.location);
+    const uniqueLocations = [...new Set(locations)];
+    setListCity(uniqueLocations);
+  }, [accounts]);
+
   // Ham logout ve trang homelogin
   function handleLogOutUser() {
     localStorage.removeItem('user-save');
@@ -82,7 +83,6 @@ function AllJobPost() {
 
   
   const resetFilters = () => {
-    setCompany(defaultFilters.company);
     setLocation(defaultFilters.location);
   };
 
@@ -114,7 +114,8 @@ function AllJobPost() {
 
   function handleDeleteSelected(ids) {
     //http://localhost:5000/admin/posts/account/642559a2443d4e532fde640b,642643ad9a87b5af871a61ac
-    fetch(`http://localhost:5000/admin/posts/account/${ids.join(',')}`, {
+    console.log(ids);
+    fetch(`http://localhost:5000/admin/posts/jobpost/${ids.join(',')}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -135,7 +136,6 @@ function AllJobPost() {
       .catch(error => {
         console.error('There was an error!', error);
       });
- // đặt thời gian chờ là 2 giây
 }
 
 
@@ -156,8 +156,8 @@ function AllJobPost() {
             Pagination: (props) => <>
 
               <Grid container style={{ padding: 15 }}>
-                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
-                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Thống kê</Typography></Grid>
+                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Số dòng theo tiêu chí : {props.count}</Typography></Grid>
               </Grid>
               <Divider />
               <TablePagination {...props} />
@@ -174,37 +174,20 @@ function AllJobPost() {
               onClick: (event, rowData) => handleUpdate(rowData)
             },
             {
-              icon: () => <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                style={{ width: 100 ,fontSize:'15px' }}
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-              >
-                <MenuItem  style={{fontSize:'15px'}}  value={'all'}><em>Company</em></MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'aitech'}>aitech</MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'FPT'}>FPT</MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'TMA'}>TMA</MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'Viettel'}>Viettel</MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'Fujinet'}>Fujinet</MenuItem>
-              </Select>,
-              tooltip: "Filter Role",
-              isFreeAction: true
-            },
-            {
-              icon: () => <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                style={{ width: 100 ,fontSize:'15px' }}
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              >
-                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Location</em></MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'HCM'}>HCM</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'Hà Nội'}>Hà Nội</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'Hải Phòng'}>Hải Phòng</MenuItem>
-              </Select>,
+              icon: () => (
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  style={{ width: 110, fontSize: '14px' }}
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                >
+                  <MenuItem style={{ fontSize: '14px' }} value={'all'}><em>Khu vực</em></MenuItem>
+                  {listcity.map((city) => (
+                    <MenuItem key={city} style={{ fontSize: '14px' }} value={city}>{city}</MenuItem>
+                  ))}
+                </Select>
+              ),
               tooltip: "Filter Location",
               isFreeAction: true
             },

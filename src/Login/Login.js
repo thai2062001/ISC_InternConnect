@@ -56,11 +56,11 @@ return(
 			<img src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/82b8d8efd3b0ac6382b9d0d71a99c6cf9dcefa23/img/bg.svg"/>
 		</div>
 		<div className={cx('login-content')}>
-			<div >
+			<div className={cx('login-wrapper')}>
 				<img src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/82b8d8efd3b0ac6382b9d0d71a99c6cf9dcefa23/img/avatar.svg"/>
-				<h2 className={cx('title')}>Welcome</h2>
+				<h2 className={cx('title')}>Chào mừng</h2>
         
-           		<div className={cx('input-div one')}>
+           		<div className={cx('input-div','one')}>
            		   <div className={cx('i')}>
                   <FaUserAlt/>
            		   </div>
@@ -68,21 +68,24 @@ return(
            		   		<input placeholder='Email' type="text" className={cx('input-user')} onChange={(e)=>setEmail(e.target.value)}/>
            		   </div>
            		</div>
-           		<div className={cx('input-div pass')}>
+           		<div className={cx('input-div ','pass')}>
            		   <div className={cx('i')}> 
                   <FaLock/>
            		   </div>
            		   <div className={cx('div')}>
-           		    	<input placeholder='password' type="password" className={cx('input-user')} onChange={(e)=>setpassword(e.target.value)}/>
+           		    	<input placeholder='Mật khẩu' type="password" className={cx('input-user')} onChange={(e)=>setpassword(e.target.value)}/>
             	   </div>
             	</div>
               <div className={cx('wraper_link')}>
-              <a className={cx('forgot_password')} onClick={handleForgotPW}>Forgot Password?</a>
-              <a onClick={handleSignUp} >Sign Up?</a>
+              <a className={cx('forgot_password')} onClick={handleForgotPW}>Quên mật khẩu?</a>
+              <a onClick={handleSignUp} >Đăng kí</a>
 
               </div>
             	<ToastContainer/>
-            	<button onClick={HandleLogin} className={cx('btn')}>Login</button>
+              <div className={cx('button-wrapper')}>
+              <button onClick={HandleLogin} className={cx('btn')}>Đăng nhập</button>
+              </div>
+            
             </div>
         </div>
     </div>

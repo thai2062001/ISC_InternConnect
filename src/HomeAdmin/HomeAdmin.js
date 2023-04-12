@@ -69,8 +69,6 @@ function HomeAdmin() {
   useEffect(() => {
     const localstore = localStorage.getItem('user-save')
     const decodeUser = jwt_decode(localstore);
-    console.log(decodeUser.username);
-    console.log(decodeUser.email);
     setName(decodeUser.username)
   }, [])
   const URL = 'http://localhost:5000/admin/account'
@@ -101,9 +99,12 @@ function HomeAdmin() {
           const updatedRows = [...accounts];
           const index = updatedRows.findIndex(row => row.id === oldData.id);
           updatedRows[index] = { ...newData, id: oldData.id };
-          setAccount(updatedRows);
-           window.location.reload();
-          setFilteredAccounts(updatedRows)
+
+          setTimeout(() => {
+            setAccount(updatedRows)
+            setFilteredAccounts(updatedRows)
+          }, 2000)
+          window.location.reload();
           toast.success('Account updated successfully!', {
             position: "top-center",
             autoClose: 5000,
@@ -181,7 +182,6 @@ function HomeAdmin() {
 }
 
   
-  
 
   return (
     <div className="App">
@@ -199,8 +199,8 @@ function HomeAdmin() {
           components={{
             Pagination: (props) => <>
               <Grid container style={{ padding: 15 }}>
-                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
-                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Thống kê</Typography></Grid>
+                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Số dòng theo tiêu chí: {props.count}</Typography></Grid>
               </Grid>
               <Divider />
               <TablePagination {...props} />
@@ -219,7 +219,7 @@ function HomeAdmin() {
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
               >
-                <MenuItem  style={{fontSize:'15px'}}  value={'all'}><em>Role</em></MenuItem>
+                <MenuItem  style={{fontSize:'15px'}}  value={'all'}><em>Quyền</em></MenuItem>
                 <MenuItem  style={{fontSize:'15px'}} value={'Admin'}>Admin</MenuItem>
                 <MenuItem  style={{fontSize:'15px'}} value={'Company'}>Company</MenuItem>
                 <MenuItem  style={{fontSize:'15px'}} value={'School'}>School</MenuItem>
@@ -255,7 +255,7 @@ function HomeAdmin() {
               const token_create = localStorage.getItem('user-save');
               const roleValue = newRow.role;
               const data = { ...newRow, role: roleValue };
-              console.log(data); // check if role value is being passed correctly
+             
               fetch('http://localhost:5000/admin/account/create', {
                 method: 'POST',
                 headers: {
@@ -275,9 +275,9 @@ function HomeAdmin() {
                   const updatedRows = [...accounts, { id: data.id, ...newRow }]
                   setTimeout(() => {
                     setAccount(updatedRows)
-                    window.location.reload();
                     resolve()
                   }, 2000)
+                  window.location.reload();
                 })
                 .catch(error => {
                   console.error('Error:', error);

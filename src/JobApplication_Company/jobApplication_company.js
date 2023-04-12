@@ -37,19 +37,16 @@ function JobApplication() {
   const [filteredAccounts, setFilteredAccounts] = useState([]);
   const [school, setSchool] = useState('all')
   const [major, setMajor] = useState('all')
-  const [date, setDate] = useState('all')
   const [statusFitter, setStatusFitter] = useState('all')
   const [defaultFilters, setDefaultFilters] = useState({
     school: 'all',
     major: 'all',
-    date: 'all',
     statusFitter: 'all',
   });
 
   const resetFilters = () => {
     setSchool(defaultFilters.school);
     setMajor(defaultFilters.major);
-    setDate(defaultFilters.date);
     setStatusFitter(defaultFilters.statusFitter);
 
   };
@@ -63,9 +60,6 @@ function JobApplication() {
       if (major !== 'all' && account.major !== major) {
         return false;
       }
-      if (date !== 'all' && account.date !== date) {
-        return false;
-      }
       if (statusFitter !== 'all' && account.status !== statusFitter) {
         return false;
       }
@@ -73,7 +67,7 @@ function JobApplication() {
       return true;
     });
     setFilteredAccounts(filteredAccounts);
-  }, [accounts, school, date, major, statusFitter]);
+  }, [accounts, school, major, statusFitter]);
 
 
   const handleRefuse = (event, rowData) => {
@@ -285,24 +279,6 @@ function JobApplication() {
                 <MenuItem style={{fontSize:'15px'}} value={'Kế toán'}>Kế toán</MenuItem>
                 <MenuItem style={{fontSize:'15px'}} value={'cntt'}>cntt</MenuItem>
                 <MenuItem style={{fontSize:'15px'}} value={'Du lịch lữ hành'}>Du lịch lữ hành</MenuItem>
-
-
-              </Select>,
-              tooltip: "Filter Verify",
-              isFreeAction: true
-            },
-            {
-              icon: () => <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                style={{ width: 110 ,fontSize:'15px'}}
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              >
-                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Year</em></MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'2021'}>2021</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'2022'}>2022</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'2023'}>2023</MenuItem>
 
               </Select>,
               tooltip: "Filter Verify",

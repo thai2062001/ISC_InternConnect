@@ -208,7 +208,7 @@ function DetailCompany() {
 
                 <div className={cx('jobpost-recomment')}>
                     <ToastContainer />
-                    <h2 style={{ color: '#00133f', fontSize: '25px', marginLeft: '10px', marginTop: '45px', fontWeight: '500' }}>Các công việc tương tự</h2>
+                    <h2 style={{ color: '#00133f', fontSize: '25px', marginLeft: '10px', marginTop: '45px', fontWeight: '500' }}>Các công việc của công ty</h2>
                     <ul>
                         {recommentPosts.slice(0, 8).map((recommentPost) => {
                             return (
