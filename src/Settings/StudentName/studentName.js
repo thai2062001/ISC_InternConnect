@@ -126,6 +126,7 @@ function StudentName(props) {
         progress: undefined,
         theme: "light",
       });
+      window.location.reload();
     } catch (error) {
       console.log(error);
       toast.error(error.message || 'Failed to change Info!');

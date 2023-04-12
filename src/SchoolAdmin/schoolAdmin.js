@@ -24,6 +24,7 @@ function SchoolAdmin() {
     const [location, setLocation] = useState('all')
     const [selectedIds, setSelectedIds] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null);
+    const [listcity, setListCity] = useState([]);
 
     const columns = [
         {
@@ -60,6 +61,11 @@ function SchoolAdmin() {
         }
         fetchData();
     }, []);
+    useEffect(() => {
+        const locations = accounts.map((school) => school.location);
+        const uniqueLocations = [...new Set(locations)];
+        setListCity(uniqueLocations);
+      }, [accounts]);
 
     const token = localStorage.getItem('user-save');
     const decodeEmail = jwt_decode(token);
@@ -152,8 +158,8 @@ function SchoolAdmin() {
                         Pagination: (props) => <>
 
                             <Grid container style={{ padding: 15 }}>
-                                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
-                                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+                                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Thống kê</Typography></Grid>
+                                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Số dòng theo tiêu chí : {props.count}</Typography></Grid>
                             </Grid>
                             <Divider />
                             <TablePagination {...props} />
@@ -161,22 +167,23 @@ function SchoolAdmin() {
                     }}
                     actions={[
                         {
-                            icon: () => <Select
+                            icon: () => (
+                              <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                style={{ width: 110 ,fontSize:'15px'}}
+                                style={{ width: 110, fontSize: '14px' }}
                                 value={location}
                                 onChange={(e) => setLocation(e.target.value)}
-                            >
-                                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Location</em></MenuItem>
-                                <MenuItem style={{fontSize:'15px'}} value={'HCM'}>HCM</MenuItem>
-                                <MenuItem style={{fontSize:'15px'}} value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
-                                <MenuItem style={{fontSize:'15px'}} value={'Hà Nội'}>Hà Nội</MenuItem>
-                                <MenuItem style={{fontSize:'15px'}} value={'Hải Phòng'}>Hải Phòng</MenuItem>
-                            </Select>,
+                              >
+                                <MenuItem style={{ fontSize: '14px' }} value={'all'}><em>Khu vực</em></MenuItem>
+                                {listcity.map((city) => (
+                                  <MenuItem key={city} style={{ fontSize: '14px' }} value={city}>{city}</MenuItem>
+                                ))}
+                              </Select>
+                            ),
                             tooltip: "Filter Location",
                             isFreeAction: true
-                        },
+                          },
                         {
                             icon: () => <img style={{ width: '25px', height: '25px' }} src="https://img.icons8.com/color/48/null/ms-excel.png" />,// you can pass icon too
                             tooltip: "Export to Excel",

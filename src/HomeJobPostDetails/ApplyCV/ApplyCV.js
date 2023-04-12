@@ -92,7 +92,7 @@ function ApplyCV(props) {
             <img src="https://icons.veryicon.com/png/o/education-technology/edit-job-operator/extract-2.png"/> 
             <input className={cx('choose-file')} type="file" name="CV" id="CV" ref={cvInputRef} />
           </div>
-          <button type="submit" >
+          <button className={cx('submit-button')} type="submit" >
             Gửi
           </button>
           <ToastContainer />

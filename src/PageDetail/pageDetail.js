@@ -151,7 +151,7 @@ function PageDetail() {
       if (editButton) {
         editButton.removeEventListener("click", function () {
           document.getElementById('title').readOnly = false;
-          document.getElementById('salary').readOnly = false;
+          document.getElementById('salary').disabled = false;
           document.getElementById('location').readOnly = false;
           document.getElementById('gender').readOnly = false;
           document.getElementById('wokingformInput').readOnly = false;
@@ -222,7 +222,7 @@ function PageDetail() {
       });
   }
 
-  console.log(accounts.place);
+  console.log(accounts);
 
   return (
     <div className={cx('wrapper')} >
@@ -250,7 +250,7 @@ function PageDetail() {
           </div>
           <div className={cx('workingForm')}>
             <label className={cx('label-des')} for="workingform">Hình thức</label>
-            <select className={cx('working-input')} disabled id="wokingformInput" name="workingform"> onChange={(e) => setAccount({ ...accounts, workingform: e.target.value })}
+            <select className={cx('working-input')} value={accounts.workingform} disabled id="wokingformInput" name="workingform"> onChange={(e) => setAccount({ ...accounts, workingform: e.target.value })}
               <option value="Bán thời gian">Bán thời gian</option>
               <option value="Toàn thời gian">Toàn thời gian</option>
             </select>
@@ -277,8 +277,8 @@ function PageDetail() {
             </select>
           </div>
           <div className={cx('gender-wrapper')}>
-            <label className={cx('label-des')} for="gender">Trợ cấp</label>
-            <select id="salary" name="gender" disabled className={cx('salary-input')}> value={accounts.salary} disabled onChange={(event) => setAccount({ ...accounts, salary: event.target.value })}
+            <label className={cx('label-des')} for="salary">Trợ cấp</label>
+            <select id="salary" name="salary" className={cx('salary-input')} value={accounts.salary} disabled onChange={(e) => setAccount({ ...accounts, salary: e.target.value })}>
               <option value="0-3Tr VND">0-2Tr VND</option>
               <option value="1Tr-3Tr VND">1Tr-3Tr VND</option>
               <option value="2Tr-4Tr VND">2Tr-4Tr VND</option>

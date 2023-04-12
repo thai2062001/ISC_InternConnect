@@ -51,7 +51,7 @@ function ReportAdmin() {
             title: "Email sinh viên", field: "Email",
         },
         {
-            title: "Tiêu đề", field: "Title",
+            title: "Tiêu đề", field: "Title" ,defaultGroupOrder:1,
 
         },
         {
@@ -126,8 +126,8 @@ function ReportAdmin() {
                         components={{
                             Pagination: (props) => <>
                                 <Grid container style={{ padding: 15 }}>
-                                    <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
-                                    <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+                                    <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Thống kê</Typography></Grid>
+                                    <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Số dòng theo tiêu chí : {props.count}</Typography></Grid>
                                 </Grid>
                                 <Divider />
                                 <TablePagination {...props} />

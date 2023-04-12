@@ -60,7 +60,7 @@
   
   // chỗ css font chữ header
   .header__item a {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: #333;
     text-decoration: none;
   }
@@ -73,6 +73,9 @@
     display: flex;
     align-items: center;
     position: relative;
+  }
+  .header__actions span{
+    font-size: 1.8rem;
   }
   .header__actions .menu_item{
     position: absolute;
@@ -110,7 +113,7 @@
   
   .header__login {
     margin-right: 1rem;
-    font-size: 1.5rem;
+    font-size:2rem;
     color: #333;
     cursor: pointer;
     background-color: transparent;

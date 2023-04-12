@@ -184,9 +184,9 @@ function MajorAdmin() {
                   console.log(updatedRows);
                   setTimeout(() => {
                     setAccount(updatedRows)
-                    window.location.reload();
                     resolve()
                   }, 2000)
+                  window.location.reload();
                 })
                 .catch(error => {
                   console.error(error);
@@ -211,8 +211,8 @@ function MajorAdmin() {
                     setTimeout(() => {
                       setAccount(updatedRows)
                       resolve()
-                      window.location.reload();
                     }, 2000)
+                    // window.location.reload();
                   } else {
                     reject(response.statusText)
                   }

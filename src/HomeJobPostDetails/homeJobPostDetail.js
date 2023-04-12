@@ -24,6 +24,7 @@ function HomeJobPostDetail() {
     const [company, setCompany] = useState({})
     const [hasUserData, setHasUserData] = useState(!!localStorage.getItem('user'));
     const [data, setData] = useState({});
+    const [isFavorite, setIsFavorite] = useState(false);
 
 
 
@@ -234,7 +235,7 @@ function HomeJobPostDetail() {
                 if (index > -1) {
                     student.favorite.splice(index, 1);
                 }
-                // Update the server
+
                 fetch(urlDelete, {
                     method: "PUT",
                     headers: {
@@ -255,6 +256,7 @@ function HomeJobPostDetail() {
                             progress: undefined,
                             theme: "light",
                         });
+                        setIsFavorite(false)
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -281,7 +283,9 @@ function HomeJobPostDetail() {
                             draggable: true,
                             progress: undefined,
                             theme: "light",
+
                         });
+                        setIsFavorite(true);
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -393,7 +397,10 @@ function HomeJobPostDetail() {
                                 )}
                                 <div className={cx('icon_wrapper-like-report')}>
                                     <span onClick={handleFavorite} title="Yêu thích">
-                                        <img className={cx('like_icon')} src="https://img.icons8.com/material-outlined/24/null/hearts.png" />
+                                        {isFavorite ? (
+                                            <img className={cx('like_icon')} src="https://img.icons8.com/material-sharp/24/null/hearts.png"/>
+                                        ) : <img className={cx('like_icon')} src="https://img.icons8.com/material-outlined/24/null/hearts.png" />}
+
                                     </span>
                                     <span onClick={handleReport} title="Báo xấu">
                                         <img className={cx('flag_icon')} src="https://img.icons8.com/dotty/80/null/flag.png" />
@@ -565,7 +572,7 @@ function HomeJobPostDetail() {
                             )
                         })}
                     </ul>
-                    <button>Xem thêm</button>
+
                 </div>
             </div>
 
