@@ -377,7 +377,7 @@ function Home() {
                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
                     <span className={cx('detail_span', 'salary')}>{jobPost.salary}</span>
                   </div>
-                  <button onClick={() => handleDetail(jobPost._id)} className={cx('apply_button')}>Xem chi tiết</button>
+
                   {/* <div onClick={()=>handleFilterDetails(jobPost.major)}>
                   <span style={{display:'block'}} className={cx('major-span')}>{jobPost.major}</span>
                   </div> */}
@@ -388,7 +388,8 @@ function Home() {
                   </div>
                   <div className={cx('wrapper_date')}>
                     <span> Cập nhật: {formatDate(jobPost.DateSubmitted)}</span>
-                  </div>
+                  </div>    
+                  <button onClick={() => handleDetail(jobPost._id)} className={cx('apply_button')}>Xem chi tiết</button>
                   
                 </div>
               </div>

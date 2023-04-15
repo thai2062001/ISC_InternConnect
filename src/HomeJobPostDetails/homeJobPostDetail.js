@@ -364,7 +364,7 @@ function HomeJobPostDetail() {
                         <img src={jobPosts.logo} />
                         <div className={cx('company-title')}>
                             <div className={cx('info-title')}>
-                                <div><h1>{jobPosts.title}</h1></div>
+                                <div><h2>{jobPosts.title}</h2></div>
                                 <div onClick={() => handleCompany(jobPosts.namecompany)} ><span className={cx('namecompany_span')}>{jobPosts.namecompany}</span></div>
                             </div>
                             <div className={cx('apply_button')}>
@@ -484,14 +484,8 @@ function HomeJobPostDetail() {
                                     </div>
 
                                 </div>
-
-
-
                             </div>
-
                         </div>
-
-
 
                         <div className={cx('content')}>
                             <div className={cx('benefit')}>
@@ -511,8 +505,6 @@ function HomeJobPostDetail() {
                                 <span className={cx('span-title')}>Yêu cầu</span>
                                 <p>{jobPosts.required}</p>
                             </div>
-
-
                         </div>
                     </div>
 

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { FaUser } from "react-icons/fa";
 import MaterialTable from "material-table";
 import { Mail as MailIcon } from '@material-ui/icons';
-import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
+import { Grid, TablePagination, Typography, Divider } from "@material-ui/core";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as XLSX from 'xlsx';
@@ -99,11 +99,13 @@ function ReportAdmin() {
     }
     const handleSendMail = () => {
         setPopup(true);
+        
     }
 
     return (
         <div className="App">
             <div className={cx('wrapper')}>
+            <ToastContainer />
                 <h1 align="center">Trang quản lý bài đăng phản hồi</h1>
                 <div className={cx('user_log')}>
                     <h2 className={cx('name_set')}> <FaUser /> {name}</h2>
@@ -184,7 +186,7 @@ function ReportAdmin() {
                             exportButton: true
                         }}
                     />
-                    <ToastContainer />
+                   
                 </div>
             </div>
             <link

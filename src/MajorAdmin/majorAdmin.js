@@ -116,7 +116,7 @@ function MajorAdmin() {
   return (
     <div className="App">
       <div className={cx('wrapper')}>
-        <h1 align="center">Trang quản lý Major</h1>
+        <h1 align="center">Trang quản lý nghề nghiệp</h1>
         <div className={cx('user_log')}>
           <h2 className={cx('name_set')}> <FaUser/> {name}</h2>
         </div>
@@ -126,21 +126,21 @@ function MajorAdmin() {
       <div className={cx('table-wrapper')}>
         <MaterialTable className={cx('Table')}
           data={accounts}
-          title='Major Data'
+          title='Bảng nghề nghiệp'
           columns={columns}
           components={{
             Pagination: (props) => <>
 
               <Grid container style={{ padding: 15 }}>
-                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
-                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Thống kê</Typography></Grid>
+                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Số dòng theo tiêu chí : {props.count}</Typography></Grid>
               </Grid>
               <Divider />
               <TablePagination {...props} />
             </>
           }}
           onSelectionChange={(rows) => {
-            // Update selectedIds state when user selects or deselects a row
+            // Update selectedIds state when user selects or deselects a rows
             setSelectedIds(rows.map((row) => row._id));
           }}
           actions={[
