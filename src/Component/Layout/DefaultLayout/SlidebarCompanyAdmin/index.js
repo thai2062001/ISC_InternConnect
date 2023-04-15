@@ -22,32 +22,32 @@ function Slidebar() {
       <li>
         <a href="/companyadmin">
           <i className={cx('bx bxs-school')}></i>
-          <span className={cx('links_name')}>Job Post</span>
+          <span className={cx('links_name')}>Quản lý bài đăng</span>
         </a>
-         <span className={cx('tooltip')}>Job Post</span>
+         <span className={cx('tooltip')}>Quản lý bài đăng</span>
       </li>
       <li>
        <a href="/companyadmin/jobapp">
          <i className={cx('bx bxs-school')} ></i>
-         <span className={cx('links_name')}>Job Application</span>
+         <span className={cx('links_name')}>Quản lý hồ sơ ứng viên</span>
        </a>
-       <span className={cx('tooltip')}>Job Application</span>
+       <span className={cx('tooltip')}>Quản lý hồ sơ ứng viên</span>
      </li>
       <li>
        <a href="/companyadmin/companyinfo">
          <i className={cx('bx bxs-school')} ></i>
-         <span className={cx('links_name')}>Profile</span>
+         <span className={cx('links_name')}>Thiết lập thông tin</span>
        </a>
-       <span className={cx('tooltip')}>Profile</span>
+       <span className={cx('tooltip')}>Thiết lập thông tin</span>
      </li>
 
      <li >
      <a href="/admin/adminlogin" onClick={handleLogOutUser}>
      <div className={cx('profile-details')}></div>
          <i className={cx('bx bx-log-out')} id="log_out" ></i>
-         <span className={cx('links_name')}>Logout</span>
+         <span className={cx('links_name')}>Đăng xuất</span>
      </a>
-     <span className={cx('tooltip')}>Logout</span>
+     <span className={cx('tooltip')}>Đăng xuất</span>
      </li>
 
     </ul>

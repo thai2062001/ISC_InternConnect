@@ -55,8 +55,8 @@ function CompanyAdmin() {
       }
     },
     {
-      title: "Địa chỉ",
-      field: "location",
+      title: "Khu vực",
+      field: "location",defaultGroupOrder:1,
       validate: rowData => {
         if (!rowData.location) {
           return "Vui lòng nhập địa chỉ."
@@ -66,6 +66,19 @@ function CompanyAdmin() {
         return true;
       }
     },
+    {
+      title: "Địa chỉ",
+      field: "place",
+      validate: rowData => {
+        if (!rowData.place) {
+          return "Vui lòng nhập địa chỉ."
+        } else if (rowData.place.length < 3) {
+          return "Địa chỉ phải bắt đầu từ một chữ cái và có độ dài tối thiểu là 3."
+        }
+        return true;
+      }
+    },
+
     {
       title: "Điện thoại",
       field: "phonecompany",
