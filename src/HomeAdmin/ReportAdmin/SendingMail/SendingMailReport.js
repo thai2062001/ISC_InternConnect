@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from './SendingMailReport.module.scss'
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-
+import { ToastContainer, toast } from 'react-toastify';
 const cx = classNames.bind(styles)
 
 function SendingMailReport(props) {
@@ -51,7 +51,12 @@ function SendingMailReport(props) {
             },
             body: JSON.stringify(payload)
         })
-            .then(response => response.json())
+            .then(response => {
+                response.json()
+                toast.success('Gửi mail thành công')
+            }
+            )
+
             .then(data => console.log(data))
             .catch(error => console.error(error));
 
@@ -65,12 +70,13 @@ function SendingMailReport(props) {
     return (
         <div className={cx('sending-mail')}>
             <div className={cx('sending-mail-content')}>
-               <div className={cx('title')}>
-               <h1>Gửi mail phản hồi</h1>
-               </div>
+                <div className={cx('title')}>
+                    <h1>Gửi mail phản hồi</h1>
+                </div>
                 <span className={cx('close')} onClick={handleOnClose}>
                     &times;
                 </span>
+                <ToastContainer/>
                 <form className={cx('wrapper')} onSubmit={handleFormSubmit}>
                     <div className={cx('wrapper-content')}>
                         <label htmlFor="email">Email Gửi:</label>
