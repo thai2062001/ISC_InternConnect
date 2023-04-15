@@ -15,6 +15,7 @@ function IntroduceCompany() {
     const [companyLogo, setCompanyLogo] = useState()
     const [email, setEmail] = useState('');
     const [location, setLocation] = useState('');
+    const [place, setPlace] = useState('');
     const [website, setWebsite] = useState('');
     const [phone, setPhone] = useState('');
     const [introduce, setIntroduce] = useState('');
@@ -46,6 +47,7 @@ function IntroduceCompany() {
                 setEmail(json.profile[0].emailcompany);
                 setWebsite(json.profile[0].websitecompany);
                 setLocation(json.profile[0].location);
+                setPlace(json.profile[0].place);
                 setPhone(json.profile[0].phonecompany);
                 setIntroduce(json.profile[0].introduce);
                 setSlogan(json.profile[0].slogan);
@@ -107,6 +109,7 @@ function IntroduceCompany() {
                 location: location,
                 websitecompany: website,
                 introduce: introduce,
+                place:place,
                 slogan: slogan
             })
         })
@@ -203,6 +206,10 @@ function IntroduceCompany() {
                             </select>
                         </div>
                         <div className={cx('form-group')}>
+                            <label htmlFor="phonecompany" className={cx('label')}>Địa chỉ</label>
+                            <input readOnly={!isEditMode} value={place} type="tel" className={cx('input')} id="placecompany" onChange={(e) => setPlace(e.target.value)} />
+                        </div>
+                        <div className={cx('form-group')}>
                             <label htmlFor="phonecompany" className={cx('label')}>Số điện thoại</label>
                             <input readOnly={!isEditMode} value={phone} type="tel" className={cx('input')} id="phonecompany" onChange={(e) => setPhone(e.target.value)} />
                         </div>
@@ -216,7 +223,7 @@ function IntroduceCompany() {
                         </div>
                         <div className={cx('form-group')}>
                             <label htmlFor="slogan" className={cx('label')}>Slogan</label>
-                            <textarea readOnly={!isEditMode} value={slogan} className={cx('textarea')} id="slogan" onChange={(e) => setSlogan(e.target.value)} />
+                            <textarea readOnly={!isEditMode} value={slogan} className={cx('textarea','slogan')} id="slogan" onChange={(e) => setSlogan(e.target.value)} />
                         </div>
                     </div>
                 )}
@@ -226,9 +233,9 @@ function IntroduceCompany() {
                         onClick={() => setIsEditMode(!isEditMode)}
                         className={cx('btn-edit')}
                     >
-                        {isEditMode ? 'Cancel' : 'Edit'}
+                        {isEditMode ? 'Hủy bỏ' : 'Chỉnh sửa'}
                     </button>
-                    <button type="submit" className={cx('btn')} onClick={handleSubmit}>Submit</button>
+                    <button type="submit" className={cx('btn')} onClick={handleSubmit}>Lưu thay đổi</button>
 
                 </div>
 
