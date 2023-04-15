@@ -67,7 +67,7 @@ function Slidebar() {
        <i className='bx bx-list-ul' ></i>
          <span className={cx('links_name')}>Quản lý báo cáo </span>
        </a>
-       <span className={cx('tooltip')}>Quản lý báo cáo</span>
+       <span className={cx('tooltip')}>Quản lý báo cáo </span>
      </li>
 
      <li className={cx('profile')}>
