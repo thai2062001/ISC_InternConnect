@@ -15,10 +15,12 @@ function StudentName(props) {
   const [address, setAddress] = useState("");
   const [Code, setCode] = useState("");
   const [Major, setMajor] = useState("");
+  const [phone, setPhone] = useState("");
   const [School, setSchool] = useState("");
   const [cities, setCities] = useState([]);
   const [listMajor, setListMajor] = useState([]);
   const [school, setListSchool] = useState([]);
+  const [avatar, setAvatar] = useState()
 
 
 
@@ -33,7 +35,7 @@ function StudentName(props) {
     setCode(props.code)
     setMajor(props.major)
     setSchool(props.school)
-
+    setPhone(props.phoneNumber)
   }, [])
   useEffect(() => {
     const fecthData = async () => {
@@ -90,10 +92,11 @@ function StudentName(props) {
     event.preventDefault();
     const URL = 'http://localhost:5000/update-profile'
     const info_token = localStorage.getItem('user');
-
     const data = {
+      avatar:avatar,
       studentname: studentName,
       gender: gender,
+      studentphone:phone,
       address: address,
       code: Code,
       major: Major,
@@ -132,8 +135,8 @@ function StudentName(props) {
       toast.error(error.message || 'Failed to change Info!');
     }
   }
-const handleEdit= (event)=>{
-  event.preventDefault();
+  const handleEdit = (event) => {
+    event.preventDefault();
 
     const editButton = document.querySelector('#edit-button');
     let isEditing = false;
@@ -147,6 +150,7 @@ const handleEdit= (event)=>{
           document.getElementById('school').disabled = true;
           document.getElementById('major').disabled = true;
           document.getElementById('Code').readOnly = true;
+          document.getElementById('phone').readOnly = true;
           isEditing = false;
         } else {
 
@@ -156,6 +160,7 @@ const handleEdit= (event)=>{
           document.getElementById('school').disabled = false;
           document.getElementById('major').disabled = false;
           document.getElementById('Code').readOnly = false;
+          document.getElementById('phone').readOnly = false;
           isEditing = true;
         }
       });
@@ -173,11 +178,24 @@ const handleEdit= (event)=>{
           document.getElementById('school').disabled = false;
           document.getElementById('major').disabled = false;
           document.getElementById('Code').readOnly = false;
+          document.getElementById('phone').readOnly = false;
         });
       }
     };
   };
+  useEffect(() => {
+    return () => {
+      avatar && URL.revokeObjectURL(avatar.preview)
+    }
+  }, [avatar])
 
+  const handlePreview = (e) => {
+    const file = e.target.files[0]
+    file.preview = URL.createObjectURL(file);
+    setAvatar(file)
+    console.log(file);
+    
+  }
 
   return (
     <div>
@@ -190,6 +208,17 @@ const handleEdit= (event)=>{
         <form className={cx('change-password-form')}>
           <h2>Cập nhật thông tin cá nhân</h2>
           <div className={cx('wrapper')}>
+
+            <div className={cx('input-div', 'wrapper-avatar')}>
+
+              <input className={cx('avatar-input')} id='avatar_input' type='file' onChange={handlePreview} />
+              <label className={cx('label-avatar')} htmlFor='avatar_input'>Chọn ảnh</label>
+
+              {avatar && (
+                <img src={avatar.preview} className={cx('avatar-preview')} />
+              )}
+            </div>
+
             <div className={cx('input-div')}>
               <label htmlFor="studentName"> Họ tên:</label>
               <input
@@ -209,6 +238,19 @@ const handleEdit= (event)=>{
                 <option value="Nữ">Nữ</option>
                 <option value="Khác">Khác</option>
               </select>
+            </div>
+
+            <div className={cx('input-div')}>
+              <label htmlFor="phone"> Số điện thoại:</label>
+              <input
+              readOnly
+                className={cx('pass_input')}
+                type="text"
+                id="phone"
+                value={phone}
+                onChange={(event) => setPhone(event.target.value)}
+                required
+              />
             </div>
 
             <div className={cx('input-div')}>
@@ -244,7 +286,7 @@ const handleEdit= (event)=>{
               </select>
             </div>
             <div className={cx('input-div')}>
-              <label htmlFor="Code"> School:</label>
+              <label htmlFor="Code"> Trường học:</label>
               <select disabled id="school" className={cx('pass_input')} value={School} required onChange={(event) => setSchool(event.target.value)}>
                 <option value="">Chọn Trường</option>
                 {school.map(schoolItem => (

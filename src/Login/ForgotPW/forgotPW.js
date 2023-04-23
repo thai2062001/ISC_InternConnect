@@ -32,13 +32,12 @@ function ForgotPW() {
         .catch(error => {
           console.error('There was an error!', error);
         });
-
     }
+
     return ( 
         <div className={cx('forgot-password-container')}>
-
           <div className={cx('forgot-password-popup')}>
-          <h1>Forgot Password</h1>
+          <h1>Quên mật khẩu</h1>
             <label htmlFor="email">Nhập email:</label>
             <input 
               id="email"
@@ -46,7 +45,7 @@ function ForgotPW() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <button onClick={()=>handleForgot(email)}>Reset Password</button>
+            <button onClick={()=>handleForgot(email)}>Đặt lại mật khẩu</button>
           </div>
       </div>
     );

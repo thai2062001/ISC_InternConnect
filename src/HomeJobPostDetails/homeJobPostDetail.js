@@ -300,10 +300,6 @@ function HomeJobPostDetail() {
         window.location.href = path
     }
     const handleCompany = (companyLink) => {
-        // const path = `/listcompany/${id}`
-        // navigate(path)
-        // window.location.href = path
-
         const companyApi = 'http://localhost:5000/listcompany'
         const fetchData = async () => {
             const result = await fetch(companyApi, {
@@ -326,7 +322,6 @@ function HomeJobPostDetail() {
             })
         }
         fetchData();
-
     }
 
 

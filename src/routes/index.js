@@ -1,7 +1,6 @@
 
 import Home from './../Home/Home';
 import HeaderOnly from '../Component/Layout/HeaderOnly';
-import Profile from '../Profile/Profile';
 import HomeAdmin from '../HomeAdmin/HomeAdmin';
 import Login from '../Login/Login';
 import SignOut from '../SignOut/SignOut';
@@ -55,7 +54,6 @@ const publicRouters = [
     // {path: '/home',component: HomeLogin,layout:HeaderLogin},
     {path: '/settings',component: AccountSettings,layout: null},
     {path: '/createcv',component: CreateCV,layout: null},
-    {path: '/profile',component: Profile},
     {path: '/login',component: Login,layout: null},
     {path: '/auth/forgot-password/',component: ForgotPW,layout: null},
     {path: '/auth/forgot-password/:email',component:AuForgot ,layout: null},

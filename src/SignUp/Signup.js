@@ -63,19 +63,23 @@ function Signup() {
 
     for (let i = 0; i < account.length; i++) {
       if (account[i].username === username) {
-        toast.error("An account with this username already exists!");
+        toast.error("Tên tài khoản đã tồn tại");
         return;
       }
       else if (account[i].email === email) {
-        toast.error("An account with this email already exists!");
+        toast.error("Email đã tồn tại");
         return;
       }
       else if (account[i].phonenumber === phonenumber) {
-        toast.error("An account with this phone number already exists!");
+        toast.error("Số điện thoại đã tồn tại");
         return;
       }
     }
 
+    if (password !== confpassword) {
+      toast.error("Mật khẩu không trùng khớp");
+      return;
+    }
     fetch('http://localhost:5000/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -87,8 +91,6 @@ function Signup() {
       })
       .catch(error => console.error(error));
   };
-
-
   return (
     <div>
       <img
@@ -201,19 +203,18 @@ function Signup() {
                   type="radio"
                   id="gender"
                   className={cx("input-gender")}
-                  value="Male"
-
+                  value="Nam"
                 />
-                <span className={cx("gender")}>Male</span>
+                <span className={cx("gender")}>Nam</span>
                 <input
                   name="gender"
                   onChange={(e) => (setGender(e.target.value))}
                   type="radio"
                   id="gender"
                   className={cx("input-gender")}
-                  value="Female"
+                  value="Nữ"
                 />
-                <span className={cx("gender")}>Female</span>
+                <span className={cx("gender")}>Nữ</span>
               </div>
             </div>
             <button onClick={() => { HandleSignup(email) }} className={cx("btn")}>
@@ -222,7 +223,6 @@ function Signup() {
           </div>
         </div>
       </div>
-
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/icon?family=Material+Icons"

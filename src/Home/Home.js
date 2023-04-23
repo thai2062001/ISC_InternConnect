@@ -29,9 +29,6 @@ function Home() {
   const [cities, setCities] = useState([]);
 
 
-
-
-
   const cityapi = 'http://localhost:5000/listareas'
   useEffect(() => {
     const fetchData = async () => {
@@ -275,8 +272,8 @@ function Home() {
         })
     }
     fetchData();
-
 }
+
   return (
     <div className={cx('container_full')}>
       <Helmet>
@@ -344,10 +341,7 @@ function Home() {
             <span className={cx('span-clear')} onClick={handleClear}>Xóa bộ lọc</span>
           </div>
         </div>
-
       </section>
-
-
 
       <div className={cx('wrapper_jobpost')}>
         <div className={cx('title_count')} style={{ marginTop: '80px' }} >
