@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import jwt_decode from "jwt-decode";
 import moment from 'moment';
-
+import { useNavigate } from "react-router-dom";
 import { Helmet } from 'react-helmet';
 import ReactPaginate from 'react-paginate';
 
@@ -19,6 +19,8 @@ function Favorite_JobApp() {
   const applicationsPerPage = 4;
   const pagesVisited = pageNumber * applicationsPerPage;
 
+  const navigate = useNavigate();
+  const jobpost_token = localStorage.getItem('user');
   const localstore = localStorage.getItem('user')
   const decodeEmail = jwt_decode(localstore);
   const emailUser = decodeEmail.email;
@@ -69,6 +71,30 @@ function Favorite_JobApp() {
   const handleJobpost = (id) => {
     window.location.href = `${id}`
   }
+  const handleCompany = (companyLink) => {
+    const companyApi = 'http://localhost:5000/listcompany'
+    const fetchData = async () => {
+        const result = await fetch(companyApi, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jobpost_token}`
+            },
+        })
+        result.json().then(json => {
+            const company = json.find(item => item.namecompany === companyLink);
+            if (company) {
+                console.log(company._id);
+                const path = `/listcompany/${company._id}`
+                navigate(path)
+                window.location.href = path
+            } else {
+                console.error('Không tồn tại công ty có tên này');
+            }
+        })
+    }
+    fetchData();
+}
   return (
     <div className={cx('wrapper')}>
       <div className={cx('container')}>
@@ -89,7 +115,7 @@ function Favorite_JobApp() {
                   <div className={cx('title-div')}>
                     <span className={cx('jobapp_span', 'title_span')}>{jobApp.title}</span>
                   </div>
-                  <div className={cx('jobpost-icon')}>
+                  <div onClick={() => handleCompany(jobApp.namecompany)} className={cx('jobpost-icon')}>
                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
                     <span className={cx('jobapp_span', 'company_span')}> {jobApp.namecompany}</span>
                   </div>

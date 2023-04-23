@@ -130,7 +130,6 @@ function IntroduceCompany() {
             .catch(error => {
                 toast.error('Lỗi khi cập nhật thông tin công ty');
             });
-
     };
 
 

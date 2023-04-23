@@ -21,21 +21,48 @@ function Login() {
   const [account,setAccount] = useState([])
   const [showPopup, setShowPopup] = useState(false)
 
-   async function HandleLogin(e){
+  const URL = 'http://localhost:5000/admin/account'
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch(URL)
+      result.json().then(json => {
+        setAccount(json)
+      })
+    }
+    fetchData();
+  }, [])
+  async function HandleLogin(e){
     try{
-      const response = await axios.post('http://localhost:5000/auth/login', {email,password})
-      const token = response.data.token.accessToken
-      var decoded = jwt_decode(token);
-      const localstored = localStorage.setItem('user',token)
-      if(decoded.role === 'Student')
-      {
-        window.location.href = '/'
+      if(!email && !password){
+        toast.info('Chưa nhập tài khoản và mật khẩu!')
+        return
+      } 
+      if(!email){
+        toast.info('Chưa nhập tài khoản!')
+        return
+      }
+      if(!password){
+        toast.info('Chưa nhập mật khẩu')
+        return
+      }
+      
+      else {
+        const response = await axios.post('http://localhost:5000/auth/login', {email,password})
+        const token = response.data.token.accessToken
+        var decoded = jwt_decode(token);
+        const localstored = localStorage.setItem('user',token)
+        if(decoded.role === 'Student')
+        {
+          window.location.href = '/'
+        }
       }
     }
     catch(error) {
       console.log(error);
+      toast.warning("Tài khoản hoặc mật khẩu không chính xác!");
     };
-   }
+  }
+  
    
    const handleForgotPW = ()=>{
     window.location.href='/auth/forgot-password'
@@ -47,7 +74,7 @@ function Login() {
 
 return(
       <div>
-              <Helmet>
+          <Helmet>
         <title>Đăng nhập</title>
       </Helmet>
       <img className={cx('wave')} src="https://github.com/sefyudem/Responsive-Login-Form/blob/master/img/wave.png?raw=true"/>

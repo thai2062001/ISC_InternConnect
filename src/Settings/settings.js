@@ -100,7 +100,9 @@ function Settings() {
       {info.profile && (
         <Popup open={showPopupInfo} onClose={() => handlePopupFalse()}>
           <StudentName
+            avatar={info.profile.avatar}
             name={info.profile.studentname}
+            phoneNumber={info.profile.studentphone}
             address={info.profile.address}
             gender={info.profile.gender}
             code={info.profile.code}
