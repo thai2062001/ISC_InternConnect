@@ -1,10 +1,8 @@
 import classNames from "classnames/bind";
 import styles from "./favorite_JobApp.module.scss";
 import React, { useState, useEffect, useRef } from "react";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import jwt_decode from "jwt-decode";
-import moment from 'moment';
 import { useNavigate } from "react-router-dom";
 import { Helmet } from 'react-helmet';
 import ReactPaginate from 'react-paginate';

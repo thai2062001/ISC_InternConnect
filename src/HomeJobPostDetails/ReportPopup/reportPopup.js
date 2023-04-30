@@ -72,7 +72,7 @@ function ReportPopup(props) {
 
     return (
         <div className={cx('wrapper-popup-report')}>
-            <h2>Report bài đăng</h2>
+            <h2>Báo cáo bài đăng</h2>
             <span className={cx("close")} onClick={handleOnClose}>
                 &times;
             </span>
@@ -83,25 +83,25 @@ function ReportPopup(props) {
                     <input type="email" id="email" name="email" className={cx('form-control')} value={email} onChange={handleEmailChange} required />
                 </div>
                 <div className={cx('form-group')}>
-                    <label className={cx('label-content')} htmlFor="title">Title bài đăng</label>
+                    <label className={cx('label-content')} htmlFor="title">Tiêu đề bài đăng</label>
                     <input type="text" id="title" name="title" className={cx('form-control')} value={title} onChange={handleTitleChange} required />
                 </div>
                 <div className={cx('form-group')}>
-                    <label htmlFor="reason">Lý do report</label>
+                    <label htmlFor="reason">Lý do báo cáo</label>
                     <div className={cx('form-check')}>
                         <input type="radio" id="reason-spam" name="reason" value="Lừa đảo" className={cx('form-check-input')} onChange={handleChecked} required />
-                        <label htmlFor="reason-spam" className={cx('form-check-label')}>Lừa đảo</label>
+                        <label htmlFor="reason-spam" className={cx('form-check-label')}> Lừa đảo</label>
                     </div>
                     <div className={cx('form-check')}>
                         <input type="radio" id="reason-violation" name="reason" value="Vi phạm chính sách" className={cx('form-check-input')} onChange={handleChecked} required />
-                        <label htmlFor="reason-violation" className={cx('form-check-label')}>Vi phạm chính sách</label>
+                        <label htmlFor="reason-violation" className={cx('form-check-label')}> Vi phạm chính sách</label>
                     </div>
                     <div className={cx('form-check')}>
                         <input type="radio" id="reason-inappropriate" name="reason" value="Khác" className={cx('form-check-input')} onChange={handleChecked} required />
-                        <label htmlFor="reason-inappropriate" className={cx('form-check-label')}>Khác</label>
+                        <label htmlFor="reason-inappropriate" className={cx('form-check-label')}> Khác</label>
                     </div>
                 </div>
-                <button type="submit" className={cx('btn', 'btn-primary')}>Gửi report</button>
+                <button type="submit" className={cx('btn', 'btn-primary')}> Gửi báo cáo</button>
             </form>
         </div>
     );

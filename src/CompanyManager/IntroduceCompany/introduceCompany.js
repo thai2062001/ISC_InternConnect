@@ -4,8 +4,6 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Select from 'react-select'
-
 
 const cx = classNames.bind(styles)
 

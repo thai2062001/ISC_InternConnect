@@ -1,9 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './studentName.module.scss'
-import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -20,9 +19,8 @@ function StudentName(props) {
   const [cities, setCities] = useState([]);
   const [listMajor, setListMajor] = useState([]);
   const [school, setListSchool] = useState([]);
-  const [avatar, setAvatar] = useState()
-
-
+  const [avatar, setAvatar] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState(null);
 
   const jobpost_token = localStorage.getItem('user');
   const decodeEmail = jwt_decode(jobpost_token);
@@ -30,6 +28,7 @@ function StudentName(props) {
 
   useEffect(() => {
     setStudentName(props.name)
+    setAvatarUrl(props.avatar);
     setGender(props.gender)
     setAddress(props.address)
     setCode(props.code)
@@ -93,10 +92,9 @@ function StudentName(props) {
     const URL = 'http://localhost:5000/update-profile'
     const info_token = localStorage.getItem('user');
     const data = {
-      avatar:avatar,
       studentname: studentName,
       gender: gender,
-      studentphone:phone,
+      studentphone: phone,
       address: address,
       code: Code,
       major: Major,
@@ -193,8 +191,31 @@ function StudentName(props) {
     const file = e.target.files[0]
     file.preview = URL.createObjectURL(file);
     setAvatar(file)
-    console.log(file);
-    
+    if (avatarUrl) {
+      setAvatarUrl(null);
+    }
+  }
+  const handleAvatarChange = (e) => {
+    const info_token = localStorage.getItem('user');
+    if (avatar) {
+      const formData = new FormData();
+      formData.append('avatar', avatar);
+
+      fetch('http://localhost:5000/profile/upload', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${info_token}`,
+        },
+        body: formData,
+
+      })
+        .then((response) => response.json())
+        .then((data) => {
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }
 
   return (
@@ -202,7 +223,7 @@ function StudentName(props) {
       (
       <div className={cx('change-password-container')}>
         <button className={cx('close-button')} onClick={handleClose}>
-          X
+          x
         </button>
 
         <form className={cx('change-password-form')}>
@@ -210,14 +231,19 @@ function StudentName(props) {
           <div className={cx('wrapper')}>
 
             <div className={cx('input-div', 'wrapper-avatar')}>
-
+              {avatarUrl && (
+                <img className={cx('avatar')} src={avatarUrl} />
+              ) }
               <input className={cx('avatar-input')} id='avatar_input' type='file' onChange={handlePreview} />
               <label className={cx('label-avatar')} htmlFor='avatar_input'>Chọn ảnh</label>
-
               {avatar && (
-                <img src={avatar.preview} className={cx('avatar-preview')} />
+                <div className={cx('avatar-preview-wrapper')}>
+                  <img src={avatar.preview} className={cx('avatar-preview')} />
+                  <button onClick={handleAvatarChange}>Lưu ảnh</button>
+                </div>
               )}
             </div>
+
 
             <div className={cx('input-div')}>
               <label htmlFor="studentName"> Họ tên:</label>
@@ -243,7 +269,7 @@ function StudentName(props) {
             <div className={cx('input-div')}>
               <label htmlFor="phone"> Số điện thoại:</label>
               <input
-              readOnly
+                readOnly
                 className={cx('pass_input')}
                 type="text"
                 id="phone"

@@ -25,7 +25,6 @@ import ForgotPW from '../Login/ForgotPW/forgotPW';
 import AuForgot from '../Login/ForgotPW/AuForgot/auForgot';
 import VerifyAccount from '../SignUp/VerifyAccount/verify';
 import SkillAdmin from '../Skill_Admin/skillAdmin';
-import CreateCV from '../CreateCV/createCV';
 import StatusCV from '../Home/StatusCV/statusCV';
 import Favorite_JobApp from '../Home/Favorite_JobApp/favorite_JobApp';
 import IntroduceCompany from '../CompanyManager/IntroduceCompany/introduceCompany';
@@ -53,7 +52,6 @@ const publicRouters = [
     {path: '/favorite_jobapp',component: Favorite_JobApp,layout:HeaderOnly},
     // {path: '/home',component: HomeLogin,layout:HeaderLogin},
     {path: '/settings',component: AccountSettings,layout: null},
-    {path: '/createcv',component: CreateCV,layout: null},
     {path: '/login',component: Login,layout: null},
     {path: '/auth/forgot-password/',component: ForgotPW,layout: null},
     {path: '/auth/forgot-password/:email',component:AuForgot ,layout: null},

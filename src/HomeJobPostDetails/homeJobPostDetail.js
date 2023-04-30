@@ -2,9 +2,7 @@ import classNames from "classnames/bind";
 import styles from './homeJobPostDetail.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
-import MaterialTable from "material-table";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaLocationArrow, FaMoneyBillAlt, FaCalendarDay, FaHeart } from 'react-icons/fa';
 import moment from 'moment';
 import Popup from "reactjs-popup";
 import ApplyCV from "./ApplyCV/ApplyCV";
@@ -25,9 +23,6 @@ function HomeJobPostDetail() {
     const [hasUserData, setHasUserData] = useState(!!localStorage.getItem('user'));
     const [data, setData] = useState({});
     const [isFavorite, setIsFavorite] = useState(false);
-
-
-
 
 
     const navigate = useNavigate();
@@ -52,7 +47,6 @@ function HomeJobPostDetail() {
                 .catch(error => console.error(error));
         }
     }, []);
-
 
 
 
@@ -526,6 +520,8 @@ function HomeJobPostDetail() {
                     <h2 style={{ color: '#00133f', fontSize: '25px', marginLeft: '10px', marginTop: '45px', fontWeight: '500' }}>Các công việc tương tự</h2>
                     <ul>
                         {recommentPosts.slice(0, 5).map((recommentPost) => {
+                             const title = recommentPost.title.length > 50 ? recommentPost.title.slice(0, 50) + '...' : recommentPost.title;
+                             const location = recommentPost.location.length > 50 ? recommentPost.location.slice(0, 50) + '...' : recommentPost.location;
                             return (
                                 <div key={recommentPost._id} onClick={() => handleRecommentPost(recommentPost._id)} className={cx('recommentPost')}>
                                     <div className={cx('jobpost')}>
@@ -535,7 +531,7 @@ function HomeJobPostDetail() {
                                             </div>
                                         </div>
                                         <div className={cx('detail_post')}>
-                                            <h2 className={cx('jobpost-title')}>{recommentPost.title}</h2>
+                                            <h2 className={cx('jobpost-title')}>{title}</h2>
                                             <div className={cx('jobpost-meta')}>
                                                 <div className={cx('info_content')}>
                                                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
@@ -543,7 +539,7 @@ function HomeJobPostDetail() {
                                                 </div>
                                                 <div className={cx('info_content')}>
                                                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/officel/30/null/place-marker--v1.png" />
-                                                    <span className={cx('jobpost_location')}>{recommentPost.location}</span>
+                                                    <span className={cx('jobpost_location')}>{location}</span>
                                                 </div>
                                                 <div className={cx('info_content')}>
                                                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />
