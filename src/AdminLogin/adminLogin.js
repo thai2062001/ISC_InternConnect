@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './adminLogin.module.scss'
 import { FaUserAlt,FaLock  } from "react-icons/fa";
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 import { useState,useEffect } from "react";
 import jwt_decode from "jwt-decode";
 
@@ -12,18 +12,14 @@ function AdminLogin() {
 
   const [email,setEmail] = useState("")
   const [password,setpassword] = useState("")
-  const [account,setAccount] = useState([])
 
   useEffect(()=>{
   },[]);
 
    async function HandleLogin(e){
     try{
-      
       const response = await axios.post('http://localhost:5000/auth/login', {
         email,password})
-      // setEmail(response.data.email)
-      // setpassword(response.data.password)
       console.log(response.data.token.accessToken);
       const token = response.data.token.accessToken
       var decoded = jwt_decode(token);
@@ -99,8 +95,7 @@ return(
                 href="https://fonts.googleapis.com/icon?family=Material+Icons"
             />
       </div>
-      
-
+    
   )
 
 }

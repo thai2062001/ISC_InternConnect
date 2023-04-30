@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss'
-import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch, FaHeart ,FaChevronLeft,FaChevronRight} from 'react-icons/fa';
+import { FaSearch ,FaChevronLeft,FaChevronRight} from 'react-icons/fa';
 import { useEffect, useState, useRef } from 'react';
 import jwt_decode from "jwt-decode";
 import ReactPaginate from 'react-paginate';

@@ -9,7 +9,6 @@ import { Grid, TablePagination, Typography, Divider } from "@material-ui/core";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as XLSX from 'xlsx';
-import PrintIcon from '@material-ui/icons/Print'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import Popup from "reactjs-popup";

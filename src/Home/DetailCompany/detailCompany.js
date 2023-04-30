@@ -2,10 +2,7 @@ import classNames from "classnames/bind";
 import styles from './detailCompany.module.scss'
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
-import MaterialTable from "material-table";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaLocationArrow, FaMoneyBillAlt, FaCalendarDay, FaHeart } from 'react-icons/fa';
-import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

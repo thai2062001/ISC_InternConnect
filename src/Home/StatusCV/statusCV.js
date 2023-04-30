@@ -1,9 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./statusCV.module.scss";
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch, FaHeart, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import jwt_decode from "jwt-decode";
 import moment from 'moment';
 import { useNavigate } from "react-router-dom";

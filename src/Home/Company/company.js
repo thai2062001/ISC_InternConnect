@@ -1,13 +1,12 @@
 import classNames from 'classnames/bind';
 import styles from './company.module.scss'
-import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch, FaHeart, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useEffect, useState, useRef } from 'react';
+import {  FaSearch, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
 import ReactPaginate from 'react-paginate';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';
-import moment from 'moment';
 import Select from 'react-select'
 
 

@@ -8,7 +8,6 @@ import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@m
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as XLSX from 'xlsx';
-import PrintIcon from '@material-ui/icons/Print'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 
