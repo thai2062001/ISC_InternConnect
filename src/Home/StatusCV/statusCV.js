@@ -48,9 +48,18 @@ function StatusCV() {
         setPageNumber(selected);
     };
 
-    const date_string = jobApplication.date;
-    const formatted_date = moment(date_string).format('DD/MM/YYYY');
-
+    
+//   function formatDate(dateString) {
+//     const date = moment(dateString);
+//     const formattedDate = date.format('DD/MM/YYYY');
+//     return formattedDate;
+//   }
+function formatDate(dateString) {
+    const date = moment(dateString);
+    const today = moment().startOf('day');
+    const daysAgo = today.isSame(date, 'd') ? 'Hôm nay' : moment().diff(date, 'days') + ' ngày trước';
+    return daysAgo;
+  }
 
     const handleJobpost = (id) => {
         window.location.href = `${id}`
@@ -105,7 +114,7 @@ function StatusCV() {
                                     </div>
                                     <div className={cx('jobpost-icon')}>
                                         <img src="https://img.icons8.com/ios/50/null/calendar-26.png" />
-                                        <span className={cx('jobapp_span', 'date_span')}>Ngày nộp: {formatted_date} </span>
+                                        <span className={cx('jobapp_span', 'date_span')}>Ngày nộp: {formatDate(jobApp.date)} </span>
                                     </div>
                                     <div className={cx('jobpost-icon')}>
                                         <span className={cx('jobapp_span',)}>Trạng thái: </span>

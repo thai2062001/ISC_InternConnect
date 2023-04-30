@@ -14,16 +14,12 @@ import Select from 'react-select'
 const cx = classNames.bind(styles)
 function Company() {
   const [accounts, setAccount] = useState([])
-  const [listJobPosts, setListJobPosts] = useState([])
-  const [jobpostSearch, setJobPostSearch] = useState([])
-  const [jobpostFilter, setJobPostFilter] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [originalJobPosts, setOriginalJobPosts] = useState([]);
   const [selectedValueCities, setSelectedValueCities] = useState([]);
   const [cities, setCities] = useState([]);
   const [listcompany, setListCompany] = useState([])
-  const [companySearch, setCompanySearch] = useState([])
 
 
   const apilistCom = 'http://localhost:5000/listcompany'
@@ -33,8 +29,6 @@ function Company() {
       result.json().then(json => {
         setListCompany(json);
         setOriginalJobPosts(json);
-        setJobPostSearch(json);
-        setJobPostFilter(json)
       })
     }
     fetchData();
@@ -86,18 +80,7 @@ function Company() {
     fetchData();
   }, []);
 
-  const api = 'http://localhost:5000/'
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetch(api)
-      result.json().then(json => {
-        setListJobPosts(json);
-      })
-    }
-    fetchData();
-  }, []);
-
-
+ 
   const JobPostCount = listcompany.length;
 
 
@@ -105,11 +88,6 @@ function Company() {
     window.location.href = `/listcompany/${id}`
   }
 
-  function formatDate(dateString) {
-    const date = moment(dateString);
-    const formattedDate = date.format('DD/MM/YYYY');
-    return formattedDate;
-  }
 
   const handleSearch = () => {
     const inputJob = document.getElementById('job-search').value.toLowerCase();
@@ -145,8 +123,6 @@ function Company() {
   const handleClear = () => {
     document.getElementById('job-search').value = '';
     setSelectedValueCities([]);
-    setListJobPosts(originalJobPosts);
-
   }
 
 

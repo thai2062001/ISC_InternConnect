@@ -127,8 +127,9 @@ function Home() {
 
   function formatDate(dateString) {
     const date = moment(dateString);
-    const formattedDate = date.format('DD/MM/YYYY');
-    return formattedDate;
+    const today = moment().startOf('day');
+    const daysAgo = today.isSame(date, 'd') ? 'Hôm nay' : moment().diff(date, 'days') + ' ngày trước';
+    return daysAgo;
   }
 
   const handleSearch = () => {
@@ -209,9 +210,6 @@ function Home() {
   }, [])
   const handleClear = () => {
     document.getElementById('job-search').value = '';
-    let majorClear = document.getElementById('major_id')
-    let salaryClear = document.getElementById('salary')
-
     setSelectedValues([]);
     setSelectedValueCities([]);
     setSelectedSalary('');

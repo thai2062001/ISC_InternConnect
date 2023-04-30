@@ -211,6 +211,8 @@ function DetailCompany() {
                     <h2 style={{ color: '#00133f', fontSize: '25px', marginLeft: '10px', marginTop: '45px', fontWeight: '500' }}>Các công việc của công ty</h2>
                     <ul>
                         {recommentPosts.slice(0, 8).map((recommentPost) => {
+                              const title = recommentPost.title.length > 50 ? recommentPost.title.slice(0, 50) + '...' : recommentPost.title;
+                              const location = recommentPost.location.length > 50 ? recommentPost.location.slice(0, 50) + '...' : recommentPost.location;
                             return (
                                 <div key={recommentPost._id} onClick={() => handleRecommentPost(recommentPost._id)} className={cx('recommentPost')}>
                                     <div className={cx('jobpost')}>
@@ -220,7 +222,7 @@ function DetailCompany() {
                                             </div>
                                         </div>
                                         <div className={cx('detail_post')}>
-                                            <h2 className={cx('jobpost-title')}>{recommentPost.title}</h2>
+                                            <h2 className={cx('jobpost-title')}>{title}</h2>
                                             <div className={cx('jobpost-meta')}>
                                                 <div className={cx('info_content')}>
                                                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/dusk/64/null/organization.png" />
@@ -228,7 +230,7 @@ function DetailCompany() {
                                                 </div>
                                                 <div className={cx('info_content')}>
                                                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/officel/30/null/place-marker--v1.png" />
-                                                    <span className={cx('jobpost_location')}>{recommentPost.location}</span>
+                                                    <span className={cx('jobpost_location')}>{location}</span>
                                                 </div>
                                                 <div className={cx('info_content')}>
                                                     <img style={{ width: '20px', height: '20px' }} src="https://img.icons8.com/ios/50/null/wallet--v1.png" />

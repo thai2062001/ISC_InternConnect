@@ -1,9 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './studentName.module.scss'
-import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -202,7 +201,7 @@ function StudentName(props) {
       (
       <div className={cx('change-password-container')}>
         <button className={cx('close-button')} onClick={handleClose}>
-          X
+          x
         </button>
 
         <form className={cx('change-password-form')}>

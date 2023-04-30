@@ -1,12 +1,11 @@
 import classNames from 'classnames/bind';
 import styles from './settings.module.scss'
-import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
 import Popup from "reactjs-popup";
 import ChangePassword from './ChangePassword/changePassword';
 import StudentName from './StudentName/studentName';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Helmet } from 'react-helmet';
@@ -16,13 +15,8 @@ function Settings() {
   const [showPopup, setShowPopup] = useState(false)
   const [showPopupInfo, setShowPopupInfo] = useState(false)
   const [info, setInfo] = useState({});
-  const [accounts, setAccount] = useState([])
-
-
   const Student_token = localStorage.getItem('user');
-  const decodeEmail = jwt_decode(Student_token);
-  const emailUser = decodeEmail.email;
-
+  // const decodeEmail = jwt_decode(Student_token);
   //http://localhost:5000/profile
   useEffect(() => {
     async function fetchData() {
