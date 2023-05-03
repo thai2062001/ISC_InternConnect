@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 function StatusCV() {
     const [jobApplication, setJobApplication] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
-    const applicationsPerPage = 4;
+    const applicationsPerPage = 3;
     const pagesVisited = pageNumber * applicationsPerPage;
     const jobpost_token = localStorage.getItem('user');
     const navigate = useNavigate();
