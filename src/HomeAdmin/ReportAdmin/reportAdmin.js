@@ -12,6 +12,7 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import Popup from "reactjs-popup";
+import { Helmet } from 'react-helmet';
 import SendingMailReport from "./SendingMail/SendingMailReport";
 
 
@@ -103,6 +104,9 @@ function ReportAdmin() {
 
     return (
         <div className="App">
+                  <Helmet>
+        <title>Quản lý phản hồi </title>
+      </Helmet>
             <div className={cx('wrapper')}>
             <ToastContainer />
                 <h1 align="center">Trang quản lý bài đăng phản hồi</h1>

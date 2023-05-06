@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf'
+import { Helmet } from 'react-helmet';
 import 'jspdf-autotable'
 
 const cx = classNames.bind(styles)
@@ -55,7 +56,7 @@ function CompanyAdmin() {
     },
     {
       title: "Khu vực",
-      field: "location",defaultGroupOrder:1,
+      field: "location", 
       validate: rowData => {
         if (!rowData.location) {
           return "Vui lòng nhập địa chỉ."
@@ -67,7 +68,7 @@ function CompanyAdmin() {
     },
     {
       title: "Địa chỉ",
-      field: "place",
+      field: "place",defaultGroupOrder: 1,
       validate: rowData => {
         if (!rowData.place) {
           return "Vui lòng nhập địa chỉ."
@@ -109,23 +110,16 @@ function CompanyAdmin() {
   }, []);
 
   useEffect(() => {
-    const locations = accounts.map((city) => city.location);
+    const locations = accounts.map((city) => city.place);
     const uniqueLocations = [...new Set(locations)];
     setListCity(uniqueLocations);
   }, [accounts]);
-
-  
-  // Ham logout ve trang homelogin
-  function handleLogOutUser() {
-    localStorage.removeItem('user-save');
-    window.location.href = '/login'
-  }
 
   useEffect(() => {
     if (location === 'all') {
       setFilteredAccounts(accounts);
     } else {
-      setFilteredAccounts(accounts.filter(dt => dt.location === location));
+      setFilteredAccounts(accounts.filter(dt => dt.place === location));
     }
   }, [location, accounts]);
 
@@ -189,6 +183,9 @@ function CompanyAdmin() {
 
   return (
     <div className="App">
+      <Helmet>
+        <title>Quản lý công ty</title>
+      </Helmet>
       <div className={cx('wrapper')}>
         <h1 align="center">Trang quản lý công ty</h1>
         <div className={cx('user_log')}>

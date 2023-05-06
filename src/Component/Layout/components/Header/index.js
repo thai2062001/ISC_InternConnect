@@ -83,10 +83,10 @@ function Header() {
                       Cài đặt
                     </li>
                     <li className={cx('menu-li')} onClick={handleCV}>
-                      Theo dõi tình trạng CV
+                      Theo dõi hồ sơ việc làm 
                     </li>
                     <li className={cx('menu-li')} onClick={handleFavorite}>
-                      JobApp yêu thích
+                      Bài đăng yêu thích
                     </li>
                     <li className={cx('menu-li')} onClick={handleLogOut}>
                       Đăng xuất

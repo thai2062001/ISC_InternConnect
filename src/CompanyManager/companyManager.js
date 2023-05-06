@@ -12,6 +12,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+import { Helmet } from 'react-helmet';
+import moment from 'moment';
 
 
 const cx = classNames.bind(styles)
@@ -20,10 +22,10 @@ function CompanyManager() {
   const [name, setName] = useState('')
   const [accounts, setAccount] = useState([])
   const [filteredAccounts, setFilteredAccounts] = useState([]);
-  const [expdate, setDate] = useState('all')
   const [location, setLocation] = useState('all')
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedIds, setSelectedIds] = useState([]);
+  const [listcity, setListCity] = useState([]);
 
 
 
@@ -31,31 +33,43 @@ function CompanyManager() {
     expdate: 'all',
     location: 'all'
   });
+  useEffect(() => {
+    const locations = accounts.map((city) => city.place);
+    const uniqueLocations = [...new Set(locations)];
+    setListCity(uniqueLocations);
+  }, [accounts]);
+ 
+
+  useEffect(() => {
+    if (location === 'all') {
+      setFilteredAccounts(accounts);
+    } else {
+      setFilteredAccounts(accounts.filter(dt => dt.place === location));
+    }
+  }, [location, accounts]);
 
   const resetFilters = () => {
-    setDate(defaultFilters.expdate);
     setLocation(defaultFilters.location);
   };
 
   useEffect(() => {
     const filteredAccounts = accounts.filter(account => {
-      if (location !== 'all' && account.location !== location) {
-        return false;
-      }
-      if (expdate !== 'all' && account.expdate !== expdate) {
+      if (location !== 'all' && account.place !== location) {
         return false;
       }
       return true;
     });
     setFilteredAccounts(filteredAccounts);
-  }, [accounts, location, expdate]);
+  }, [accounts, location]);
 
 
-
+  const formatDate = (date) => {
+    return moment(date).format('DD/MM/YYYY');
+  }
   const columns = [
     { title: "Tiêu đề", field: "title" },
-    { title: "Ngày đăng bài", field: "DateSubmitted" },
-    { title: "Ngày hết hạn", field: "expdate" },
+    { title: "Ngày đăng bài", field: "DateSubmitted" ,render: rowData => formatDate(rowData.DateSubmitted)},
+    { title: "Ngày hết hạn", field: "expdate",render: rowData => formatDate(rowData.expdate) },
     { title: "Thành phố", field: "place", defaultGroupOrder: 1 },
     { title: "Nghề nghiệp", field: "major" },
     { title: "Trợ cấp", field: "salary" },
@@ -76,9 +90,7 @@ function CompanyManager() {
   useEffect(() => {
     const localstore = localStorage.getItem('user-save')
     const decodeUser = jwt_decode(localstore);
-    console.log(decodeUser);
     setName(decodeUser.username)
-    console.log(decodeUser.username);
   }, [])
 
   //call api fill data
@@ -106,15 +118,6 @@ function CompanyManager() {
   }
   const handleCreate = () => {
     window.location.href = '/companyadmin/create'
-  }
-
-  //Hàm Logout và chuyển về trang login
-  const token = localStorage.getItem('user-save');
-  function handleLogOutUser() {
-    const decodeEmail = jwt_decode(token);
-    const emailUser = decodeEmail.email;
-    localStorage.removeItem('user-save');
-    window.location.href = '/login'
   }
 
 
@@ -171,8 +174,11 @@ function CompanyManager() {
   }
   return (
     <div className="App">
+      <Helmet>
+        <title>Quản lý bài đăng</title>
+      </Helmet>
       <div className={cx('wrapper')}>
-        <h1 align="center">Trang quản lý Company Jobpost</h1>
+        <h1 align="center">Trang quản lý bài đăng tuyển dụng</h1>
 
         <div className={cx('user_log')}>
           <h2 className={cx('name_set')}> <FaUser /> {name}</h2>
@@ -189,8 +195,8 @@ function CompanyManager() {
             Pagination: (props) => <>
 
               <Grid container style={{ padding: 15 }}>
-                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
-                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Thống kê</Typography></Grid>
+                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Số cột theo tiêu chí : {props.count}</Typography></Grid>
               </Grid>
               <Divider />
               <TablePagination {...props} />
@@ -202,19 +208,20 @@ function CompanyManager() {
           }}
           actions={[
             {
-              icon: () => <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                style={{ width: 110, fontSize: '15px' }}
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              >
-                <MenuItem style={{ fontSize: '15px' }} value={'all'}><em>Location</em></MenuItem>
-                <MenuItem style={{ fontSize: '15px' }} value={'HCM'}>HCM</MenuItem>
-                <MenuItem style={{ fontSize: '15px' }} value={'Đà Nẵng'}>Đà Nẵng</MenuItem>
-                <MenuItem style={{ fontSize: '15px' }} value={'Hà Nội'}>Hà Nội</MenuItem>
-                <MenuItem style={{ fontSize: '15px' }} value={'Hải Phòng'}>Hải Phòng</MenuItem>
-              </Select>,
+              icon: () => (
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  style={{ width: 110, fontSize: '14px' }}
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                >
+                  <MenuItem style={{ fontSize: '14px' }} value={'all'}><em>Khu vực</em></MenuItem>
+                  {listcity.map((city) => (
+                    <MenuItem key={city} style={{ fontSize: '14px' }} value={city}>{city}</MenuItem>
+                  ))}
+                </Select>
+              ),
               tooltip: "Filter Location",
               isFreeAction: true
             },

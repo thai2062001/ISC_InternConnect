@@ -71,7 +71,7 @@ function SendingMailReport(props) {
         <div className={cx('sending-mail')}>
             <div className={cx('sending-mail-content')}>
                 <div className={cx('title')}>
-                    <h1>Gửi mail phản hồi</h1>
+                    <h1>Gửi thư phản hồi</h1>
                 </div>
                 <span className={cx('close')} onClick={handleOnClose}>
                     &times;

@@ -9,8 +9,8 @@ import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@m
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as XLSX from 'xlsx';
-import PrintIcon from '@material-ui/icons/Print'
 import jsPDF from 'jspdf'
+import { Helmet } from 'react-helmet';
 import 'jspdf-autotable'
 
 
@@ -33,18 +33,30 @@ function HomeAdmin() {
     {
       title: "Email", field: "email", validate: rowData => {
         if (rowData.email === undefined || rowData.email === "") {
-          return "Required"
+          return "Vui lòng nhập email"
         } else if (!rowData.email.includes('@' && '.')) {
-          return "Enter valid email address"
+          return "Email không hợp lệ"
         }
         return true
       }
     },
     {
-      title: "Mật khẩu", field: "password"
+      title: "Mật khẩu", field: "password",validate: rowData => {
+        if (rowData.password === undefined || rowData.password === "") {
+          return "Vui lòng nhập mật khẩu"
+        }
+        return true
+      }
     },
     {
-      title: "Số điện thoại", field: "phonenumber"
+      title: "Số điện thoại", field: "phonenumber",validate: rowData => {
+        if (rowData.phonenumber === undefined || rowData.phonenumber === "") {
+          return "Vui lòng nhập số điện thoại"
+        } else if (rowData.phonenumber.length !== 10 && rowData.phonenumber.length !== 11) {
+          return "Số điện thoại không hợp lệ"
+      }
+        return true
+      }
     },
 
     {
@@ -185,8 +197,11 @@ function HomeAdmin() {
 
   return (
     <div className="App">
+            <Helmet>
+        <title>Quản lý tài khoản </title>
+      </Helmet>
       <div className={cx('wrapper')}>
-        <h1 align="center">Trang quản lý Admin</h1>
+        <h1 align="center">Trang quản lý tài khoản</h1>
         <div className={cx('user_log')}>
           <h2 className={cx('name_set')}> <FaUser/> {name}</h2>
         </div>
@@ -221,9 +236,9 @@ function HomeAdmin() {
               >
                 <MenuItem  style={{fontSize:'15px'}}  value={'all'}><em>Quyền</em></MenuItem>
                 <MenuItem  style={{fontSize:'15px'}} value={'Admin'}>Admin</MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'Company'}>Company</MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'School'}>School</MenuItem>
-                <MenuItem  style={{fontSize:'15px'}} value={'Student'}>Student</MenuItem>
+                <MenuItem  style={{fontSize:'15px'}} value={'Company'}>Công ty</MenuItem>
+                <MenuItem  style={{fontSize:'15px'}} value={'School'}>Trường</MenuItem>
+                <MenuItem  style={{fontSize:'15px'}} value={'Student'}>Sinh Viên</MenuItem>
               </Select>,
               tooltip: "Filter Role",
               isFreeAction: true

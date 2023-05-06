@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import { FaUser } from "react-icons/fa";
 import MaterialTable from "material-table";
+import { Helmet } from 'react-helmet';
 import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@material-ui/core";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,15 +25,17 @@ function MajorAdmin() {
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedIds, setSelectedIds] = useState([]);
   const columns = [
-      {title: "Nghề nghiệp", field: "namemajor", validate: rowData => {
+    {
+      title: "Nghề nghiệp", field: "namemajor", validate: rowData => {
         if (rowData.namemajor === undefined || rowData.namemajor === "") {
           return "Required"
         } else if (rowData.namemajor.length < 3) {
           return "Name should contains atleast 3 chars "
         }
         return true
-      }}
-    
+      }
+    }
+
   ]
 
   useEffect(() => {
@@ -99,9 +102,9 @@ function MajorAdmin() {
       .then(response => {
         if (response.ok) {
           setTimeout(() => {
-          toast.success("Xóa major thành công!")
-          window.location.reload()
-        }, 2000);
+            toast.success("Xóa major thành công!")
+            window.location.reload()
+          }, 2000);
         } else {
           toast.error("Xóa major không thành công!")
         }
@@ -109,18 +112,21 @@ function MajorAdmin() {
       .catch(error => {
         console.error('There was an error!', error);
       });
- // đặt thời gian chờ là 2 giây
-}
+    // đặt thời gian chờ là 2 giây
+  }
 
 
   return (
     <div className="App">
+      <Helmet>
+        <title>Quản lý nghề nghiệp</title>
+      </Helmet>
       <div className={cx('wrapper')}>
         <h1 align="center">Trang quản lý nghề nghiệp</h1>
         <div className={cx('user_log')}>
-          <h2 className={cx('name_set')}> <FaUser/> {name}</h2>
+          <h2 className={cx('name_set')}> <FaUser /> {name}</h2>
         </div>
-        <ToastContainer style={{zIndex:'999'}}/>
+        <ToastContainer style={{ zIndex: '999' }} />
       </div>
 
       <div className={cx('table-wrapper')}>
@@ -160,7 +166,7 @@ function MajorAdmin() {
             {
               tooltip: 'Remove All Selected Users',
               icon: 'delete',
-              onClick: ()=> handleDeleteSelected(selectedIds)
+              onClick: () => handleDeleteSelected(selectedIds)
             }
           ]}
           editable={{
@@ -264,14 +270,14 @@ function MajorAdmin() {
               fontSize: '18px',
               width: '200px',
             },
-            columnsButton:true,
+            columnsButton: true,
             addRowPosition: "first",
             filtering: true,
             sorting: true,
             lookupFilter: true,
             pageSize: 10, // set default page size
-            pageSizeOptions: [5, 10, 20], 
-            grouping:true,
+            pageSizeOptions: [5, 10, 20],
+            grouping: true,
             selection: true,
             selectionProps: rowData => ({
               disabled: rowData.role === 'Admin',

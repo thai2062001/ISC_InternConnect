@@ -56,13 +56,6 @@ function Slidebar() {
        <span className={cx('tooltip')}>Quản lý bài đăng</span>
      </li>
      <li>
-       <a href="/homeadmin/skill">
-         <i className='bx bx-list-ul' ></i>
-         <span className={cx('links_name')}>Quản lý kỹ năng</span>
-       </a>
-       <span className={cx('tooltip')}>Quản lý kỹ năng</span>
-     </li>
-     <li>
        <a href="/homeadmin/report">
        <i className='bx bx-list-ul' ></i>
          <span className={cx('links_name')}>Quản lý báo cáo </span>

@@ -176,6 +176,12 @@ function Home() {
     });
     setListJobPosts(filteredPosts);
   };
+
+  const handleEnter = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
   const handleSalary = (selectedOptions) => {
     setSelectedSalary(selectedOptions);
     if (selectedOptions.value === 'all') {
@@ -281,8 +287,10 @@ function Home() {
         <div className={cx('input-wrapper')}>
           <div className={cx('input-group', 'job_search')}>
             <input
+              onKeyDown={handleEnter}
               id="job-search"
               className={cx('input-search')}
+              onChange={handleSearch}
               placeholder="Nhập từ khóa, công việc"
             />
           </div>
@@ -305,7 +313,7 @@ function Home() {
               onChange={handleChangeCity}
             />
           </div>
-          <button className={cx('search-button')} onClick={handleSearch}>
+          <button className={cx('search-button')} onDragEnter={handleSearch} onClick={handleSearch}>
             <FaSearch className={cx('search-icon')} />
           </button>
         </div>

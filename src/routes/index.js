@@ -24,7 +24,6 @@ import Settings from '../Settings/settings';
 import ForgotPW from '../Login/ForgotPW/forgotPW';
 import AuForgot from '../Login/ForgotPW/AuForgot/auForgot';
 import VerifyAccount from '../SignUp/VerifyAccount/verify';
-import SkillAdmin from '../Skill_Admin/skillAdmin';
 import StatusCV from '../Home/StatusCV/statusCV';
 import Favorite_JobApp from '../Home/Favorite_JobApp/favorite_JobApp';
 import IntroduceCompany from '../CompanyManager/IntroduceCompany/introduceCompany';
@@ -64,7 +63,7 @@ const publicRouters = [
     {path: '/homeadmin/majorAdmin',component:MajorAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/companyAdmin',component:CompanyAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/jobpost',component:AllJobPost ,layout: SlidebarOnly},
-    {path: '/homeadmin/skill',component:SkillAdmin ,layout: SlidebarOnly},
+    // {path: '/homeadmin/skill',component:SkillAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/report',component:ReportAdmin ,layout: SlidebarOnly},
     {path: '/schooladmin',component:SchoolManager ,layout: SlidebarSchool },
     {path: '/schooladmin/updateinfo',component:SchoolUpdate ,layout: SlidebarSchool },

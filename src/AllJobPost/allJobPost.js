@@ -9,7 +9,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf'
+import { Helmet } from 'react-helmet';
 import 'jspdf-autotable'
+import moment from 'moment';
 
 const cx = classNames.bind(styles)
 
@@ -37,12 +39,15 @@ function AllJobPost() {
     setFilteredAccounts(filteredAccounts);
   }, [accounts, location]);
 
+  const formatDate = (date) => {
+    return moment(date).format('DD/MM/YYYY');
+  }
   const columns = [
-    { title: "Title", field: "title" },
-    { title: "Company", field: "namecompany" ,defaultGroupOrder:1},
-    { title: "Location", field: "location" },
-    { title: "Date", field: 'expdate' },
-    { title: "Salary", field: 'salary' },
+    { title: "Tiêu đề", field: "title" },
+    { title: "Công ty", field: "namecompany" ,defaultGroupOrder:1},
+    { title: "Khu vực", field: "place" },
+    { title: "Ngày hết hạn", field: 'expdate',render: rowData => formatDate(rowData.expdate) },
+    { title: "Mức lương", field: 'salary' },
   ]
   useEffect(() => {
     const localstore = localStorage.getItem('user-save')
@@ -61,10 +66,18 @@ function AllJobPost() {
   }, []);
 
   useEffect(() => {
-    const locations = accounts.map((city) => city.location);
+    const locations = accounts.map((city) => city.place);
     const uniqueLocations = [...new Set(locations)];
     setListCity(uniqueLocations);
   }, [accounts]);
+  useEffect(() => {
+    if (location === 'all') {
+      setFilteredAccounts(accounts);
+    } else {
+      setFilteredAccounts(accounts.filter(dt => dt.place === location));
+    }
+  }, [location, accounts]);
+
 
   // Ham logout ve trang homelogin
   function handleLogOutUser() {
@@ -72,9 +85,7 @@ function AllJobPost() {
     window.location.href = '/login'
   }
 
-  const handleUpdate = (rowData) => {
-    alert(`Update ${rowData._id}`)
-  }
+
   // dung de luu lai xem tai khoan nao da login
   const token = localStorage.getItem('user-save');
   const decodeEmail = jwt_decode(token);
@@ -140,8 +151,11 @@ function AllJobPost() {
 
   return (
     <div className="App">
+            <Helmet>
+        <title>Quản lý bài đăng tuyển dụng</title>
+      </Helmet>
       <div className={cx('wrapper')}>
-        <h1 align="center">Trang quản lý JobPosts</h1>
+        <h1 align="center">Trang quản lý bài đăng tuyển dụng</h1>
         <div className={cx('user_log')}>
         <h2 className={cx('name_set')}> <FaUser /> {name}</h2>
         </div>
@@ -167,11 +181,6 @@ function AllJobPost() {
             setSelectedIds(rows.map((row) => row._id));
           }}
           actions={[
-            {
-              icon: 'edit',
-              Tooltip: 'Cập nhật',
-              onClick: (event, rowData) => handleUpdate(rowData)
-            },
             {
               icon: () => (
                 <Select

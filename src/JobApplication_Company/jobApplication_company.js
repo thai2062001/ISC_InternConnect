@@ -13,6 +13,7 @@ import { Grid, MenuItem, Select, TablePagination, Typography, Divider } from "@m
 import * as XLSX from 'xlsx';
 import PrintIcon from '@material-ui/icons/Print'
 import jsPDF from 'jspdf'
+import { Helmet } from 'react-helmet';
 import 'jspdf-autotable'
 import moment from 'moment';
 
@@ -36,7 +37,11 @@ function JobApplication() {
 
   const [filteredAccounts, setFilteredAccounts] = useState([]);
   const [school, setSchool] = useState('all')
+  const [listschool, setListSchool] = useState([]);
+
   const [major, setMajor] = useState('all')
+  const [listmajor, setListMajor] = useState([]);
+
   const [statusFitter, setStatusFitter] = useState('all')
   const [defaultFilters, setDefaultFilters] = useState({
     school: 'all',
@@ -44,11 +49,65 @@ function JobApplication() {
     statusFitter: 'all',
   });
 
+  const apiMajor = 'http://localhost:5000/admin/major'
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch(apiMajor)
+      result.json().then(json => {
+        setListMajor(json)
+      })
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const majors = accounts.map((major) => major.major);
+    const uniqueLocations = [...new Set(majors)];
+    setListMajor(uniqueLocations);
+  }, [accounts]);
+
+  useEffect(() => {
+    if (major === 'all') {
+      setFilteredAccounts(accounts);
+    } else {
+      setFilteredAccounts(accounts.filter(dt => dt.major === major));
+    }
+  }, [major, accounts]);
+
+
+
+  const apiSchool = 'http://localhost:5000/admin/school'
+  useEffect(() => {
+      const fetchData = async () => {
+          const result = await fetch(apiSchool)
+          result.json().then(json => {
+              setListSchool(json)
+          })
+      }
+      fetchData();
+  }, []);
+  useEffect(() => {
+    const schools = accounts.map((school) => school.nameschool);
+    const uniqueLocations = [...new Set(schools)];
+    setListSchool(uniqueLocations);
+  }, [accounts]);
+
+  useEffect(() => {
+    if (school === 'all') {
+      setFilteredAccounts(accounts);
+    } else {
+      setFilteredAccounts(accounts.filter(dt => dt.nameschool === school));
+    }
+  }, [school, accounts]);
+
+
+
+
+
   const resetFilters = () => {
     setSchool(defaultFilters.school);
     setMajor(defaultFilters.major);
     setStatusFitter(defaultFilters.statusFitter);
-
   };
 
 
@@ -110,21 +169,21 @@ function JobApplication() {
 
   }
 
-  const date_string = filteredAccounts.expdate;
-  const dateFormat = moment(date_string);
-  const formatted_date = dateFormat.format('DD/MM/YYYY');
+  const formatDate = (date) => {
+    return moment(date).format('DD/MM/YYYY');
+  }
   
   const columns = [
-    { title: "Title", field: "title" },
-    { title: "Name", field: "name" },
+    { title: "Tiêu đề", field: "title" },
+    { title: "Sinh Viên", field: "name" },
     { title: "Email", field: "email" },
-    { title: "School", field: "nameschool", defaultGroupOrder:1 },
-    { title: "Major", field: "major" },
-    { title: "Date", field: "date" },
-    { title: "Company", field: "namecompany" },
-    { title: "Status", field: "status", cellStyle: { width: "250px" } },
+    { title: "Trường", field: "nameschool", defaultGroupOrder:1 },
+    { title: "Ngành nghề", field: "major" },
+    { title: "Ngày nộp", field: "date" ,render: rowData => formatDate(rowData.date) },
+    { title: "Công ty", field: "namecompany" },
+    { title: "Trạng thái", field: "status", cellStyle: { width: "250px" } },
     {
-      title: 'CV',
+      title: 'Hồ sơ ',
       render: rowData => (
         <a style={{ textAlign: 'left' }} target="_blank" href={rowData.url} >
           <FaDownload style={{ fontSize: '15px' }} />
@@ -209,8 +268,11 @@ function JobApplication() {
   }
   return (
     <div className="App">
+            <Helmet>
+        <title>Quản lý hồ sơ tuyển dụng</title>
+      </Helmet>
       <div className={cx('wrapper')}>
-        <h1 align="center">Trang quản lý Hồ sơ xin việc</h1>
+        <h1 align="center">Trang quản lý hồ sơ xin việc</h1>
         <div className={cx('user_log')}>
           <ToastContainer />
           <h2 className={cx('name_set')}> <FaUser/> {name}</h2>
@@ -228,8 +290,8 @@ function JobApplication() {
             Pagination: (props) => <>
 
               <Grid container style={{ padding: 15 }}>
-                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Total</Typography></Grid>
-                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Number of rows : {props.count}</Typography></Grid>
+                <Grid sm={6} item><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Thống kê</Typography></Grid>
+                <Grid sm={6} item align="center"><Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>Số cột theo tiêu chí : {props.count}</Typography></Grid>
               </Grid>
               <Divider />
               <TablePagination {...props} />
@@ -247,41 +309,40 @@ function JobApplication() {
               onClick: handleMail
             },
             {
-              icon: () => <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                style={{ width: 110 ,fontSize:'15px'}}
-                value={school}
-                onChange={(e) => setSchool(e.target.value)}
-              >
-                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>School</em></MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'UEF'}>UEF</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'Hutech'}>Hutech</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'FPT'}>FPT</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'Văn Lăng'}>Văn Lăng</MenuItem>
-
-              </Select>,
-              tooltip: "Filter Verify",
+              icon: () => (
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  style={{ width: 110, fontSize: '14px' }}
+                  value={school}
+                  onChange={(e) => setSchool(e.target.value)}
+                >
+                  <MenuItem style={{ fontSize: '14px' }} value={'all'}><em>Trường </em></MenuItem>
+                  {listschool.map((school) => (
+                    <MenuItem key={school} style={{ fontSize: '14px' }} value={school}>{school}</MenuItem>
+                  ))}
+                </Select>
+              ),
+              tooltip: "Filter Location",
               isFreeAction: true
             },
 
             {
-              icon: () => <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                style={{ width: 110 ,fontSize:'15px'}}
-                value={major}
-                onChange={(e) => setMajor(e.target.value)}
-              >
-                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Major</em></MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'Công nghệ thông tin'}>Công nghệ thông tin</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'Quản trị kinh doanh'}>Quản trị kinh doanh</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'Kế toán'}>Kế toán</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'cntt'}>cntt</MenuItem>
-                <MenuItem style={{fontSize:'15px'}} value={'Du lịch lữ hành'}>Du lịch lữ hành</MenuItem>
-
-              </Select>,
-              tooltip: "Filter Verify",
+              icon: () => (
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  style={{ width: 110, fontSize: '14px' }}
+                  value={major}
+                  onChange={(e) => setMajor(e.target.value)}
+                >
+                  <MenuItem style={{ fontSize: '14px' }} value={'all'}><em>Ngành nghề</em></MenuItem>
+                  {listmajor.map((major) => (
+                    <MenuItem key={major} style={{ fontSize: '14px' }} value={major}>{major}</MenuItem>
+                  ))}
+                </Select>
+              ),
+              tooltip: "Filter Location",
               isFreeAction: true
             },
             {
@@ -292,7 +353,7 @@ function JobApplication() {
                 value={statusFitter}
                 onChange={(e) => setStatusFitter(e.target.value)}
               >
-                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Status</em></MenuItem>
+                <MenuItem style={{fontSize:'15px'}} value={'all'}><em>Trạng thái</em></MenuItem>
                 <MenuItem style={{fontSize:'15px'}} value={'Đang chờ xác nhận'}>Đang chờ xác nhận</MenuItem>
                 <MenuItem style={{fontSize:'15px'}} value={'Đã từ chối'}>Đã từ chối</MenuItem>
                 <MenuItem style={{fontSize:'15px'}} value={'Đã xác nhận qua Email'}>Đã xác nhận qua Email</MenuItem>

@@ -1,9 +1,4 @@
 function Is_valid_password(password) {
-    // Kiểm tra độ dài mật khẩu có tối thiểu 8 ký tự
-    if (password.length < 8) {
-      return false;
-    }
-  
     let hasUpperCase = false;
     let hasLowerCase = false;
     let hasNumber = false;
@@ -27,7 +22,7 @@ function Is_valid_password(password) {
     }
   
     // Kiểm tra xem mật khẩu có chứa ít nhất một chữ cái hoa, một chữ cái thường và một chữ số không
-    if (hasUpperCase && hasLowerCase && hasNumber) {
+    if (password.length >= 3 && hasUpperCase && hasLowerCase && hasNumber) {
       return true;
     } else {
       return false;
