@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -116,8 +117,8 @@ function DetailCompany() {
         }
         fetchData();
     }, [CompanyName]);
-    
-   
+
+
     const handleRecommentPost = (id) => {
         const path = `/${id}`
         navigate(path)
@@ -126,6 +127,9 @@ function DetailCompany() {
 
     return (
         <div className={cx('Jobpost-wapper')}>
+            <Helmet>
+                <title>{company.namecompany}</title>
+            </Helmet>
             <div className={cx('banner')}>
                 <img src="https://res.cloudinary.com/dg4ifdrn5/image/upload/v1681028747/bannerCompany_dmo0hw.jpg" />
             </div>
@@ -183,7 +187,7 @@ function DetailCompany() {
                                     </div>
 
                                 </div>
-                        
+
                             </div>
 
                         </div>
@@ -208,8 +212,8 @@ function DetailCompany() {
                     <h2 style={{ color: '#00133f', fontSize: '25px', marginLeft: '10px', marginTop: '45px', fontWeight: '500' }}>Các công việc của công ty</h2>
                     <ul>
                         {recommentPosts.slice(0, 8).map((recommentPost) => {
-                              const title = recommentPost.title.length > 50 ? recommentPost.title.slice(0, 50) + '...' : recommentPost.title;
-                              const location = recommentPost.location.length > 50 ? recommentPost.location.slice(0, 50) + '...' : recommentPost.location;
+                            const title = recommentPost.title.length > 50 ? recommentPost.title.slice(0, 50) + '...' : recommentPost.title;
+                            const location = recommentPost.location.length > 50 ? recommentPost.location.slice(0, 50) + '...' : recommentPost.location;
                             return (
                                 <div key={recommentPost._id} onClick={() => handleRecommentPost(recommentPost._id)} className={cx('recommentPost')}>
                                     <div className={cx('jobpost')}>

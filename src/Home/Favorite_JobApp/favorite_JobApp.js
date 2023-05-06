@@ -14,7 +14,7 @@ function Favorite_JobApp() {
   const [students, setStudent] = useState([])
   const [listJobPosts, setListJobPosts] = useState([])
   const [pageNumber, setPageNumber] = useState(0);
-  const applicationsPerPage = 4;
+  const applicationsPerPage = 3;
   const pagesVisited = pageNumber * applicationsPerPage;
 
   const navigate = useNavigate();

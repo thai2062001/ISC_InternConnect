@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { Helmet } from 'react-helmet';
 const cx = classNames.bind(styles)
 
 function IntroduceCompany() {
@@ -107,7 +108,7 @@ function IntroduceCompany() {
                 location: location,
                 websitecompany: website,
                 introduce: introduce,
-                place:place,
+                place: place,
                 slogan: slogan
             })
         })
@@ -166,8 +167,11 @@ function IntroduceCompany() {
 
     return (
         <div className="App">
+            <Helmet>
+                <title>Quản lý công ty</title>
+            </Helmet>
             <div className={cx('wrapper')}>
-                <h1>Profile</h1>
+                <h1>Thiết lập thông tin công ty</h1>
 
                 {accounts && accounts.profile && accounts.profile.length > 0 && (
                     <div>
@@ -220,7 +224,7 @@ function IntroduceCompany() {
                         </div>
                         <div className={cx('form-group')}>
                             <label htmlFor="slogan" className={cx('label')}>Slogan</label>
-                            <textarea readOnly={!isEditMode} value={slogan} className={cx('textarea','slogan')} id="slogan" onChange={(e) => setSlogan(e.target.value)} />
+                            <textarea readOnly={!isEditMode} value={slogan} className={cx('textarea', 'slogan')} id="slogan" onChange={(e) => setSlogan(e.target.value)} />
                         </div>
                     </div>
                 )}

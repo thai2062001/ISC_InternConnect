@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+import { Helmet } from 'react-helmet';
 
 
 const cx = classNames.bind(styles)
@@ -27,9 +28,9 @@ function SchoolAdmin() {
         {
             title: "Trường", field: "nameschool", validate: rowData => {
                 if (rowData.nameschool === undefined || rowData.nameschool === "") {
-                    return "Required"
+                    return "Vui lòng nhập tên trường"
                 } else if (rowData.nameschool.length < 3) {
-                    return "NameSchool should contains atleast 3 chars"
+                    return "Tên trường không được nhỏ hơn 3 kí tự"
                 }
                 return true
             }
@@ -37,15 +38,22 @@ function SchoolAdmin() {
         {
             title: "Địa điểm", field: "location",defaultGroupOrder:1
         },
-        { title: "Email", field: "emailschool" },
+        {
+            title: "Email", field: "emailschool", validate: rowData => {
+              if (rowData.email === undefined || rowData.email === "") {
+                return "Vui lòng nhập email"
+              } else if (!rowData.email.includes('@' && '.')) {
+                return "Email không hợp lệ"
+              }
+              return true
+            }
+          },
         { title: "Điện thoại", field: 'phoneschool' },
         { title: 'Website', field: 'websiteschool' },
     ]
     useEffect(() => {
         const localstore = localStorage.getItem('user-save')
         const decodeUser = jwt_decode(localstore);
-        console.log(decodeUser.username);
-        console.log(decodeUser.email);
         setName(decodeUser.username)
     }, [])
     const URL = 'http://localhost:5000/admin/school'
@@ -135,8 +143,11 @@ function SchoolAdmin() {
 
     return (
         <div className="App">
+                  <Helmet>
+        <title>Quản lý trường </title>
+      </Helmet>
             <div className={cx('wrapper')}>
-                <h1 align="center">Trang quản lý School</h1>
+                <h1 align="center">Trang quản lý trường </h1>
                 <div className={cx('user_log')}>
                 <h2 className={cx('name_set')}> <FaUser/> {name}</h2>
                     <ToastContainer/>

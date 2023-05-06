@@ -157,7 +157,7 @@ function Company() {
   return (
     <div className={cx('container_full')}>
       <Helmet>
-        <title>Trang chủ</title>
+        <title>Công ty</title>
       </Helmet>
       <section className={cx('container')}>
         <div className={cx('input-wrapper')}>

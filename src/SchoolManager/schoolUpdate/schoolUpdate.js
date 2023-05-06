@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Helmet } from 'react-helmet';
 
 
 const cx = classNames.bind(styles)
@@ -81,7 +81,7 @@ function SchoolUpdate() {
             body: JSON.stringify({
                 emailschool: email,
                 nameschool: name,
-                location:location,
+                location: location,
                 phoneschool: phone,
                 websiteschool: website,
             })
@@ -97,6 +97,7 @@ function SchoolUpdate() {
                     progress: undefined,
                     theme: "light",
                 });
+                window.location.reload();
 
             })
             .catch(error => {
@@ -107,9 +108,11 @@ function SchoolUpdate() {
 
     return (
         <div className="App">
+            <Helmet>
+                <title>Thiết lập thông tin trường</title>
+            </Helmet>
             <div className={cx('wrapper')}>
                 <h1>Thiết lập thông tin Trường</h1>
-
                 <div>
                     <div className={cx('form-group')}>
                         <label htmlFor="emailcompany" className={cx('label')}>Email Trường</label>
@@ -144,7 +147,7 @@ function SchoolUpdate() {
                         onClick={() => setIsEditMode(!isEditMode)}
                         className={cx('btn-edit')}
                     >
-                        {isEditMode ? 'Hủy' : 'Chỉnh sửa'}
+                        {isEditMode ? 'Hủy bỏ' : 'Chỉnh sửa'}
                     </button>
                     <button type="submit" className={cx('btn')} onClick={handleSubmit}>Lưu thay đổi</button>
 
