@@ -20,6 +20,9 @@ function Signup() {
   const [gender, setGender] = useState('');
   const [school, setSchool] = useState('');
 
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showReNewPassword, setShowReNewPassword] = useState(false);
+
   const URL = 'http://localhost:5000/admin/account'
   useEffect(() => {
     const fetchData = async () => {
@@ -91,6 +94,13 @@ function Signup() {
       })
       .catch(error => console.error(error));
   };
+
+  const togglePasswordNewVisibility = () => {
+    setShowNewPassword(!showNewPassword);
+  };
+  const togglePasswordRenewVisibility = () => {
+    setShowReNewPassword(!showReNewPassword);
+  };
   return (
     <div>
       <img
@@ -158,10 +168,15 @@ function Signup() {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => (setPassword(e.target.value))}
-                  type="password"
+                  type={showNewPassword ? "text" : "password"}
                   id="password"
                   className={cx("input-user")}
                 />
+                <div onClick={togglePasswordNewVisibility} className={cx('hide-icon')}>
+                  {!showNewPassword ? (<img src="https://img.icons8.com/material/24/null/visible--v1.png" />)
+                    : (<img src="https://img.icons8.com/external-febrian-hidayat-glyph-febrian-hidayat/64/null/external-closed-eyes-user-interface-febrian-hidayat-glyph-febrian-hidayat.png" />)
+                  }
+                </div>
               </div>
             </div>
             <div className={cx("input-div pass")}>
@@ -173,10 +188,15 @@ function Signup() {
                   placeholder="Re-enter password"
                   value={confpassword}
                   onChange={(e) => (setConfirmPass(e.target.value))}
-                  type="password"
+                  type={showReNewPassword ? "text" : "password"}
                   id="repass"
                   className={cx("input-user")}
                 />
+                <div onClick={togglePasswordRenewVisibility} className={cx('hide-icon')}>
+                  {!showReNewPassword ? (<img src="https://img.icons8.com/material/24/null/visible--v1.png" />)
+                    : (<img src="https://img.icons8.com/external-febrian-hidayat-glyph-febrian-hidayat/64/null/external-closed-eyes-user-interface-febrian-hidayat-glyph-febrian-hidayat.png" />)
+                  }
+                </div>
               </div>
             </div>
             <div className={cx("input-div phone")}>
@@ -218,7 +238,7 @@ function Signup() {
               </div>
             </div>
             <button onClick={() => { HandleSignup(email) }} className={cx("btn")}>
-              Signup
+              Đăng kí
             </button>
           </div>
         </div>

@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './changPassword.module.scss'
-import { FaAngleDoubleRight, FaAngleDoubleLeft, FaArrowRight, FaLocationArrow, FaSearch } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import jwt_decode from "jwt-decode";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,6 +15,7 @@ function ChangePassword(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showReNewPassword, setShowReNewPassword] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(true);
 
 
   const jobpost_token = localStorage.getItem('user');
@@ -23,11 +23,11 @@ function ChangePassword(props) {
   const email = decodeEmail.email;
 
   const handleClose = () => {
+    setIsPopupOpen(false);
     if (props.onClose) {
       props.onClose();
     }
   };
-
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
@@ -69,9 +69,7 @@ function ChangePassword(props) {
         progress: undefined,
         theme: "light",
       });
-      setOldPassword("");
-      setNewPassword("");
-      setConfirmNewPassword("");
+      handleClose();
     } catch (error) {
       console.log(error);
       toast.error('Nhập sai mật khẩu cũ' || 'Không thể đổi mật khẩu');

@@ -20,8 +20,9 @@ function StudentName(props) {
   const [listMajor, setListMajor] = useState([]);
   const [school, setListSchool] = useState([]);
   const [avatar, setAvatar] = useState(null);
+  const [showAvatar, setShowAvatar] = useState(true); 
   const [avatarUrl, setAvatarUrl] = useState(null);
-
+  
   const jobpost_token = localStorage.getItem('user');
   const decodeEmail = jwt_decode(jobpost_token);
 
@@ -191,6 +192,7 @@ function StudentName(props) {
     const file = e.target.files[0]
     file.preview = URL.createObjectURL(file);
     setAvatar(file)
+    setShowAvatar(false);
     if (avatarUrl) {
       setAvatarUrl(null);
     }
@@ -233,13 +235,13 @@ function StudentName(props) {
             <div className={cx('input-div', 'wrapper-avatar')}>
               {avatarUrl && (
                 <img className={cx('avatar')} src={avatarUrl} />
-              ) }
+              )}
               <input className={cx('avatar-input')} id='avatar_input' type='file' onChange={handlePreview} />
               <label className={cx('label-avatar')} htmlFor='avatar_input'>Chọn ảnh</label>
               {avatar && (
                 <div className={cx('avatar-preview-wrapper')}>
                   <img src={avatar.preview} className={cx('avatar-preview')} />
-                  <button onClick={handleAvatarChange}>Lưu ảnh</button>
+                  <button onClick={handleAvatarChange} className={cx('submit_button')}>Lưu ảnh</button>
                 </div>
               )}
             </div>

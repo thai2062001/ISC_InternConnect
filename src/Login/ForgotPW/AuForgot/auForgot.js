@@ -40,24 +40,32 @@ function AuForgot() {
   }
 
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
   }
   return (
     <div className={cx('wrapper')}>
-      <h1>Đặt lại mật khẩu</h1>
+
       <form className={cx('form-wrapper')} onClick={handleSubmit}>
+        <h1>Đặt lại mật khẩu</h1>
         <div className={cx('password-wrapper')}>
+
           <label className={cx('label-input')}>
             Mật khẩu:
           </label>
+          <div className={cx('pw-wrapper')}>
           <input className={cx('input-info')} type="password" onChange={(e) => setPassword(e.target.value)} />
+          </div>
+
+
+
         </div>
         <div className={cx('password-wrapper')}>
           <label className={cx('label-input')}>
             Nhập lại mật khẩu:
-            </label>
-            <input className={cx('input-info')} type="password" onChange={(e) => setConfirPassword(e.target.value)} />
+          </label>
+          <input className={cx('input-info')} type="password" onChange={(e) => setConfirPassword(e.target.value)} />
         </div>
         <button className={cx('action-button')} onClick={handleReset} type="submit">Lưu thay đổi</button>
       </form>
