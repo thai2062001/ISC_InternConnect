@@ -18,6 +18,9 @@
     margin-top: 30px;
     width: 450px;
   }
+  .form-wrapper h1 {
+    margin-bottom: 60px;
+  }
   
   .label-input {
     font-weight: 700;
@@ -54,8 +57,10 @@
   .password-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     margin-bottom: 20px;
     width: 100%;
   }
   
+  .pw-wrapper{
+    display: flex;
+  }

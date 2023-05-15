@@ -16,7 +16,8 @@ function Settings() {
   const [showPopupInfo, setShowPopupInfo] = useState(false)
   const [info, setInfo] = useState({});
   const Student_token = localStorage.getItem('user');
-  // const decodeEmail = jwt_decode(Student_token);
+  const decodeEmail = jwt_decode(Student_token);
+
   //http://localhost:5000/profile
   useEffect(() => {
     async function fetchData() {
@@ -36,7 +37,7 @@ function Settings() {
       }
     }
     fetchData();
-  }, []);
+  }, [Student_token]);
 
 
   const handleChangePw = () => {
@@ -47,24 +48,6 @@ function Settings() {
   }
   const handlePopupFalse = () => {
     setShowPopupInfo(false)
-    // const fetchData = async () => {
-    //   const infoStudent = 'http://localhost:5000/profile'
-    //   const result = await fetch(infoStudent, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Authorization': `Bearer ${Student_token}`
-    //     },
-    //   })
-    //   const json = await result.json();
-    //   const student = json.profile.find(item => item.studentemail === emailUser);
-    //   if (student) {
-    //     setInfo(student);
-    //   } else {
-    //     console.error('Không tồn tại sinh viên này');
-    //   }
-    // }
-    // fetchData();
   }
 
   return (

@@ -1,9 +1,7 @@
 
 import classNames from 'classnames/bind';
 import styles from './forgotpw.module.scss'
-import { useEffect, useState } from 'react';
-import jwt_decode from "jwt-decode";
-
+import {  useState } from 'react';
 
 const cx = classNames.bind(styles)
 
