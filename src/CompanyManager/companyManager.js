@@ -264,7 +264,7 @@ function CompanyManager() {
               fetch(`http://localhost:5000/company/${id}`, {
                 method: 'DELETE',
                 headers: {
-                  'Authorization': `Bearer ${token}`
+                  'Authorization': `Bearer ${company_token}`
                 }
               })
                 .then(response => {

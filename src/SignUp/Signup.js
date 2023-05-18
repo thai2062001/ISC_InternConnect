@@ -121,7 +121,7 @@ function Signup() {
               </div>
               <div className={cx("div")}>
                 <input
-                  placeholder="Username"
+                  placeholder="Tên tài khoản"
                   value={username}
                   onChange={(e) => (setName(e.target.value))}
                   type="text"
@@ -150,7 +150,7 @@ function Signup() {
               </div>
               <div className={cx("div")}>
                 <input
-                  placeholder="Phone number"
+                  placeholder="Số điện thoại"
                   value={phonenumber}
                   onChange={(e) => (setPhone(e.target.value))}
                   type="text"
@@ -165,7 +165,7 @@ function Signup() {
               </div>
               <div className={cx("div")}>
                 <input
-                  placeholder="Password"
+                  placeholder="Mật khẩu"
                   value={password}
                   onChange={(e) => (setPassword(e.target.value))}
                   type={showNewPassword ? "text" : "password"}
@@ -185,7 +185,7 @@ function Signup() {
               </div>
               <div className={cx("div")}>
                 <input
-                  placeholder="Re-enter password"
+                  placeholder="Nhập lại mật khẩu"
                   value={confpassword}
                   onChange={(e) => (setConfirmPass(e.target.value))}
                   type={showReNewPassword ? "text" : "password"}

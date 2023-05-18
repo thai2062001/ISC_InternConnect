@@ -51,8 +51,11 @@ function Login() {
         const token = response.data.token.accessToken
         var decoded = jwt_decode(token);
         const localstored = localStorage.setItem('user', token)
-        if (decoded.role === 'Student') {
+        if (decoded.role === 'Student' && decoded.verified === true) {
           window.location.href = '/'
+        }
+        else {
+          toast.warning('Chưa xác thực tài khoản vui lòng kiểm tra Email để xác thực')
         }
       }
     }
@@ -67,7 +70,7 @@ function Login() {
     window.location.href = '/auth/forgot-password'
   }
   const handleSignUp = () => {
-    window.location.href = '/signup'
+    window.location.href = '/auth/signup'
   }
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -100,8 +103,8 @@ function Login() {
               <div className={cx('i')}>
                 <FaLock />
               </div>
-              <div className={cx('div','password-class')}>
-                <input placeholder='Mật khẩu'type={showPassword ? "text" : "password"} className={cx('input-user')} onChange={(e) => setpassword(e.target.value)} />
+              <div className={cx('div', 'password-class')}>
+                <input placeholder='Mật khẩu' type={showPassword ? "text" : "password"} className={cx('input-user')} onChange={(e) => setpassword(e.target.value)} />
                 <div onClick={togglePasswordVisibility} className={cx('hide-icon')}>
                   {!showPassword ? (<img src="https://img.icons8.com/material/24/null/visible--v1.png" />)
                     : (<img src="https://img.icons8.com/external-febrian-hidayat-glyph-febrian-hidayat/64/null/external-closed-eyes-user-interface-febrian-hidayat-glyph-febrian-hidayat.png" />)
@@ -112,7 +115,7 @@ function Login() {
             </div>
             <div className={cx('wraper_link')}>
               <a className={cx('forgot_password')} onClick={handleForgotPW}>Quên mật khẩu?</a>
-              <a onClick={handleSignUp} >Đăng kí</a>
+              <a onClick={handleSignUp}>Đăng kí</a>
 
             </div>
             <ToastContainer />
