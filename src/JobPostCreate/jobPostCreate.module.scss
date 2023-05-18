@@ -144,10 +144,11 @@
   
   .button-action-div {
     margin-top: 30px;
-    text-align: center;
+    text-align: right;
   }
   
   .button-action {
+    width: 200px;
     font-size: 1.5rem;
     padding: 10px 20px;
     background-color: #0077cc;
@@ -233,4 +234,16 @@
   
   .wrapper-gen .major-wrapper .major-input{
     width: 100%;
+  }
+  .back-wrapper{
+    display: flex;
+    align-items: center;
+  }
+
+
+  .goback-btn{
+    cursor: pointer;
+  }
+  .goback-btn:hover{
+    color: #0077cc;
   }

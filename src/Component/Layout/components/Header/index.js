@@ -13,7 +13,30 @@ function Header() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
+  const [info, setInfo] = useState({});
+  const [avatar, setAvatar] = useState();
 
+  const Student_token = localStorage.getItem('user');
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const options = {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + Student_token,
+            'Content-Type': 'application/json'
+          }
+        };
+        const response = await fetch('http://localhost:5000/profile', options);
+        const data = await response.json();
+        setAvatar(data.profile.avatar)
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, [Student_token]);
 
   const handleLogin = () => {
     window.location.href = "/login"
@@ -93,6 +116,7 @@ function Header() {
                     </li>
                   </ul>
                 </div>
+                {avatar && <img className={cx('avatar')} src={avatar} alt="Avatar" />}
               </>
             ) : (
               <FaUser onClick={handleLogin} className={cx('header__login')} />

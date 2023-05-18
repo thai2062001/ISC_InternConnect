@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+
 import classNames from "classnames/bind";
 import styles from './jobPostCreate.module.scss'
 import jwt_decode from "jwt-decode";
@@ -101,7 +101,7 @@ function JobPostCreate() {
     const createJobPost = async () => {
         try {
             const formData = new FormData();
-            if(companyLogo){
+            if (companyLogo) {
                 formData.append('namecompany', document.getElementById('companyNameInput').value);
                 formData.append('title', document.getElementById('jobTitleInput').value);
                 formData.append('workingform', document.getElementById('wokingformInput').value);
@@ -115,7 +115,7 @@ function JobPostCreate() {
                 formData.append('major', selectedMajor);
                 formData.append('place', selectedValueCities);
                 formData.append('logo', companyLogo);
-            }else{
+            } else {
                 formData.append('namecompany', document.getElementById('companyNameInput').value);
                 formData.append('title', document.getElementById('jobTitleInput').value);
                 formData.append('workingform', document.getElementById('wokingformInput').value);
@@ -151,9 +151,16 @@ function JobPostCreate() {
     const handleChangeCity = (selectedOptions) => {
         setSelectedValueCities(selectedOptions.value);
     };
+    const handleGoBack = () => {
+        window.history.back();
+      };
 
     return (
         <div className={cx('wrapper')} >
+            <div className={cx('back-wrapper')} >
+                <img width="24" height="24" src="https://img.icons8.com/material-rounded/24/back--v1.png" alt="back--v1" />
+                <span className={cx('goback-btn')} onClick={handleGoBack}>Quay lại</span>
+            </div>
             <h1 >Tạo bài đăng mới</h1>
             <div className={cx('form-detail')}>
                 <div className={cx('container')}>

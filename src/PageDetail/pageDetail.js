@@ -1,13 +1,11 @@
 import { useParams } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from './pageDetail.module.scss'
-import jwt_decode from "jwt-decode";
 import { useState, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Select from 'react-select'
 
 const cx = classNames.bind(styles)
 
@@ -221,17 +219,22 @@ function PageDetail() {
         // Xử lý lỗi nếu có
       });
   }
+  const handleGoBack = () => {
+    window.history.back();
+  };
 
-  console.log(accounts);
 
   return (
     <div className={cx('wrapper')} >
+      <div className={cx('back-wrapper')} >
+        <img width="24" height="24" src="https://img.icons8.com/material-rounded/24/back--v1.png" alt="back--v1" />
+        <span className={cx('goback-btn')} onClick={handleGoBack}>Quay lại</span>
+      </div>
       <div className={cx('form-detail')}>
         <div className={cx('container')}>
           <div className={cx('logo-info')}>
             <img src={accounts.logo} alt="Lỗi" />
           </div>
-
         </div>
         <div className={cx('wrapper-date-form')}>
           <div className={cx('input-img')}>
@@ -269,7 +272,7 @@ function PageDetail() {
         <div className={cx('wrapper-des')}>
           <div className={cx('place')}>
             <label className={cx('label-des')}>Khu vực</label>
-            <select disabled id="placeInput" className={cx( 'place_input')} value={accounts.place} onChange={(e) => setAccount({ ...accounts, place: e.target.value })} >
+            <select disabled id="placeInput" className={cx('place_input')} value={accounts.place} onChange={(e) => setAccount({ ...accounts, place: e.target.value })} >
               <option value="">Chọn khu vực</option>
               {cities.map(city => (
                 <option key={city._id} value={city.name}>{city.name}</option>
@@ -301,7 +304,7 @@ function PageDetail() {
         <ToastContainer style={{ width: '400px' }} />
 
         <div className={cx('wrapper-gen')}>
-          <div  className={cx('gender_wrapper')}>
+          <div className={cx('gender_wrapper')}>
             <label className={cx('label-des')} for="gender">Giới tính</label>
             <select disabled value={accounts.gender} className={cx('input-des')} id="gender" name="gender" onChange={(e) => setAccount({ ...accounts, gender: e.target.value })}>
               <option value="Nam">Nam</option>
