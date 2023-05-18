@@ -14,7 +14,6 @@ import CompanyManager from '../CompanyManager/companyManager';
 import SlidebarCompany from '../Component/Layout/SlidebarCompany'
 import PageDetail from '../PageDetail/pageDetail';
 import JobPostCreate from '../JobPostCreate/jobPostCreate';
-import AccountSettings from '../SettingsAdmin/settingsAdmin';
 import JobApplication from '../JobApplication_Company/jobApplication_company';
 import AllJobPost from '../AllJobPost/allJobPost';
 import Signup from '../SignUp/Signup';
@@ -32,25 +31,19 @@ import TermOfServices from '../TermofServices/termofservice';
 import Company from '../Home/Company/company';
 import DetailCompany from '../Home/DetailCompany/detailCompany';
 import ReportAdmin from '../HomeAdmin/ReportAdmin/reportAdmin';
-import HomeDetailsSearch from '../Home/HomeDetailsSearch/homeDetailsSearch';
 //public routers
 
 
 const publicRouters = [
 
     {path: '/',component: Home,layout:HeaderOnly},
-    // {path: '/:major',component: HomeDetailsSearch,layout:HeaderOnly},
     {path: '/:id',component: HomeJobPostDetail,layout:HeaderOnly},
-
     {path: '/listcompany',component: Company,layout:HeaderOnly},
     {path: '/listcompany/:id',component: DetailCompany,layout:HeaderOnly},
-
     {path: '/accountSettings',component: Settings,layout:HeaderOnly},
     {path: '/services',component: TermOfServices,layout:HeaderOnly},
     {path: '/statuscv',component: StatusCV,layout:HeaderOnly},
     {path: '/favorite_jobapp',component: Favorite_JobApp,layout:HeaderOnly},
-    // {path: '/home',component: HomeLogin,layout:HeaderLogin},
-    {path: '/settings',component: AccountSettings,layout: null},
     {path: '/login',component: Login,layout: null},
     {path: '/auth/forgot-password/',component: ForgotPW,layout: null},
     {path: '/auth/forgot-password/:email',component:AuForgot ,layout: null},
@@ -63,7 +56,6 @@ const publicRouters = [
     {path: '/homeadmin/majorAdmin',component:MajorAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/companyAdmin',component:CompanyAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/jobpost',component:AllJobPost ,layout: SlidebarOnly},
-    // {path: '/homeadmin/skill',component:SkillAdmin ,layout: SlidebarOnly},
     {path: '/homeadmin/report',component:ReportAdmin ,layout: SlidebarOnly},
     {path: '/schooladmin',component:SchoolManager ,layout: SlidebarSchool },
     {path: '/schooladmin/updateinfo',component:SchoolUpdate ,layout: SlidebarSchool },

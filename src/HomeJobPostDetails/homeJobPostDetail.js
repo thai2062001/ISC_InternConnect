@@ -365,6 +365,7 @@ function HomeJobPostDetail() {
                                             id_post={jobPosts._id}
                                             username={Username}
                                             major={student.major}
+                                            verify={student.verify}
                                             logo={jobPosts.logo}
                                             title={jobPosts.title}
                                             email={decodeEmail.email}

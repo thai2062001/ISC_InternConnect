@@ -50,6 +50,7 @@ function Settings() {
     setShowPopupInfo(false)
   }
 
+
   return (
 
     <div className={cx('wrapper')}>
@@ -85,6 +86,7 @@ function Settings() {
             code={info.profile.code}
             major={info.profile.major}
             school={info.profile.school}
+            verify = {info.profile.verify}
             onClose={() => setShowPopupInfo(false)}
           />
         </Popup>

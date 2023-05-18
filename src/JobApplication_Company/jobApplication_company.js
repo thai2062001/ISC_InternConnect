@@ -179,6 +179,7 @@ function JobApplication() {
     { title: "Email", field: "email" },
     { title: "Trường", field: "nameschool", defaultGroupOrder:1 },
     { title: "Ngành nghề", field: "major" },
+    { title: "Trường xác nhận",cellStyle: { width: "225px" }, field: "verify", render: rowData => rowData.verify ? "Đã xác nhận" : "Chưa xác nhận" },
     { title: "Ngày nộp", field: "date" ,render: rowData => formatDate(rowData.date) },
     { title: "Công ty", field: "namecompany" },
     { title: "Trạng thái", field: "status", cellStyle: { width: "250px" } },

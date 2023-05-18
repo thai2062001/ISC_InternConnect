@@ -10,6 +10,7 @@ function ApplyCV(props) {
   const [date, setDate] = useState("");
   const [name, setName] = useState("");
   const [major, setMajor] = useState("");
+  const [verify, setVerify] = useState("");
   const [email, setEmail] = useState(props.initialEmail || "");
   const [namecompany, setnameCompany] = useState("");
   const [nameschool, setNameSchool] = useState("");
@@ -21,6 +22,7 @@ function ApplyCV(props) {
   useEffect(() => {
     setDate(props.expdate);
     setName(props.username);
+    setVerify(props.verify);
     setMajor(props.major);
     setEmail(props.email);
     setLogo(props.logo);
@@ -29,12 +31,14 @@ function ApplyCV(props) {
     setTitle(props.title)
     setID(props.id_post)
   }, []);
+
   const handleApply = (event) => {
     event.preventDefault()
     const cvFile = cvInputRef.current.files[0];
     const formData = new FormData();
     formData.append("date", date);
     formData.append("email", email);
+    formData.append("verify", verify);
     formData.append("title", title);
     formData.append("name", name);
     formData.append("logo", logo);

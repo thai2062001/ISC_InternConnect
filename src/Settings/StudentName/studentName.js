@@ -12,6 +12,7 @@ function StudentName(props) {
   const [studentName, setStudentName] = useState("");
   const [gender, setGender] = useState("");
   const [address, setAddress] = useState("");
+  const [verify, setVerify] = useState("");
   const [Code, setCode] = useState("");
   const [Major, setMajor] = useState("");
   const [phone, setPhone] = useState("");
@@ -19,6 +20,7 @@ function StudentName(props) {
   const [cities, setCities] = useState([]);
   const [listMajor, setListMajor] = useState([]);
   const [school, setListSchool] = useState([]);
+
   const [avatar, setAvatar] = useState(null);
   const [showAvatar, setShowAvatar] = useState(true); 
   const [avatarUrl, setAvatarUrl] = useState(null);
@@ -29,6 +31,7 @@ function StudentName(props) {
 
   useEffect(() => {
     setStudentName(props.name)
+    setVerify(props.verify)
     setAvatarUrl(props.avatar);
     setGender(props.gender)
     setAddress(props.address)
@@ -37,6 +40,7 @@ function StudentName(props) {
     setSchool(props.school)
     setPhone(props.phoneNumber)
   }, [])
+
   useEffect(() => {
     const fecthData = async () => {
       const response = await fetch("http://localhost:5000/admin/school");
@@ -100,6 +104,7 @@ function StudentName(props) {
       code: Code,
       major: Major,
       school: School,
+      verify:verify
     };
 
     try {
@@ -321,6 +326,17 @@ function StudentName(props) {
                   <option key={schoolItem._id} value={schoolItem.nameschool}>{schoolItem.nameschool}</option>
                 ))}
               </select>
+            </div>
+            <div className={cx('input-div')}>
+              <label htmlFor="verify"> Trạng thái:</label>
+              <input
+                disabled
+                className={cx('pass_input')}
+                type="text"
+                id="verify"
+                value={verify ? "Đã xác nhận" : "Chưa xác nhận"}
+                required
+              />
             </div>
 
 
