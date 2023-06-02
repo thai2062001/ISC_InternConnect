@@ -203,6 +203,7 @@ function StudentName(props) {
     }
   }
   const handleAvatarChange = (e) => {
+    e.preventDefault();
     const info_token = localStorage.getItem('user');
     if (avatar) {
       const formData = new FormData();
@@ -334,7 +335,7 @@ function StudentName(props) {
                 className={cx('pass_input')}
                 type="text"
                 id="verify"
-                value={verify ? "Đã xác nhận" : "Chưa xác nhận"}
+                value={verify ? "Đã xác thực" : "Chưa xác thực"}
                 required
               />
             </div>

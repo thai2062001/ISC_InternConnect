@@ -339,6 +339,7 @@ function HomeJobPostDetail() {
         const formattedDate = date.format('DD/MM/YYYY');
         return formattedDate;
     }
+    console.log(company);
     return (
         <div className={cx('Jobpost-wapper')}>
             <Helmet>
@@ -503,7 +504,9 @@ function HomeJobPostDetail() {
                             <div className={cx('benefit')}>
                                 <div className={cx('introduce_company')}>
                                     <span className={cx('span-title')}>Giới thiệu công ty</span>
-                                    <p>{company.introduce}</p>
+                                    {company && (
+                                        <p>{company.introduce}</p>
+                                    )}
                                 </div>
                                 <div>
 

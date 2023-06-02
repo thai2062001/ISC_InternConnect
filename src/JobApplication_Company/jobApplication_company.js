@@ -141,7 +141,6 @@ function JobApplication() {
     })
       .then(response => {
         if (response.ok) {
-          setStatus(rowData.status);
           toast.success('Đã từ chối ứng viên!', {
             position: "top-center",
             autoClose: 5000,
@@ -152,6 +151,7 @@ function JobApplication() {
             progress: undefined,
             theme: "light",
           });
+          setStatus(rowData.status);
 
         } else {
           throw new Error(response.statusText);
