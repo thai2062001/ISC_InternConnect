@@ -152,7 +152,9 @@
 
 
  .avatar{
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
   object-fit: contain;
+  margin-left: 5px;
  }
